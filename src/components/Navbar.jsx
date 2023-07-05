@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="container-fluid pe-lg-4">
         <div className="d-flex align-items-center">
           <a href="" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
-            <img src="../public/ejemplo-logo.jpg" width="47" alt="Logo" />
+            <img src="../ejemplo-logo.jpg" width="47" alt="Logo" />
             Libros
           </a>
           <button
@@ -26,7 +26,7 @@ const Navbar = () => {
               data-bs-toggle="dropdown"
             >
               <img
-                src="../public/avatar.png"
+                src="../avatar.png"
                 alt="Avatar"
                 className="rounded-circle"
                 width="48"
