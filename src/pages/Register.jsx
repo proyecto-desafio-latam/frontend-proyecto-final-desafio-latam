@@ -73,12 +73,15 @@ export default function Register() {
                         validations.repeatPassword = 'Las contraseñas no coinciden';
                     }
 
-                    //Birthday Validation
-                    const minAgeDate = new Date();
-                    minAgeDate.setFullYear(minAgeDate.getFullYear() - 18);
-                    const selectedDate = new Date(values.birthday);
+                    // Birthday Validation
+                    const currentDate = new Date(); // Obtener la fecha actual
+                    const selectedDate = new Date(values.birthday); // Obtener la fecha ingresada
 
-                    if (selectedDate > minAgeDate) {
+                    if (!values.birthday) {
+                        validations.birthday = 'Por favor ingrese su fecha de nacimiento';
+                    } else if (selectedDate > currentDate) {
+                        validations.birthday = 'La fecha de nacimiento no puede ser mayor al día actual';
+                    } else if (currentDate.getFullYear() - selectedDate.getFullYear() < 18) {
                         validations.birthday = 'Debes tener al menos 18 años';
                     }
                     return validations;
