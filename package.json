@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "sass": "sass --watch src/assets/theme.scss src/assets/css/style.css",
+    "sass": "sass --watch src/assets/sass/theme.scss src/assets/css/style.css",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
