@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Books from "./pages/Books";
 import Home from "./pages/Home";
 import BookDetail from "./pages/BookDetail";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/books/:id" element={<BookDetail />} />
         </Routes>
       </main>
+      <Footer></Footer>
     </>
   );
 }
