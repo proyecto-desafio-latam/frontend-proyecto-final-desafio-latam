@@ -1,7 +1,7 @@
 const Navbar = () => {
   return (
     <header
-      className="header navbar navbar-expand bg-light border-bottom border-light shadow fixed-top"
+      className="header navbar container-fluid navbar-expand bg-light border-bottom border-light shadow fixed-top"
       data-scroll-header
     >
       <div className="container-fluid pe-lg-4">
