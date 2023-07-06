@@ -1,13 +1,13 @@
 const Navbar = () => {
   return (
     <header
-      className="header navbar container-fluid navbar-expand bg-light border-bottom border-light shadow fixed-top"
+      className="header navbar navbar-expand bg-light border-bottom border-light shadow fixed-top"
       data-scroll-header
     >
       <div className="container-fluid pe-lg-4">
         <div className="d-flex align-items-center">
           <a href="" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
-            <img src="../ejemplo-logo.jpg" width="47" alt="Logo" />
+            <img src="../public/ejemplo-logo.jpg" width="47" alt="Logo" />
             Libros
           </a>
           <button
@@ -26,7 +26,7 @@ const Navbar = () => {
               data-bs-toggle="dropdown"
             >
               <img
-                src="../avatar.png"
+                src="../public/avatar.png"
                 alt="Avatar"
                 className="rounded-circle"
                 width="48"
@@ -43,12 +43,23 @@ const Navbar = () => {
               <li>
                 <a href="#" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2"></i>
-                  Ítems en el Carrito
+                  Orders
                   <span
                     className="bg-success rounded-circle mt-n2 ms-1"
                     style={{ width: "5px", height: "5px" }}
                   ></span>
                   <span className="ms-auto fs-xs text-muted">2</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" className="dropdown-item d-flex align-items-center">
+                  <i
+                    className="bx bx-dollar fs-base opacity-60 me-2
+                            "
+                  >
+                    Ventas
+                  </i>
+                  <span className="ms-auto fs-xs text-muted">100.000</span>
                 </a>
               </li>
               <li>
@@ -59,6 +70,13 @@ const Navbar = () => {
                     style={{ width: "5px", height: "5px" }}
                   ></span>
                   <span className="ms-auto fs-xs text-muted">1</span>
+                </a>
+              </li>
+              <li>
+                <a href="" className="dopdown-item d-flex align-items-center">
+                  <i className="bx bx-group fs-base opacity-60 me-2 text-muted"></i>
+                  Seguidores
+                  <span className="ms-auto fs-xs">(5)</span>
                 </a>
               </li>
               <li>
@@ -77,15 +95,6 @@ const Navbar = () => {
               </li>
               <li className="dropdown-divider"></li>
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center">
-                  <i className="bx bx-star fs-base opacity-60 me-2"></i>
-                  Perfil
-                </a>
-                <a href="#" className="dropdown-item d-flex align-items-center">
-                  <i className="bx bx-dollar fs-base opacity-60 ms-2">
-                    Historial de Compras
-                  </i>
-                </a>
                 <a href="#" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-star fs-base opacity-60 me-2"></i>
                   Logout
