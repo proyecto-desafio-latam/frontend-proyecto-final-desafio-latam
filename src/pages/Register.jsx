@@ -5,7 +5,6 @@ import '../Register.css';
 export default function Register() {
 
     const [submittedForm, setSubmittedForm] = useState(false);
-
     return (
         <>
             <Formik
@@ -16,7 +15,8 @@ export default function Register() {
                     email: '',
                     password: '',
                     repeatPassword: '',
-                    birthday: ''
+                    birthday: '',
+                    isAdmin: false
                 }}
 
                 validate={(values) => {
@@ -32,7 +32,6 @@ export default function Register() {
                         validations.firstName = 'Ingrese un nombre válido';
                     }
 
-
                     // Validación lastName
                     if (!values.lastName) {
                         validations.lastName = 'Por favor ingresa un apellido';
@@ -41,7 +40,6 @@ export default function Register() {
                     } else if (values.lastName.length < 2) {
                         validations.lastName = 'Ingrese un apellido válido';
                     }
-
 
                     // Validación userName
                     if (!values.userName) {
@@ -84,38 +82,51 @@ export default function Register() {
                     } else if (currentDate.getFullYear() - selectedDate.getFullYear() < 18) {
                         validations.birthday = 'Debes tener al menos 18 años';
                     }
+
+                    if (values.isAdmin === '') {
+                        validations.isAdmin = 'Por favor selecciona un rol';
+                    }
+
                     return validations;
                 }}
 
                 onSubmit={async (values, { resetForm }) => {
 
-                    try {
-                        const response = await fetch('/api/register', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(values)
+                    // If register is success
 
-                        });
+                    resetForm();             // clean inputs
+                    setSubmittedForm(true);  // change state for "Registro exitoso"
+                    console.log(submittedForm)
+                    setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
+                    console.log(values);
 
-                        console.log(values)
+                    // try {
+                    //     const response = await fetch('/api/register', {
+                    //         method: 'POST',
+                    //         headers: {
+                    //             'Content-Type': 'application/json'
+                    //         },
+                    //         body: JSON.stringify(values)
+
+                    //     });
+                    //     console.log(values);
 
 
-                        if (response.ok) {
-                            // If register is success
+                    //     if (response.ok) {
+                    //         // If register is success
 
-                            resetForm();             // clean inputs
-                            setSubmittedForm(true);  // change state for "Registro exitoso"
-                            setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
-                        } else {
-                            // If is an error server
-                            console.error('Error en el servidor:', response.status);
-                        }
-                    } catch (error) {
-                        // Error in request
-                        console.error('Error al enviar la solicitud:', error);
-                    }
+                    //         resetForm();             // clean inputs
+                    //         setSubmittedForm(true);  // change state for "Registro exitoso"
+                    //         console.log(submittedForm)
+                    //         setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
+                    //     } else {
+                    //         // If is an error server
+                    //         console.error('Error en el servidor:', response.status);
+                    //     }
+                    // } catch (error) {
+                    //     // Error in request
+                    //     console.error('Error al enviar la solicitud:', error);
+                    // }
                 }}
             >
 
@@ -221,6 +232,31 @@ export default function Register() {
                                     <div className='form-error'>{errors.birthday}</div>
                                 )} />
                         </div>
+                        <div className='form-field'>
+                            <label className='form-label' htmlFor="isAdmin">Rol</label>
+                            <div className='form-radio-group'>
+                                <label>
+                                    <Field
+                                        type="radio"
+                                        name="isAdmin"
+                                        value="false"
+                                    />
+                                    Usuario
+                                </label>
+                                <label>
+                                    <Field
+                                        type="radio"
+                                        name="isAdmin"
+                                        value="true"
+                                    />
+                                    Administrador
+                                </label>
+                            </div>
+                            <ErrorMessage name='isAdmin' component={() => (
+                                <div className='form-error'>{errors.isAdmin}</div>
+                            )} />
+                        </div>
+
                         <button className='form-button' type="submit">Registrar</button>
                         {submittedForm && <p className="success-message">Registro exitoso</p>}
                     </Form>

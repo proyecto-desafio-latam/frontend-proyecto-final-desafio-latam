@@ -6,7 +6,6 @@
     max-width: 400px;
     margin: 0 auto;
     padding: 0 20px;
-    /* Agregado para dar espacio en los bordes del formulario en pantallas más anchas */
 }
 
 .form-field {
@@ -34,7 +33,8 @@
     margin-top: 4px;
 }
 
-.form-button {
+.form-button,
+.form-button-login {
     padding: 8px 16px;
     background-color: #4caf50;
     color: white;
@@ -42,10 +42,28 @@
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
+    margin: 0 auto;
+    display: block;
+    transition: background-color 0.3s;
+}
 
+.form-button:hover,
+.form-button-login:hover {
+    background-color: #45a049; /* Cambia el color de fondo en el hover */
+}
+
+.form-button:active,
+.form-button-login:active {
+    background-color: #408c3f; /* Cambia el color de fondo al hacer clic */
 }
 
 .success-message {
     color: green;
     font-weight: bold;
+}
+
+.login-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
