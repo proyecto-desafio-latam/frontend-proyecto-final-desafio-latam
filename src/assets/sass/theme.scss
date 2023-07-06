@@ -58,3 +58,12 @@
 
 // User custom styles
 @import 'user';
+
+.img-container {
+    max-height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5rem;
+  }
