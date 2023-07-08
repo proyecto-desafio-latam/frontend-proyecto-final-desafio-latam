@@ -8,8 +8,6 @@ const BookDetail = () => {
     const navigate = useNavigate()
 
     console.log(books)
-    //    console.log(id)
-    //    console.log(books[id].id)
 
     return (
         <div className="container mt-5 p-5">
@@ -37,7 +35,7 @@ const BookDetail = () => {
 
                                         <button className="btn btn-secondary" onClick={() =>
                                             navigate("/books")
-                                        }>Volver 🏠</button>
+                                        }>Volver 📖</button>
                                     </div>
                                 </div>
                                 <div className="accordion" id="faq">
