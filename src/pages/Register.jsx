@@ -5,6 +5,14 @@ import '../Register.css';
 export default function Register() {
 
     const [submittedForm, setSubmittedForm] = useState(false);
+
+    //reformulación de objeto values para que no incluya el valor 'repeatPassword'
+    const prepareData = (values) => {
+        // Eliminar la propiedad 'repeatPassword' del objeto 'values'
+        const { repeatPassword, ...data } = values;
+        return data;
+    };
+
     return (
         <>
             <main className='main-content-container'>
@@ -91,6 +99,7 @@ export default function Register() {
                         return validations;
                     }}
 
+
                     onSubmit={async (values, { resetForm }) => {
 
                         // If register is success
@@ -100,6 +109,8 @@ export default function Register() {
                         console.log(submittedForm)
                         setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
                         console.log(values);
+                        const data = prepareData(values);
+                        console.log('Data to send:', data);
 
                         // try {
                         //     const response = await fetch('/api/register', {
@@ -107,6 +118,7 @@ export default function Register() {
                         //         headers: {
                         //             'Content-Type': 'application/json'
                         //         },
+                                   //aquí se debe cambiar el 'values' por data (que reformula el objeto en viado sin repeatPW)
                         //         body: JSON.stringify(values)
 
                         //     });
