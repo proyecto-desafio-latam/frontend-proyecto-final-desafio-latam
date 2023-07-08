@@ -131,7 +131,7 @@ export default function Register() {
             >
 
                 {({ errors }) => (
-                    <Form className='register-form'>
+                    <Form className='register-form mt-5'>
                         <div className='form-field'>
                             <label className='form-label' htmlFor="firstName">Nombre</label>
                             <Field

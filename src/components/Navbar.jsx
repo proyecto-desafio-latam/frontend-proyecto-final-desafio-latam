@@ -5,8 +5,8 @@ const Navbar = () => {
       data-scroll-header
     >
       <div className="container-fluid pe-lg-4">
-        <div className="d-flex align-items-center">
-          <a href="" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
+        <div className="d-flex align-items-around w-100">
+          <a href="/" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
             <img src="../public/ejemplo-logo.jpg" width="47" alt="Logo" />
             Libros
           </a>
@@ -26,7 +26,7 @@ const Navbar = () => {
               data-bs-toggle="dropdown"
             >
               <img
-                src="../public/avatar.png"
+                src="../avatar.png"
                 alt="Avatar"
                 className="rounded-circle"
                 width="48"
@@ -41,9 +41,12 @@ const Navbar = () => {
               style={{ width: "14rem" }}
             >
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center">
+                <a
+                  href="/user/cart"
+                  className="dropdown-item d-flex align-items-center"
+                >
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2"></i>
-                  Orders
+                  Carrito
                   <span
                     className="bg-success rounded-circle mt-n2 ms-1"
                     style={{ width: "5px", height: "5px" }}
@@ -52,14 +55,16 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center">
+                <a
+                  href="/user"
+                  className="dropdown-item d-flex align-items-center"
+                >
                   <i
                     className="bx bx-dollar fs-base opacity-60 me-2
                             "
                   >
-                    Ventas
+                    Perfil
                   </i>
-                  <span className="ms-auto fs-xs text-muted">100.000</span>
                 </a>
               </li>
               <li>
@@ -73,9 +78,9 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href="" className="dopdown-item d-flex align-items-center">
+                <a href="/user/allcarts" className="dopdown-item d-flex align-items-center">
                   <i className="bx bx-group fs-base opacity-60 me-2 text-muted"></i>
-                  Seguidores
+                  Historial de Compras
                   <span className="ms-auto fs-xs">(5)</span>
                 </a>
               </li>
@@ -87,7 +92,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center">
+                <a href="/user/favorites" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-star fs-base opacity-60 me-2"></i>
                   Favoritos
                   <span className="ms-auto fs-xs text-muted">10</span>
@@ -114,8 +119,18 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-link ">
-                  Services
+                <a href="/books" className="nav-link ">
+                  Libros
+                </a>
+              </li>
+              <li className="nav-item">
+                <a href="/login" className="nav-link ">
+                  Ingresar
+                </a>
+              </li>
+              <li className="nav-item">
+                <a href="/register" className="nav-link ">
+                  Registrarse
                 </a>
               </li>
               <li className="nav-item">
