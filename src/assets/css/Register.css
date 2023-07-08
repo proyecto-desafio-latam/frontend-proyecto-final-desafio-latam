@@ -2,6 +2,13 @@
     font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono", "Droid Sans Mono", monospace, monospace;
 }
 
+.main-content-container {
+    padding: 100px;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
 .register-form {
     max-width: 400px;
     margin: 0 auto;
@@ -49,12 +56,14 @@
 
 .form-button:hover,
 .form-button-login:hover {
-    background-color: #45a049; /* Cambia el color de fondo en el hover */
+    background-color: #45a049;
+    /* Cambia el color de fondo en el hover */
 }
 
 .form-button:active,
 .form-button-login:active {
-    background-color: #408c3f; /* Cambia el color de fondo al hacer clic */
+    background-color: #408c3f;
+    /* Cambia el color de fondo al hacer clic */
 }
 
 .success-message {
