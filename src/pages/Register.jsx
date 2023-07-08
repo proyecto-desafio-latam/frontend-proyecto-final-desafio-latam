@@ -131,20 +131,20 @@ export default function Register() {
                     }}
                 >
 
-                    {({ errors }) => (
-                        <Form className='register-form'>
-                            <div className='form-field'>
-                                <label className='form-label' htmlFor="firstName">Nombre</label>
-                                <Field
-                                    className="form-input"
-                                    type="text"
-                                    id='firstName'
-                                    name='firstName'
-                                    placeholder='Susan'
-                                />
-                                <ErrorMessage name='firstName' component={() => (
-                                    <div className='form-error'>{errors.firstName}</div>
-                                )} />
+                {({ errors }) => (
+                    <Form className='register-form'>
+                        <div className='form-field'>
+                            <label className='form-label' htmlFor="firstName">Nombre</label>
+                            <Field
+                                className="form-input"
+                                type="text"
+                                id='firstName'
+                                name='firstName'
+                                placeholder='Susan'
+                            />
+                            <ErrorMessage name='firstName' component={() => (
+                                <div className='form-error'>{errors.firstName}</div>
+                            )} />
 
                             </div>
                             <div className='form-field'>

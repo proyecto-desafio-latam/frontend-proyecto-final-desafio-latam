@@ -97,7 +97,7 @@
         "price": 11630,
         "stock": 15,
         "category": "Sagas",
-        "author": ""
+        "author": "George R. R. Martin"
     },
     {
         "id": 11,
@@ -304,7 +304,7 @@
         "title": "El exorcista",
         "image": "elexorcista.jpg",
         "description": "Una niña de doce años es poseída por una entidad demoníaca, y dos sacerdotes se enfrentan a una batalla aterradora para liberarla de la influencia del mal.",
-        "price": 16.99,
+        "price": 16990,
         "stock": 3,
         "category": "Terror",
         "author": "William Peter Blatty"
@@ -314,7 +314,7 @@
         "title": "Drácula",
         "image": "dracula.jpg",
         "description": "El icónico vampiro, el Conde Drácula, seduce y aterroriza a las personas en su búsqueda por expandir su dominio y saciar su sed de sangre.",
-        "price": 19.99,
+        "price": 9990,
         "stock": 10,
         "category": "Terror",
         "author": "Bram Stoker"
@@ -324,7 +324,7 @@
         "title": "Pet Sematary",
         "image": "petsematary.jpg",
         "description": "Una familia se muda a una casa cerca de un antiguo cementerio indio, donde descubren que los animales y las personas enterradas allí pueden volver a la vida, pero no de la misma manera.",
-        "price": 13.99,
+        "price": 13909,
         "stock": 6,
         "category": "Terror",
         "author": "Stephen King"
@@ -334,7 +334,7 @@
         "title": "Misery",
         "image": "misery.jpg",
         "description": "Un famoso escritor queda atrapado en las garras de una obsesiva y sádica fanática que lo tortura física y mentalmente para mantenerlo cautivo y continuar escribiendo para ella.",
-        "price": 21.99,
+        "price": 21990,
         "stock": 15,
         "category": "Terror",
         "author": "Stephen King"

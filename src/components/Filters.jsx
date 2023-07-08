@@ -3,14 +3,9 @@ import { useUserContext } from "../context/UserContext"
 
 
 const Filters = () => {
-    const { books } = useUserContext()
-    const [data, setData] = useState([])
-    const [value, setValue] = useState("")
-    const [selected, setSelected] = useState()
+  
     const [category, setCategory] = useState([])
     const [author, setAuthor] = useState([])
-    const [sortValue, setSortValue] = useState("");
-    const sortOptions = ["title", "author", "price"];
 
     const getCategories = async () => {
         try {
@@ -46,8 +41,8 @@ const Filters = () => {
         <div className="d-lg-flex align-items-center justify-content-between py-4 mt-lg-2">
             <h1 className="me-3">Catálogo de Libros</h1>
             <div className="d-md-flex d-xl-flex mb-3">
-                <select className="form-select me-md-4 mb-2 mb-md-0" style={{ minWidth: '240px' }}  >
-                    <option defaultValue disabled selected>Filtrar por</option>
+                <select className="form-select me-md-4 mb-2 mb-md-0" style={{ minWidth: '240px' }} defaultValue={"placeholder"}>
+                    <option value={"placeholder"} disabled>Filtrar por</option>
                     <optgroup label="Categoría" >
                         {category.map((item) => (
                             <option value={item.name} key={item.id}>
@@ -68,9 +63,10 @@ const Filters = () => {
                     <select
                         className="form-select me-md-4 mb-2 mb-md-0"
                         style={{ minWidth: '240px' }}
+                        defaultValue={"placeholder"}
                     >
 
-                        <option defaultValue disabled selected>Ordenar por</option>
+                        <option value={"placeholder"} disabled>Ordenar por</option>
                         <option value="Título">Título: A - Z</option>
                         <option value="Título">Título: Z- A</option>
                         <option value="Autor">Autor: A - Z</option>
