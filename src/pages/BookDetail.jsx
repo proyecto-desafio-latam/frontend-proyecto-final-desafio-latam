@@ -8,8 +8,6 @@ const BookDetail = () => {
     const navigate = useNavigate()
 
     console.log(books)
-    //    console.log(id)
-    //    console.log(books[id].id)
 
     return (
         <div className="container mt-5 p-5">
@@ -26,7 +24,7 @@ const BookDetail = () => {
                             <div className="col-md-8">
                                 <div className="card-body">
                                     <h5 className="fs-1">{item.title}</h5>
-                                    <p className="card-text"><b> Autor:</b> {item.author}</p>
+                                    <p className="card-text"><b> Autor:</b> {item.author.name}</p>
                                     <h4 className="card-text">
                                         <b> $ {item.price}</b>
                                     </h4>
@@ -37,7 +35,7 @@ const BookDetail = () => {
 
                                         <button className="btn btn-secondary" onClick={() =>
                                             navigate("/books")
-                                        }>Volver 🏠</button>
+                                        }>Volver 📖</button>
                                     </div>
                                 </div>
                                 <div className="accordion" id="faq">
@@ -72,7 +70,7 @@ const BookDetail = () => {
                                         </h3>
                                         <div className="accordion-collapse collapse" id="q-2" data-bs-parent="#faq">
                                             <div className="accordion-body fs-sm pt-0">
-                                                <p>{item.category}</p>
+                                                <p>{item.category.name}</p>
                                             </div>
                                         </div>
                                     </div>

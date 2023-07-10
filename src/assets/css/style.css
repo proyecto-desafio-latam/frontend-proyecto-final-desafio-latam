@@ -15941,4 +15941,27 @@ img-comparison-slider:focus {
   padding-top: 5rem;
 }
 
+.img-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-carousel {
+  width: 13rem;
+  border: 0;
+  font-weight: bold;
+  color: black;
+}
+
+.card-book {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-book-title {
+  flex-grow: 1;
+}
+
 /*# sourceMappingURL=style.css.map */
