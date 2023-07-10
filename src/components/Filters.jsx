@@ -4,12 +4,10 @@ const Filters = ({ setFilterCategory, sortCriteria, setSortCriteria }) => {
 
     const [category, setCategory] = useState([])
 
-
     const handleSortChange = (e) => {
         let value = e.target.value;
         setSortCriteria(value);
     }
-
 
     const getCategories = async () => {
         try {
@@ -25,22 +23,6 @@ const Filters = ({ setFilterCategory, sortCriteria, setSortCriteria }) => {
         getCategories();
     }, [])
 
-    const getAuthors = async () => {
-        try {
-            const response = await fetch("/authors.json")
-            if (!response.ok) throw "No se puede desplegar la información"
-            const data = await response.json()
-            setAuthor(data)
-        } catch (error) {
-            setError(error)
-        }
-    }
-
-    useEffect(() => {
-        getAuthors();
-    }, [])
-
-
     return (
         <div className="d-lg-flex align-items-center justify-content-between py-4 mt-lg-2">
             <h1 className="me-3">Catálogo de Libros</h1>
@@ -54,16 +36,7 @@ const Filters = ({ setFilterCategory, sortCriteria, setSortCriteria }) => {
                             </option>
                         ))}
                     </optgroup>
-                    {/* <optgroup label="Autor">
-                        {author.map((item) => (
-                            <option value={item.id} key={item.id}>
-                                {item.name}
-                            </option>
-                        ))}
-                    </optgroup> */}
                 </select>
-
-
                 <div className="position-relative" >
                     <select
                         className="form-select me-md-4 mb-2 mb-md-0"
@@ -72,7 +45,6 @@ const Filters = ({ setFilterCategory, sortCriteria, setSortCriteria }) => {
                         defaultValue={"placeholder"}
                         onChange={handleSortChange}
                     >
-
                         <option value={"placeholder"} disabled>Ordenar por</option>
                         <option value="title-asc">Título: A - Z</option>
                         <option value="title-desc">Título: Z- A</option>
