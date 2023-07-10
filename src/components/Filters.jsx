@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
-import { useUserContext } from "../context/UserContext"
 
+const Filters = ({ setFilterCategory, sortCriteria, setSortCriteria }) => {
 
-const Filters = () => {
-  
     const [category, setCategory] = useState([])
-    const [author, setAuthor] = useState([])
+
+
+    const handleSortChange = (e) => {
+        let value = e.target.value;
+        setSortCriteria(value);
+    }
+
 
     const getCategories = async () => {
         try {
@@ -41,38 +45,41 @@ const Filters = () => {
         <div className="d-lg-flex align-items-center justify-content-between py-4 mt-lg-2">
             <h1 className="me-3">Catálogo de Libros</h1>
             <div className="d-md-flex d-xl-flex mb-3">
-                <select className="form-select me-md-4 mb-2 mb-md-0" style={{ minWidth: '240px' }} defaultValue={"placeholder"}>
-                    <option value={"placeholder"} disabled>Filtrar por</option>
+                <select className="form-select me-md-4 mb-2 mb-md-0" style={{ minWidth: '240px' }} onChange={(e) => setFilterCategory(e.target.value)} >
+                    <option value={"all"}>Todos</option>
                     <optgroup label="Categoría" >
                         {category.map((item) => (
-                            <option value={item.name} key={item.id}>
+                            <option value={item.id} key={item.id}>
                                 {item.name}
                             </option>
                         ))}
                     </optgroup>
-                    <optgroup label="Autor">
+                    {/* <optgroup label="Autor">
                         {author.map((item) => (
-                            <option value={item.name} key={item.id}>
+                            <option value={item.id} key={item.id}>
                                 {item.name}
                             </option>
                         ))}
-                    </optgroup>
+                    </optgroup> */}
                 </select>
+
 
                 <div className="position-relative" >
                     <select
                         className="form-select me-md-4 mb-2 mb-md-0"
                         style={{ minWidth: '240px' }}
+                        value={sortCriteria}
                         defaultValue={"placeholder"}
+                        onChange={handleSortChange}
                     >
 
                         <option value={"placeholder"} disabled>Ordenar por</option>
-                        <option value="Título">Título: A - Z</option>
-                        <option value="Título">Título: Z- A</option>
-                        <option value="Autor">Autor: A - Z</option>
-                        <option value="Autor">Autor: Z- A</option>
-                        <option value="Precio">Precio: Menor a mayor</option>
-                        <option value="Precio">Precio: Mayor a menor</option>
+                        <option value="title-asc">Título: A - Z</option>
+                        <option value="title-desc">Título: Z- A</option>
+                        <option value="author-asc">Autor: A - Z</option>
+                        <option value="author-desc">Autor: Z- A</option>
+                        <option value="price-asc">Precio: Menor a mayor</option>
+                        <option value="price-desc">Precio: Mayor a menor</option>
                     </select>
                 </div>
             </div>
