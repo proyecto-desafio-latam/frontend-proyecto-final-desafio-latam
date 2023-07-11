@@ -1,7 +1,7 @@
 import { BiBadgeCheck, BiRocket } from "react-icons/bi"
+import { useUserContext } from "../context/UserContext"
 import Banners from "../components/Banners"
 import BookCarousel from "../components/BookCarousel"
-import { useUserContext } from "../context/UserContext"
 
 const Home = () => {
     const { books } = useUserContext()

@@ -79,6 +79,7 @@ const BookCarousel = ({ books, color }) => {
               <img className=" img-carousel"
                 src={item.image}
                 alt=""
+                style={{ cursor: 'pointer' }}
                 onClick={() =>
                   navigate(`/books/${item.id}`)}
               />
