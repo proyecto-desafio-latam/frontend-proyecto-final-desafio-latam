@@ -14,10 +14,10 @@ const Home = () => {
                 <hr />
                 <BookCarousel books={books.slice(45, 55)} color={`bg-danger`} />
             </div>
-            <div className="pt-5">
+            <div className="pt-3 pb-5 mb-5">
                 <h3 className="mt-5"> <BiRocket style={{ color: 'darkgreen', fontSize: '50px' }} /> No te pierdas </h3>
                 <hr />
-                <BookCarousel books={books.slice(24, 34)}  color={`bg-success`} />
+                <BookCarousel books={books.slice(24, 34)}  color={`bg-success`}/>
             </div>
         </div>
     )
