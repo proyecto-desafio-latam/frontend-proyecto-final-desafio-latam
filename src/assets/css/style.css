@@ -15932,6 +15932,10 @@ img-comparison-slider:focus {
   background: linear-gradient(to right, rgba(255, 255, 255, 0.55) var(--buffered-width), rgba(255, 255, 255, 0.3) var(--buffered-width));
 }
 
+.btn-font {
+  font-size: 13.5px;
+}
+
 .img-container {
   display: flex;
   align-items: center;
