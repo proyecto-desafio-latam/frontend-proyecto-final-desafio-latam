@@ -53,8 +53,11 @@ const Books = () => {
                     ))}
                 </div>
                 <Paginate
-                    previousLabel={"anterior"}
-                    nextLabel={"siguiente"}
+                    breakLabel="..."
+                    pageRangeDisplayed={1}
+                    marginPagesDisplayed={1}
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
                     pageCount={Math.ceil(sortedBooks.length / booksPerPage)}
                     onPageChange={({ selected }) => {
                         setCurrentPage(selected + 1);

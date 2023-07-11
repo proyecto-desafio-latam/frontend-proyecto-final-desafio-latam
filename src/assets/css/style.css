@@ -16001,4 +16001,11 @@ img-comparison-slider:focus {
   display: none !important;
 }
 
+@media screen and (max-width: 600px) {
+  .pagination .page-num {
+    margin: 0 2px;
+    font-size: 1rem;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */
