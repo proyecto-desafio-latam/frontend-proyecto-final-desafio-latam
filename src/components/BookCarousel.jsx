@@ -3,10 +3,10 @@ import Carousel from "react-multi-carousel"
 import { useNavigate } from "react-router-dom"
 import { useUserContext } from "../context/UserContext"
 
-const BookCarousel = () => {
+const BookCarousel = ({ books, color }) => {
 
-  const { books } = useUserContext()
   const navigate = useNavigate()
+  const {FormatCoin} = useUserContext()
 
   return (
     <div className="container mt-5">
@@ -53,7 +53,7 @@ const BookCarousel = () => {
             items: 2,
             partialVisibilityGutter: 30
           },
-          tablet: {
+          laptop: {
             breakpoint: {
               max: 1024,
               min: 768
@@ -72,11 +72,12 @@ const BookCarousel = () => {
         swipeable
       >
         {books &&
-          books.slice(24, 56).map((item) => (
+          books.map((item) => (
             <div key={item.id} className="card card-carousel" >
-              <span className="badge bg-danger position-absolute top-0 end-0 zindex-2 mt-3 ms-3"> ${item.price}</span>
+              <span className={`badge ${color} position-absolute top-0 end-0 zindex-2 mt-3 ms-3`}
+              > {FormatCoin(item.price)}</span>
               <img className=" img-carousel"
-                src="/libroprueba.webp"
+                src={item.image}
                 alt=""
                 onClick={() =>
                   navigate(`/books/${item.id}`)}

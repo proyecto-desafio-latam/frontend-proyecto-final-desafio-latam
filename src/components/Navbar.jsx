@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <header
@@ -22,7 +24,7 @@ const Navbar = () => {
           <div className="nav dropdown d-block order-lg-3 ms-4">
             <a
               href="#"
-              className="d-flex nav-link p-0"
+              className="d-flex nav-link me-2"
               data-bs-toggle="dropdown"
             >
               <img
@@ -45,8 +47,10 @@ const Navbar = () => {
                   href="/user/cart"
                   className="dropdown-item d-flex align-items-center"
                 >
-                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2"></i>
-                  Carrito
+                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
+                    Carrito
+                  </i>
+
                   <span
                     className="bg-success rounded-circle mt-n2 ms-1"
                     style={{ width: "5px", height: "5px" }}
@@ -60,7 +64,7 @@ const Navbar = () => {
                   className="dropdown-item d-flex align-items-center"
                 >
                   <i
-                    className="bx bx-dollar fs-base opacity-60 me-2
+                    className="bx bx-shopping-bag fsbase opacity-60 me-2
                             "
                   >
                     Perfil
@@ -69,7 +73,10 @@ const Navbar = () => {
               </li>
               <li>
                 <a href="#" className="dropdown-item d-flex align-items-center">
-                  <i className="bx bx-chat fs-base opacity-60 me-2"></i>Mensajes
+                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
+                    Mensajes
+                  </i>
+
                   <span
                     className="bg-success rounded-circle mt-n2 ms-1"
                     style={{ width: "5px", height: "5px" }}
@@ -78,23 +85,34 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href="/user/allcarts" className="dopdown-item d-flex align-items-center">
-                  <i className="bx bx-group fs-base opacity-60 me-2 text-muted"></i>
-                  Historial de Compras
-                  <span className="ms-auto fs-xs">(5)</span>
+                <a
+                  href="/user/allcarts"
+                  className="dropdown-item d-flex align-items-center"
+                >
+                  <i className=" bx bx-shopping-bag fsbase opacity-60 me-2">
+                    Historial de Compras
+                  </i>
+                  <span className="ms-auto fs-xs text-muted">5</span>
                 </a>
               </li>
               <li>
                 <a href="#" className="dropdown-item d-flex align-items-center">
-                  <i className="bx bx-star fs-base opacity-60 me-2"></i>
-                  Calificaciones
+                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
+                    Calificaciones
+                  </i>
+
                   <span className="ms-auto fs-xs text-muted">15</span>
                 </a>
               </li>
               <li>
-                <a href="/user/favorites" className="dropdown-item d-flex align-items-center">
-                  <i className="bx bx-star fs-base opacity-60 me-2"></i>
-                  Favoritos
+                <a
+                  href="/user/favorites"
+                  className="dropdown-item d-flex align-items-center"
+                >
+                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
+                    Favoritos
+                  </i>
+
                   <span className="ms-auto fs-xs text-muted">10</span>
                 </a>
               </li>
@@ -114,34 +132,34 @@ const Navbar = () => {
             <hr className="d-lg-none mt-3 mb-2" />
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <a href="#" className="nav-link active">
+                <NavLink to="/" className="nav-link ">
                   Home
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a href="/books" className="nav-link ">
+                <NavLink to="/books" className="nav-link ">
                   Libros
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a href="/login" className="nav-link ">
+                <NavLink to="/login" className="nav-link ">
                   Ingresar
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a href="/register" className="nav-link ">
+                <NavLink to="/register" className="nav-link ">
                   Registrarse
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-link ">
+                <NavLink to="/about" className="nav-link ">
                   Acerca de...
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-link ">
-                  Contactos
-                </a>
+                <NavLink to="/contact" className="nav-link ">
+                  Contacto
+                </NavLink>
               </li>
             </ul>
           </nav>

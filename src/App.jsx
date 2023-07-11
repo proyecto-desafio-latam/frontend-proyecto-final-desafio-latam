@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 import BookDetail from "./pages/BookDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
+import Favorites from "./pages/Favorites";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -18,8 +19,10 @@ export default function App() {
           <Route path="/Register" element={<Register />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/:id" element={<BookDetail />} />
+          <Route path="/user/favorites" element={<Favorites />} />
         </Routes>
       </main>
+      <Footer></Footer>
     </>
   );
 }
