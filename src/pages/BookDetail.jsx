@@ -4,7 +4,7 @@ import { useUserContext } from "../context/UserContext"
 const BookDetail = () => {
 
     const { id } = useParams()
-    const { books } = useUserContext()
+    const { books, FormatCoin } = useUserContext()
     const navigate = useNavigate()
 
     console.log(books)
@@ -18,7 +18,7 @@ const BookDetail = () => {
                         <div className="row g-0">
                             <div className="col-md-4 ">
                                 <div className="img-container">
-                                <img src="/libroprueba.webp" className="img-fluid rounded-start h-100" alt="..." />
+                                <img src={item.image} className="img-fluid rounded-start h-100" alt="..." />
                                 </div>
                             </div>
                             <div className="col-md-8">
@@ -26,7 +26,7 @@ const BookDetail = () => {
                                     <h5 className="fs-1">{item.title}</h5>
                                     <p className="card-text"><b> Autor:</b> {item.author.name}</p>
                                     <h4 className="card-text">
-                                        <b> $ {item.price}</b>
+                                        <b> {FormatCoin(item.price)}</b>
                                     </h4>
                                     <p>Stock Disponible: {item.stock}</p>
                                     <div className="d-flex justify-content-end gap-3">

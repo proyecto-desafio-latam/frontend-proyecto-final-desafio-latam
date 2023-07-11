@@ -6,6 +6,9 @@ export default function UserContextProvider({ children }) {
     const [books, setBooks] = useState([])
     const [error, setError] = useState()
 
+    const FormatCoin = (number) => 
+    ( new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(number))
+
     const getData = async () => {
         try {
             const response = await fetch("/inventory.json")
@@ -21,7 +24,7 @@ export default function UserContextProvider({ children }) {
     }, [])
 
     return(
-        <UserContext.Provider value={{books, setBooks, error, setError}}>
+        <UserContext.Provider value={{books, setBooks, error, setError, FormatCoin}}>
             {children}
         </UserContext.Provider>
     )
