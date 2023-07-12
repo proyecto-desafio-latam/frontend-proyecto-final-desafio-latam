@@ -1,4 +1,5 @@
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
 import Books from "./pages/Books";
 import Home from "./pages/Home";
@@ -6,7 +7,8 @@ import BookDetail from "./pages/BookDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Favorites from "./pages/Favorites";
-import Footer from "./components/Footer";
+
+import Cart from "./pages/Cart";
 
 export default function App() {
   return (
@@ -20,6 +22,7 @@ export default function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/books/:id" element={<BookDetail />} />
           <Route path="/user/favorites" element={<Favorites />} />
+          <Route path="/user/cart" element={<Cart />} />
         </Routes>
       </main>
       <Footer></Footer>
