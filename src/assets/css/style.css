@@ -15932,6 +15932,10 @@ img-comparison-slider:focus {
   background: linear-gradient(to right, rgba(255, 255, 255, 0.55) var(--buffered-width), rgba(255, 255, 255, 0.3) var(--buffered-width));
 }
 
+.btn-font {
+  font-size: 13.5px;
+}
+
 .img-container {
   display: flex;
   align-items: center;
@@ -15967,6 +15971,45 @@ img-comparison-slider:focus {
 
 .img-carousel {
   height: 290px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 3rem;
+  font-size: 1.2rem;
+  gap: 5px;
+}
+
+.pagination .page-num {
+  padding: 8px 15px;
+  border-radius: 3px;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #6366f1;
+  color: white;
+}
+
+.pagination .page-num:hover {
+  background-color: darkblue;
+  color: #fff;
+}
+
+.pagination .active a {
+  color: white;
+  background-color: darkblue;
+}
+
+.hide-link {
+  display: none !important;
+}
+
+@media screen and (max-width: 600px) {
+  .pagination .page-num {
+    margin: 0 2px;
+    font-size: 1rem;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

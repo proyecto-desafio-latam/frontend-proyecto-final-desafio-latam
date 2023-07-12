@@ -30,10 +30,10 @@ const BookDetail = () => {
                                     </h4>
                                     <p>Stock Disponible: {item.stock}</p>
                                     <div className="d-flex justify-content-end gap-3">
-                                        <button className="btn btn-primary" 
+                                        <button className="btn btn-sm btn-primary btn-font"
                                         >Añadir 🛒</button>
 
-                                        <button className="btn btn-secondary" onClick={() =>
+                                        <button className="btn btn-sm btn-secondary btn-font" onClick={() =>
                                             navigate("/books")
                                         }>Volver 📖</button>
                                     </div>

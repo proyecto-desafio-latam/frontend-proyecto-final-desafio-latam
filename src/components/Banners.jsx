@@ -9,16 +9,16 @@ const Banners = () => {
       </div>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src="/banner4.png" className="d-block w-100" alt="..." />
+          <img src="/banners/banner2.png" className="d-block w-100" alt="..." />
         </div>
         <div className="carousel-item">
-          <img src="/banner1.png" className="d-block w-100" alt="..." />
+          <img src="/banners/banner1.png" className="d-block w-100" alt="..." />
         </div>
         <div className="carousel-item">
-          <img src="/banner2.png" className="d-block w-100" alt="..." />
+          <img src="/banners/banner3.png" className="d-block w-100" alt="..." />
         </div>
         <div className="carousel-item">
-          <img src="/banner3.png" className="d-block w-100" alt="..." />
+          <img src="/banners/banner4.png" className="d-block w-100" alt="..." />
         </div>
       </div>
       <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
