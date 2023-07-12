@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Favorites from "./pages/Favorites";
 import Footer from "./components/Footer";
+import User from "./pages/User";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/books" element={<Books />} />
+          <Route path="/user" element={<User />} />
           <Route path="/books/:id" element={<BookDetail />} />
           <Route path="/user/favorites" element={<Favorites />} />
         </Routes>
