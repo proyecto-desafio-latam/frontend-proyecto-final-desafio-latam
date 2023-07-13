@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 const User = () => {
   return (
     <>
-      <div className="container-fluid user-table mt-5 pt-5">
+      <div className="container-fluid user-table my-5 p-5">
         <div className=" d-flex flex-column">
           <div className="d-flex align-items-center justify-content-center me-5">
             <Avatar
@@ -42,7 +42,7 @@ const User = () => {
                 />
                 <TextField
                   id="outlined-read-only-input"
-                  label="Usuario"
+                  label="Nombre de Usuario"
                   defaultValue="mcuadrose"
                   InputProps={{
                     readOnly: true,
