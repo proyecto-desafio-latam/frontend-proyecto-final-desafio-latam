@@ -1,13 +1,25 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useUserContext } from "../context/UserContext"
+import Heart from "../components/Heart"
+import { useState } from "react"
 
 const BookDetail = () => {
 
     const { id } = useParams()
     const { books, FormatCoin } = useUserContext()
     const navigate = useNavigate()
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [favorites, setFavorites] = useState([]);
+    const accessToken = localStorage.getItem('accessToken');
 
-    console.log(books)
+    const handleFavoriteClick = () => {
+        setIsFavorite(!isFavorite);
+        if (!isFavorite) {
+            setFavorites([...favorites, id]);
+        } else {
+            setFavorites(favorites.filter((favorite) => favorite !== id));
+        }
+    };
 
     return (
         <div className="container mt-5 p-5">
@@ -16,9 +28,10 @@ const BookDetail = () => {
                 .map((item) => (
                     <div className="card mb-3 mt-5" key={item.id}>
                         <div className="row g-0">
-                            <div className="col-md-4 ">
+                            <div className="col-md-4 position ">
                                 <div className="img-container">
-                                <img src={item.image} className="img-fluid rounded-start h-100" alt="..." />
+                                    <img src={item.image} className="img-fluid rounded-start h-100" alt="..." />
+                                    {accessToken &&  <Heart className="icon" filled={isFavorite} onClick={handleFavoriteClick} />}
                                 </div>
                             </div>
                             <div className="col-md-8">
