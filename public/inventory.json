@@ -67,7 +67,7 @@
         "id": 5,
         "title": "Harry Potter y la Orden del Fénix",
         "image": "/books-img/hp5.jpg",
-        "description": "napolitana",
+        "description": "Las tediosas vacaciones de verano en casa de sus tíos toda vía no han acabado y Harry se encuentra más inquieto que nunca. Apenas ha tenido noticias de Ron y Hermione, y presiente que algo extraño está sucediendo en Hogwarts. En efecto, cuando por fin comienza otro curso en el famoso colegio d e magia y hechicería, sus temores se vuelven realidad. El Ministerio de Magia niega que Voldemort haya regresado y ha iniciado una campaña de desprestigio contra Harry y Dumbledore, para lo cual ha asignado a la horrible profesora Dolores Umbridge la tarea de vigilar todos sus movimientos. Así pues, además de sentirse solo e incomprendido, Harry sospecha que Voldemort puede adivinar sus pensamientos, e intuye que el temible mago trata de apoderarse de un objeto secreto que le permitiría recuperar su poder destructivo.",
         "price": 28490,
         "stock": 23,
         "category": {
@@ -851,7 +851,7 @@
         "id": 55,
         "title": "El Coronel no tiene a quien le escriba",
         "image": "/books-img/elcoronel.jpg",
-        "description": "napolitanaTras el barroquismo faulkneriano de La hojarasca, esta segunda novela supone un paso hacia la ascesis, hacia la economía expresiva, y el estilo del escritor se hace más puro y transparente. Se trata también de una historia de injusticia y violencia: un viejo coronel retirado va al puerto todos los viernes a esperar la llegada de la carta oficial que responda a la justa reclamación de sus derechos por los servicios prestados a la patria. Pero la patria permanece muda.",
+        "description": "Tras el barroquismo faulkneriano de La hojarasca, esta segunda novela supone un paso hacia la ascesis, hacia la economía expresiva, y el estilo del escritor se hace más puro y transparente. Se trata también de una historia de injusticia y violencia: un viejo coronel retirado va al puerto todos los viernes a esperar la llegada de la carta oficial que responda a la justa reclamación de sus derechos por los servicios prestados a la patria. Pero la patria permanece muda.",
         "price": 20000,
         "stock": 15,
         "category": {
