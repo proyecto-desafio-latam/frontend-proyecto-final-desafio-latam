@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-export const UserContext = createContext()
+export const BookContext = createContext()
 
-export default function UserContextProvider({ children }) {
+export default function BookContextProvider({ children }) {
     const [books, setBooks] = useState([])
     const [error, setError] = useState()
 
@@ -24,10 +24,10 @@ export default function UserContextProvider({ children }) {
     }, [])
 
     return(
-        <UserContext.Provider value={{books, setBooks, error, setError, FormatCoin}}>
+        <BookContext.Provider value={{books, setBooks, error, setError, FormatCoin}}>
             {children}
-        </UserContext.Provider>
+        </BookContext.Provider>
     )
 }
 
-export const useUserContext = () => useContext(UserContext);
+export const useBookContext = () => useContext(BookContext);
