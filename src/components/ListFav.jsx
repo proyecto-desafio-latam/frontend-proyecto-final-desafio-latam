@@ -1,7 +1,7 @@
 const ListFav = () => {
   return (
     <>
-      <div className="container-fluid mt-5 pt-5">
+      <div className="container-fluid m-5 pt-5 vh-50">
         <h2>Listado de Libros Favoritos:</h2>
         <div className="container-fluid border d-flex ">
           <table className="align-items-between p-3 w-100">
