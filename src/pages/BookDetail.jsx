@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useBookContext } from "../context/BookContext"
 import Heart from "../components/Heart"
 import { useState } from "react"
+import { useAuthContext } from "../context/AuthContext"
 
 const BookDetail = () => {
 
@@ -10,7 +11,7 @@ const BookDetail = () => {
     const navigate = useNavigate()
     const [isFavorite, setIsFavorite] = useState(false);
     const [favorites, setFavorites] = useState([]);
-    const accessToken = localStorage.getItem('accessToken');
+    const { user } = useAuthContext()
 
     const handleFavoriteClick = () => {
         setIsFavorite(!isFavorite);
@@ -31,7 +32,7 @@ const BookDetail = () => {
                             <div className="col-md-4 position ">
                                 <div className="img-container">
                                     <img src={item.image} className="img-fluid rounded-start h-100" alt="..." />
-                                    {accessToken &&  <Heart className="icon" filled={isFavorite} onClick={handleFavoriteClick} />}
+                                    {user && <Heart className="icon" filled={isFavorite} onClick={handleFavoriteClick} />}
                                 </div>
                             </div>
                             <div className="col-md-8">
@@ -43,7 +44,7 @@ const BookDetail = () => {
                                     </h4>
                                     <p>Stock Disponible: {item.stock}</p>
                                     <div className="d-flex justify-content-end gap-3">
-                                    {accessToken && <button className="btn btn-sm btn-primary btn-font"
+                                        {user && <button className="btn btn-sm btn-primary btn-font"
                                         >Añadir 🛒</button>}
                                         <button className="btn btn-sm btn-secondary btn-font" onClick={() =>
                                             navigate("/books")
