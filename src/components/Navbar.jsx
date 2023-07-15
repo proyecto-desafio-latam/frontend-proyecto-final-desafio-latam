@@ -9,7 +9,7 @@ const Navbar = () => {
       <div className="container-fluid pe-lg-4">
         <div className="d-flex align-items-around w-100">
           <a href="/" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
-            <img src="../public/ejemplo-logo.jpg" width="47" alt="Logo" />
+            <img src="../ejemplo-logo.jpg" width="47" alt="Logo" />
             Libros
           </a>
           <button
@@ -130,7 +130,7 @@ const Navbar = () => {
             id="navbarCollapse5"
           >
             <hr className="d-lg-none mt-3 mb-2" />
-            <ul className="navbar-nav me-auto">
+            <ul className="navbar-nav me-auto fs-6">
               <li className="nav-item">
                 <NavLink to="/" className="nav-link ">
                   Home
