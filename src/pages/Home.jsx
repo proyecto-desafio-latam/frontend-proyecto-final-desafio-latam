@@ -1,10 +1,10 @@
 import { BiBadgeCheck, BiRocket } from "react-icons/bi"
 import Banners from "../components/Banners"
 import BookCarousel from "../components/BookCarousel"
-import { useUserContext } from "../context/UserContext"
+import { useBookContext } from "../context/BookContext"
 
 const Home = () => {
-    const { books } = useUserContext()
+    const { books } = useBookContext()
     return (
         <div className="container mt-5 pt-5">
             <h1 className="text-center pt-5">Título</h1>
