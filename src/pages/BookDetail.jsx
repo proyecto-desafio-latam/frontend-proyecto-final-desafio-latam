@@ -3,11 +3,13 @@ import { useBookContext } from "../context/BookContext"
 import Heart from "../components/Heart"
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../context/AuthContext"
+import { useCartContext } from "../context/CartContext"
 
 const BookDetail = () => {
 
     const { id } = useParams()
     const { books, FormatCoin } = useBookContext()
+    const { addToCart } = useCartContext()
     const navigate = useNavigate()
     const [isFavorite, setIsFavorite] = useState(false);
      const { user, favorites, setFavorites } = useAuthContext()
@@ -45,6 +47,11 @@ const BookDetail = () => {
     };
     console.log(favorites)
 
+    // push the book into the cart
+    const handleAddToCart = (bookDetailed) => {
+        addToCart(bookDetailed)
+    }
+
     return (
         <div className="container mt-5 p-5">
 
@@ -67,7 +74,7 @@ const BookDetail = () => {
                                     </h4>
                                     <p>Stock Disponible: {item.stock}</p>
                                     <div className="d-flex justify-content-end gap-3">
-                                        {user && <button className="btn btn-sm btn-primary btn-font"
+                                        {user && <button onClick={()=>handleAddToCart(item)} className="btn btn-sm btn-primary btn-font"
                                         >Añadir 🛒</button>}
                                         <button className="btn btn-sm btn-secondary btn-font" onClick={() =>
                                             navigate("/books")

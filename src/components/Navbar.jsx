@@ -1,14 +1,29 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { useState } from "react";
+import { useCartContext } from "../context/CartContext";
 
 const Navbar = () => {
 
   const { user, logout } = useAuthContext()
-  const [showDropdown, setShowDropdown] = useState(false);
+
+  const { cart } = useCartContext();
+  const calculateTotalQuantity = () => {
+    let totalQuantity = 0;
+
+    cart.forEach((item) => {
+      totalQuantity += item.quantity;
+    });
+
+    return totalQuantity;
+  }
+
+  const totalQuantityCart = calculateTotalQuantity();
 
   return (
-    <nav className="navbar navbar-expand-lg bg-light border-bottom border-light shadow fixed-top" data-scroll-header>
+    <header
+      className="header navbar navbar-expand bg-light border-bottom border-light shadow fixed-top"
+      data-scroll-header
+    >
       <div className="container-fluid pe-lg-4">
         <div className="d-flex align-items-around w-100">
           <a href="/" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
@@ -19,7 +34,7 @@ const Navbar = () => {
             className="navbar-toggler ms-auto"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
+            data-bs-target="#navbarCollapse5"
             aria-expanded="false"
           >
             <span className="navbar-toggler-icon"></span>
@@ -28,10 +43,7 @@ const Navbar = () => {
             <a
               href="#"
               className="d-flex nav-link me-2"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarCollapse"
-              aria-expanded="false"
-              onClick={() => setShowDropdown(!showDropdown)}
+              data-bs-toggle="dropdown"
             >
               <img
                 src="../avatar.png"
@@ -45,25 +57,18 @@ const Navbar = () => {
               </div>
             </a>
             <ul
-              className={`dropdown-menu dropdown-menu-end my-1 ${showDropdown ? "show" : ""}`}
+              className="dropdown-menu dropdown-menu-end my-1"
               style={{ width: "14rem" }}
             >
-              <li>
-                <a
-                  href="/user/cart"
-                  className="dropdown-item d-flex align-items-center"
-                >
-                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
-                    Carrito
-                  </i>
 
-                  <span
-                    className="bg-success rounded-circle mt-n2 ms-1"
-                    style={{ width: "5px", height: "5px" }}
-                  ></span>
-                  <span className="ms-auto fs-xs text-muted">2</span>
-                </a>
+              <li>
+                <Link to="/cart" className="dropdown-item d-flex align-items-center">
+                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">Carrito</i>
+                  <span className="bg-success rounded-circle mt-n2 ms-1" style={{ width: "5px", height: "5px" }}></span>
+                  <span className="ms-auto fs-xs text-muted">{totalQuantityCart}</span>
+                </Link>
               </li>
+
               <li>
                 <a
                   href="/user"
@@ -111,14 +116,18 @@ const Navbar = () => {
               </li>
               <li className="dropdown-divider"></li>
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center"  onClick={logout}>
+                <a href="#" className="dropdown-item d-flex align-items-center" onClick={logout}>
                   <i className="bx bx-star fs-base opacity-60 me-2"></i>
                   Logout
                 </a>
               </li>
             </ul>
-          </div> }
-          <div className="collapse navbar-collapse order-lg-2" id="navbarCollapse">
+          </div>}
+
+          <nav
+            className="collapse navbar-collapse order-lg-2"
+            id="navbarCollapse5"
+          >
             <hr className="d-lg-none mt-3 mb-2" />
             <ul className="navbar-nav me-auto fs-6">
               <li className="nav-item">
@@ -132,18 +141,14 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                {!user && (
-                  <NavLink to="/login" className="nav-link ">
-                    Ingresar
-                  </NavLink>
-                )}
+                {!user && <NavLink to="/login" className="nav-link ">
+                  Ingresar
+                </NavLink>}
               </li>
               <li className="nav-item">
-                {!user && (
-                  <NavLink to="/register" className="nav-link ">
-                    Registrarse
-                  </NavLink>
-                )}
+                {!user && <NavLink to="/register" className="nav-link ">
+                  Registrarse
+                </NavLink>}
               </li>
               <li className="nav-item">
                 <NavLink to="/about" className="nav-link ">
@@ -151,11 +156,10 @@ const Navbar = () => {
                 </NavLink>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
       </div>
-    </nav>
-
+    </header>
   );
 };
 

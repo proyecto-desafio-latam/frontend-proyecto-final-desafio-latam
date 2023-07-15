@@ -13,11 +13,12 @@ import Favorites from "./pages/Favorites";
 import User from "./pages/User";
 import About from "./pages/About";
 import Addresses from "./pages/Addresses";
+import Cart from "./pages/Cart";
 
 
 export default function App() {
 
-  const {user} = useAuthContext()
+  const { user } = useAuthContext()
   if (user === null) return <div>Loading...</div>;
 
   return (
@@ -31,9 +32,10 @@ export default function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/books/:id" element={<BookDetail />} />
           <Route path="/about" element={<About />} />
-          <Route path="/user" element={ user ? <User/> : <Navigate to="/login"/>} />
+          <Route path="/user" element={user ? <User /> : <Navigate to="/login" />} />
           <Route path="/user/favorites" element={user ? <Favorites /> : <Navigate to="/login" />} />
-          <Route path="/user/addresses" element={user ? <Addresses /> : <Navigate to="/login"/>} />
+          <Route path="/user/addresses" element={user ? <Addresses /> : <Navigate to="/login" />} />
+          <Route path="/cart" element={user ? <Cart /> : <Navigate to="/login" />} />
         </Routes>
       </main>
       <Footer></Footer>
