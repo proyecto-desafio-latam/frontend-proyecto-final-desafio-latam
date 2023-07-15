@@ -1,28 +1,38 @@
+import { BiSolidHeart } from "react-icons/bi";
+import { useAuthContext } from "../context/AuthContext";
+import { useBookContext } from "../context/BookContext";
+
 const ListFav = () => {
+
+  const { favorites } = useAuthContext() 
+  const { books } = useBookContext()
+ 
   return (
     <>
-      <div className="container-fluid m-5 pt-5 vh-50">
-        <h2>Listado de Libros Favoritos:</h2>
-        <div className="container-fluid border d-flex ">
-          <table className="align-items-between p-3 w-100">
+      <div className="container  m-5 pt-5 vh-50">
+        <h2 className="text-center pt-3"> <BiSolidHeart style={{ color: 'red' }} /> Mis Libros Favoritos <BiSolidHeart style={{ color: 'red' }} /> </h2>
+        <div className="container-fluid border d-flex mt-5 pb-5 mb-5 ">
+          <table className="align-items-between p-3 w-100 ">
             <thead>
-              <th>#</th>
-              <th>Título</th>
-              <th>Autor</th>
-              <th>Categoría</th>
-              <th>Año</th>
-              <th>Editorial</th>
+              <tr>
+                <th>#ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Categoría</th>
+              </tr>
             </thead>
             <tbody>
-                {/* a iterar */}
-              <tr>
-                <td>1</td>
-                <td>La Piedra Filosofal</td>
-                <td>J.K Rowling</td>
-                <td>Novela</td>
-                <td>1990</td>
-                <td>Planeta</td>
-              </tr>
+                {favorites.map((id) => {
+                 const book = books.find(book => book.id == id);
+                  return (
+                    <tr key={id}>
+                      <td>{book.id}</td>
+                      <td>{book.title}</td>
+                      <td>{book.author.name}</td>
+                      <td>{book.category.name}</td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>

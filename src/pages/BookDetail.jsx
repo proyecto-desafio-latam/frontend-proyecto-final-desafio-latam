@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useBookContext } from "../context/BookContext"
 import Heart from "../components/Heart"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuthContext } from "../context/AuthContext"
 
 const BookDetail = () => {
@@ -10,17 +10,40 @@ const BookDetail = () => {
     const { books, FormatCoin } = useBookContext()
     const navigate = useNavigate()
     const [isFavorite, setIsFavorite] = useState(false);
-    const [favorites, setFavorites] = useState([]);
-    const { user } = useAuthContext()
+     const { user, favorites, setFavorites } = useAuthContext()
+
+    // const handleFavoriteClick = () => {
+    //     setIsFavorite(!isFavorite);
+    //     if (!isFavorite) {
+    //         setFavorites([...favorites, id]);
+    //     } else {
+    //         setFavorites(favorites.filter((favorite) => favorite !== id));
+    //     }
+    //     console.log(favorites)
+    // };
+    useEffect(() => {
+        if (favorites.find((fav) => fav == id)){
+            setIsFavorite(true);
+        }
+        if (isFavorite) {
+            setFavorites((prevState) => {
+                const newFavorites = [...prevState, id];
+                localStorage.setItem('favorites', JSON.stringify(newFavorites)); 
+                return newFavorites;
+            });
+        } else {
+            setFavorites((prevState) => {
+                const newFavorites = prevState.filter((favorite) => favorite !== id);
+                localStorage.setItem('favorites', JSON.stringify(newFavorites));
+                return newFavorites;
+            });
+        }
+    }, [isFavorite, id]);
 
     const handleFavoriteClick = () => {
         setIsFavorite(!isFavorite);
-        if (!isFavorite) {
-            setFavorites([...favorites, id]);
-        } else {
-            setFavorites(favorites.filter((favorite) => favorite !== id));
-        }
     };
+    console.log(favorites)
 
     return (
         <div className="container mt-5 p-5">
