@@ -130,7 +130,7 @@ const Navbar = () => {
             id="navbarCollapse5"
           >
             <hr className="d-lg-none mt-3 mb-2" />
-            <ul className="navbar-nav me-auto">
+            <ul className="navbar-nav me-auto fs-6">
               <li className="nav-item">
                 <NavLink to="/" className="nav-link ">
                   Home
