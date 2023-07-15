@@ -54,12 +54,12 @@ const Cart = () => {
 
         <div className='cart-favorites-wrapper'>
             {/* cart */}
-            <main class="cart-container">
+            <main className="cart-container">
                 <div className='title-container'>
                     <h2>Carro 🛒</h2>
                 </div>
                 <hr />
-                <div class="table">
+                <div className="table">
                     {/* <div className='product-container'>
                         <div className='description-container'>img product</div>
                         <div className='description-container'>Nombre Producto</div>
@@ -110,7 +110,7 @@ const Cart = () => {
 
             </main>
             {/* favorites */}
-            <aside class="favorites-container">
+            <aside className="favorites-container">
                 <div className='title-container'>
                     <h2>Favoritos ❤️</h2>
                 </div>
