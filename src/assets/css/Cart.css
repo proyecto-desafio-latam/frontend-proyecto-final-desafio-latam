@@ -52,11 +52,123 @@ h6 {
     margin-bottom: 50px;
 }
 
+/****************************************************************/
+
+.table {
+    display: flex;
+    flex-direction: column;
+}
+
+.table .row {
+    display: flex;
+    flex-direction: row;
+    height: 10vh;
+    align-content: center;
+    /* border: solid black 1px; */
+}
+
+.row .id-img {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center
+}
+
+.img-product {
+    display:flex;
+    height: 12vh;
+}
+
+.row .name-product {
+    flex: 4;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.row .price-total {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center
+}
+
+.row .quantity-selector {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center
+}
+
+.row .delete-product {
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 .products-container {
     display: flex;
     flex-direction: column;
-    /* height: 60%; */
+
     width: 100%;
+}
+
+.products-container .row {
+    display: flex;
+}
+
+.row .image-product,
+.row .image-product,
+.row .image-product,
+.row .image-product,
+.row .image-product
+{
+flex: 2;
 }
 
 .product-container {
@@ -75,7 +187,7 @@ h6 {
 .description-container {
     display: flex;
     align-items: center;
-}
+} */
 
 .title-container {
     display: flex;

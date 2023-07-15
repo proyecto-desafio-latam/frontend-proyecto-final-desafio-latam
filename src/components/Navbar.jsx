@@ -1,6 +1,29 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { useCartContext } from "../context/CartContext";
 
+
+
+
+// const navigate = useNavigate();
+// console.log('Vengo de Nav');
+// console.log(cart);
 const Navbar = () => {
+
+  const { cart } = useCartContext();
+  const calculateTotalQuantity = () => {
+    let totalQuantity = 0;
+
+    cart.forEach((item) => {
+      totalQuantity += item.quantity;
+    });
+
+    return totalQuantity;
+  }
+
+  const totalQuantityCart = calculateTotalQuantity();
+
+
   return (
     <header
       className="header navbar navbar-expand bg-light border-bottom border-light shadow fixed-top"
@@ -43,10 +66,13 @@ const Navbar = () => {
               style={{ width: "14rem" }}
             >
               <li>
-                <a
-                  href="/user/cart"
-                  className="dropdown-item d-flex align-items-center"
-                >
+                <Link to="/user/cart" className="dropdown-item d-flex align-items-center">
+                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">Carrito</i>
+                  <span className="bg-success rounded-circle mt-n2 ms-1" style={{ width: "5px", height: "5px" }}></span>
+                  <span className="ms-auto fs-xs text-muted">{totalQuantityCart}</span>
+                </Link>
+
+                {/* <a href="/user/cart" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
                     Carrito
                   </i>
@@ -56,7 +82,7 @@ const Navbar = () => {
                     style={{ width: "5px", height: "5px" }}
                   ></span>
                   <span className="ms-auto fs-xs text-muted">2</span>
-                </a>
+                </a> */}
               </li>
               <li>
                 <a

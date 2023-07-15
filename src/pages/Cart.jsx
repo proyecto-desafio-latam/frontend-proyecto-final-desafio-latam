@@ -1,30 +1,57 @@
 import '../assets/css/Cart.css'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { useUserContext } from '../context/UserContext';
+import { useCartContext } from '../context/CartContext';
 
 const Cart = () => {
-    // const [products, setProducts] = useState([]);
 
-    // const incrementCount = (index) => {
-    //     const updatedProducts = [...products];
-    //     updatedProducts[index].count += 1;
-    //     setProducts(updatedProducts);
-    // };
 
-    // const decrementCount = (index) => {
-    //     const updatedProducts = [...products];
-    //     if (updatedProducts[index].count > 0) {
-    //         updatedProducts[index].count -= 1;
-    //     }
-    //     setProducts(updatedProducts);
-    // };
+    // const { books } = useUserContext();
 
-    // const addToCart = () => {
-    //     const newProduct = {
-    //         name: `Product ${products.length + 1}`,
-    //         count: 0,
-    //     };
-    //     setProducts([...products, newProduct]);
-    // };
+
+    const { cart, setCart, deleteFromCart } = useCartContext();
+    console.log(cart)
+    const handleDeleteFromCart = (idBook) => {
+        deleteFromCart(idBook);
+    }
+
+    const handleIncrementBook = (idBook) => {
+        const newCart = cart.map((item) => item.bookProduct.id === idBook ?
+            { ...item, quantity: item.quantity + 1 } : item);
+        setCart(newCart);
+    };
+
+    const handleDecrementBook = (idBook) => {
+        const newCart = cart.map((item) => {
+            if (item.bookProduct.id === idBook && item.quantity > 1) {
+                return { ...item, quantity: item.quantity - 1 };
+            }
+            return item;
+        });
+        setCart(newCart);
+    };
+
+    const totalPurchaseCalculate = () => {
+        let total = 0;
+        cart.forEach((item) => {
+            const { bookProduct, quantity } = item;
+            const priceBook = bookProduct.price;
+            total += priceBook * quantity;
+        })
+        return total;
+    }
+
+    const totalPurchase = totalPurchaseCalculate();
+
+    // useEffect(() => {
+    //   first
+    
+    //   return () => {
+    //     second
+    //   }
+    // }, [third])
+    
 
     return (
 
@@ -36,8 +63,8 @@ const Cart = () => {
                     <h2>Carro 🛒</h2>
                 </div>
                 <hr />
-                <div class="products-container">
-                    <div className='product-container'>
+                <div class="table">
+                    {/* <div className='product-container'>
                         <div className='description-container'>img product</div>
                         <div className='description-container'>Nombre Producto</div>
                         <div className='description-container'>Precio</div>
@@ -51,27 +78,37 @@ const Cart = () => {
                                 Eliminar
                             </button>
                         </div>
-                    </div>
-
-                    <div className='product-container'>
-                        <div className='description-container'>img product</div>
-                        <div className='description-container'>Nombre Producto</div>
-                        <div className='description-container'>Precio</div>
-                        <div className='description-container'>desc</div>
-                        <div className='description-container'>cantidad</div>
-                        <div className='description-container'>eliminar</div>
-                    </div>
-
+                    </div> */}
+                    {
+                        cart.map((book) => (
+                            <div className='table row'>
+                                <div className='id-img'><img className='img-product' src={book.bookProduct.image} alt="" />{ }</div>
+                                <div className='name-product '>{book.bookProduct.title}</div>
+                                <div className='price-total'>{`$${book.bookProduct.price * book.quantity}`}</div>
+                                <div className='quantity-selector'>
+                                    <button onClick={() => handleDecrementBook(book.bookProduct.id)} class="count-button minus">-</button>
+                                    <span>{book.quantity}</span>
+                                    <button onClick={() => handleIncrementBook(book.bookProduct.id)} class="count-button plus">+</button>
+                                </div>
+                                <div className='id-img'>
+                                    <button onClick={() => handleDeleteFromCart(book.bookProduct.id)} class="delete-button">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
+
+                {/* pago */}
                 <div className='total-cart'>
                     <div className='total-container'>
                         <button className='payment-button'>Pagar</button>
                     </div>
                     <div className='total-container'>
                         <div className='total-container-title'>Total</div>
-                        <div className='total-container-price'>$100</div>
+                        <div className='total-container-price'>${totalPurchase}</div>
                     </div>
-
                 </div>
 
 
