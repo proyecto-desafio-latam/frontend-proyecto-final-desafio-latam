@@ -1,15 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
+import { useState } from "react";
 
 const Navbar = () => {
 
   const { user, logout } = useAuthContext()
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <header
-      className="header navbar navbar-expand bg-light border-bottom border-light shadow fixed-top"
-      data-scroll-header
-    >
+    <nav className="navbar navbar-expand-lg bg-light border-bottom border-light shadow fixed-top" data-scroll-header>
       <div className="container-fluid pe-lg-4">
         <div className="d-flex align-items-around w-100">
           <a href="/" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
@@ -20,7 +19,7 @@ const Navbar = () => {
             className="navbar-toggler ms-auto"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse5"
+            data-bs-target="#navbarCollapse"
             aria-expanded="false"
           >
             <span className="navbar-toggler-icon"></span>
@@ -29,7 +28,10 @@ const Navbar = () => {
             <a
               href="#"
               className="d-flex nav-link me-2"
-              data-bs-toggle="dropdown"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
+              aria-expanded="false"
+              onClick={() => setShowDropdown(!showDropdown)}
             >
               <img
                 src="../avatar.png"
@@ -43,7 +45,7 @@ const Navbar = () => {
               </div>
             </a>
             <ul
-              className="dropdown-menu dropdown-menu-end my-1"
+              className={`dropdown-menu dropdown-menu-end my-1 ${showDropdown ? "show" : ""}`}
               style={{ width: "14rem" }}
             >
               <li>
@@ -116,11 +118,7 @@ const Navbar = () => {
               </li>
             </ul>
           </div> }
-          
-          <nav
-            className="collapse navbar-collapse order-lg-2"
-            id="navbarCollapse5"
-          >
+          <div className="collapse navbar-collapse order-lg-2" id="navbarCollapse">
             <hr className="d-lg-none mt-3 mb-2" />
             <ul className="navbar-nav me-auto fs-6">
               <li className="nav-item">
@@ -134,14 +132,18 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                {!user && <NavLink to="/login" className="nav-link ">
-                  Ingresar
-                </NavLink>}
+                {!user && (
+                  <NavLink to="/login" className="nav-link ">
+                    Ingresar
+                  </NavLink>
+                )}
               </li>
               <li className="nav-item">
-                {!user && <NavLink to="/register" className="nav-link ">
-                  Registrarse
-                </NavLink>}
+                {!user && (
+                  <NavLink to="/register" className="nav-link ">
+                    Registrarse
+                  </NavLink>
+                )}
               </li>
               <li className="nav-item">
                 <NavLink to="/about" className="nav-link ">
@@ -149,10 +151,11 @@ const Navbar = () => {
                 </NavLink>
               </li>
             </ul>
-          </nav>
+          </div>
         </div>
       </div>
-    </header>
+    </nav>
+
   );
 };
 
