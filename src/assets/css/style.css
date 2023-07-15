@@ -16011,5 +16011,18 @@ img-comparison-slider:focus {
     font-size: 1rem;
   }
 }
+.position {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.custom-link {
+  margin-bottom: 0.5rem; /* Ajusta el valor según tus preferencias */
+}
 
 /*# sourceMappingURL=style.css.map */

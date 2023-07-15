@@ -1,13 +1,26 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { useUserContext } from "../context/UserContext"
+import { useBookContext } from "../context/BookContext"
+import Heart from "../components/Heart"
+import { useState } from "react"
+import { useAuthContext } from "../context/AuthContext"
 
 const BookDetail = () => {
 
     const { id } = useParams()
-    const { books, FormatCoin } = useUserContext()
+    const { books, FormatCoin } = useBookContext()
     const navigate = useNavigate()
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [favorites, setFavorites] = useState([]);
+    const { user } = useAuthContext()
 
-    console.log(books)
+    const handleFavoriteClick = () => {
+        setIsFavorite(!isFavorite);
+        if (!isFavorite) {
+            setFavorites([...favorites, id]);
+        } else {
+            setFavorites(favorites.filter((favorite) => favorite !== id));
+        }
+    };
 
     return (
         <div className="container mt-5 p-5">
@@ -16,9 +29,10 @@ const BookDetail = () => {
                 .map((item) => (
                     <div className="card mb-3 mt-5" key={item.id}>
                         <div className="row g-0">
-                            <div className="col-md-4 ">
+                            <div className="col-md-4 position ">
                                 <div className="img-container">
-                                <img src={item.image} className="img-fluid rounded-start h-100" alt="..." />
+                                    <img src={item.image} className="img-fluid rounded-start h-100" alt="..." />
+                                    {user && <Heart className="icon" filled={isFavorite} onClick={handleFavoriteClick} />}
                                 </div>
                             </div>
                             <div className="col-md-8">
@@ -30,9 +44,8 @@ const BookDetail = () => {
                                     </h4>
                                     <p>Stock Disponible: {item.stock}</p>
                                     <div className="d-flex justify-content-end gap-3">
-                                        <button className="btn btn-sm btn-primary btn-font"
-                                        >Añadir 🛒</button>
-
+                                        {user && <button className="btn btn-sm btn-primary btn-font"
+                                        >Añadir 🛒</button>}
                                         <button className="btn btn-sm btn-secondary btn-font" onClick={() =>
                                             navigate("/books")
                                         }>Volver 📖</button>

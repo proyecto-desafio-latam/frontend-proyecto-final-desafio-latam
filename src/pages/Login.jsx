@@ -1,15 +1,45 @@
 import React, { useState } from "react";
 import { Field, Formik, Form, ErrorMessage } from "formik";
 import "../assets/css/Register.css";
-import Navbar from "../components/Navbar";
+import { useAuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [loginSuccess, setLoginSuccess] = useState(false);
+    const {saveToken} = useAuthContext()
+    const navigate = useNavigate()
+
+    const handleSubmit = async (values, { resetForm }) => {
+        try {
+          const response = await fetch("https://api.escuelajs.co/api/v1/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          });
+    
+          if (response.ok) {
+            const data = await response.json()
+            saveToken(data.access_token)
+            resetForm();
+            setLoginSuccess(true);
+            setTimeout(() => setLoginSuccess(false), 4000);
+            console.log("Login exitoso");
+            navigate("/user")
+          } else {
+            console.log("Error en la solicitud");
+          }
+        } catch (error) {
+          console.log("Error en la solicitud:", error);
+        }
+      };
 
     return (
 
         <>
-            <main className='main-content-container'>
+            <main className='container mt-5 pt-5 pb-5 mb-5'>
+                <h2 className="text-center pt-5 pb-4">Ingresa a tu cuenta:</h2>
                 <Formik
                     initialValues={{
                         email: '',
@@ -33,13 +63,7 @@ export default function Login() {
                         return validations;
                     }}
 
-                    onSubmit={async (values, { resetForm }) => {
-                        resetForm();             // clean inputs
-                        setLoginSuccess(true);  // change state for "Login exitoso"
-                        console.log(loginSuccess);
-                        setTimeout(() => setLoginSuccess(false), 4000); //hide "Login exitoso" after 4 sec"
-                        console.log(values);
-                    }}
+                    onSubmit={handleSubmit}
                 >
                     {({ errors }) => (
                         <Form className='register-form'>
