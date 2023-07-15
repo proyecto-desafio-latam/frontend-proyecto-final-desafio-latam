@@ -30,12 +30,6 @@ These routes can only be accessed once logged in and includes:
 - `/user/address`
 - At bookDetail: Add to favorites and add to cart buttons
 - `/cart`
-- `/user/carts`
-- `/`
-- `/`
-- `/`
-- `/`
-
 
 ## API
 As the project has not yet developed its API, json files were used to display the books, categories and authors. In addition, [Platzi Fake Store API](https://fakeapi.platzi.com/) was used to generate a login, save token and access protected paths.

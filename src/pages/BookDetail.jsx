@@ -14,15 +14,7 @@ const BookDetail = () => {
     const [isFavorite, setIsFavorite] = useState(false);
      const { user, favorites, setFavorites } = useAuthContext()
 
-    // const handleFavoriteClick = () => {
-    //     setIsFavorite(!isFavorite);
-    //     if (!isFavorite) {
-    //         setFavorites([...favorites, id]);
-    //     } else {
-    //         setFavorites(favorites.filter((favorite) => favorite !== id));
-    //     }
-    //     console.log(favorites)
-    // };
+ 
     useEffect(() => {
         if (favorites.find((fav) => fav == id)){
             setIsFavorite(true);

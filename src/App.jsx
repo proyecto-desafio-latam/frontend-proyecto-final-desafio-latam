@@ -22,7 +22,7 @@ export default function App() {
   if (user === null) return <div>Loading...</div>;
 
   return (
-    <div className="App">
+    <>
       <Navbar></Navbar>
       <main>
         <Routes>
@@ -37,8 +37,8 @@ export default function App() {
           <Route path="/user/addresses" element={user ? <Addresses /> : <Navigate to="/login" />} />
           <Route path="/cart" element={user ? <Cart /> : <Navigate to="/login" />} />
         </Routes>
-        <Footer></Footer>
       </main>
-    </div>
+      <Footer></Footer>
+    </>
   );
 }
