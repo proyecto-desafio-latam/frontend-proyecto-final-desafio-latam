@@ -1,0 +1,33 @@
+//
+// Main
+// --------------------------------------------------
+
+
+.selectAddress {
+    height: 2rem;
+    width: 800px;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+  position: relative;
+    min-height: 100vh;
+    margin: 0;
+
+    
+}
+
+main{
+    min-height: 90vh;
+}
+
+.footer {
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+   
+}

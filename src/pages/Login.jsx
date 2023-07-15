@@ -37,7 +37,7 @@ export default function Login() {
     return (
 
         <>
-            <main className='container mt-5 pt-5 pb-5 mb-5'>
+            <div className='container mt-5 pt-5 pb-5 mb-5'>
                 <h2 className="text-center pt-5 pb-4">Ingresa a tu cuenta:</h2>
                 <Formik
                     initialValues={{
@@ -104,7 +104,7 @@ export default function Login() {
                         </Form>
                     )}
                 </Formik>
-            </main>
+            </div>
         </>
     );
 }
