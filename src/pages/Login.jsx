@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Field, Formik, Form, ErrorMessage } from "formik";
 import { useAuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [loginSuccess, setLoginSuccess] = useState(false);
@@ -97,7 +97,7 @@ export default function Login() {
                             </div>
                             <div className='login-button-container'>
                                 <button className='form-button-login' type="submit">Login</button>
-                                <p>Aun no tienes cuenta? crea una aquí</p>
+                                <p>Aun no tienes cuenta? <Link to="/register">crea una aquí</Link></p>
                             </div>
 
                             {loginSuccess && <p className="success-message">Login exitoso</p>}

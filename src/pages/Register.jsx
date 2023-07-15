@@ -6,7 +6,8 @@ export default function Register() {
     const [submittedForm, setSubmittedForm] = useState(false);
     return (
         <>
-            <main className='main-content-container'>
+            <main className='container pt-5 mt-5 pb-5'>
+                <h2 className='text-center mt-5 mb-4'>Formulario de Registro:</h2>
                 <Formik
                     initialValues={{
                         firstName: '',
