@@ -3,9 +3,9 @@ const initialState = JSON.parse(localStorage.getItem('cart')) || [];
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 
-const CartContext = createContext();
+export const CartContext = createContext();
 
-export const CartContextProvider = ({ children }) => {
+export default function CartContextProvider({ children })  {
 
 
     //Estado carrito
