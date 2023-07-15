@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Field, Formik, Form, ErrorMessage } from 'formik';
-import '../Register.css';
 
 export default function Register() {
 

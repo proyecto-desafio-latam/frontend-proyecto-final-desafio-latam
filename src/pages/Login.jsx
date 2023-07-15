@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Field, Formik, Form, ErrorMessage } from "formik";
-import "../assets/css/Register.css";
 import { useAuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 

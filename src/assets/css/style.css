@@ -15932,6 +15932,81 @@ img-comparison-slider:focus {
   background: linear-gradient(to right, rgba(255, 255, 255, 0.55) var(--buffered-width), rgba(255, 255, 255, 0.3) var(--buffered-width));
 }
 
+* {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono", "Droid Sans Mono", monospace, monospace;
+}
+
+.main-content-container {
+  padding: 100px;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.register-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: bold;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-error {
+  color: rgb(122, 0, 0);
+  margin-top: 4px;
+}
+
+.form-button,
+.form-button-login {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.form-button:hover,
+.form-button-login:hover {
+  background-color: #45a049;
+  /* Cambia el color de fondo en el hover */
+}
+
+.form-button:active,
+.form-button-login:active {
+  background-color: #408c3f;
+  /* Cambia el color de fondo al hacer clic */
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+
+.login-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .btn-font {
   font-size: 13.5px;
 }
@@ -16019,10 +16094,6 @@ img-comparison-slider:focus {
   position: absolute;
   top: 0;
   right: 0;
-}
-
-.custom-link {
-  margin-bottom: 0.5rem; /* Ajusta el valor según tus preferencias */
 }
 
 /*# sourceMappingURL=style.css.map */
