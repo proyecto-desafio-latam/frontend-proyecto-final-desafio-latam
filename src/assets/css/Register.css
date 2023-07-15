@@ -31,9 +31,9 @@
     border-radius: 4px;
 }
 
-.form-input--date {
-    /* Estilos específicos para el input de fecha */
-}
+/* .form-input--date {
+    Estilos específicos para el input de fecha 
+}  */
 
 .form-error {
     color: rgb(122, 0, 0);

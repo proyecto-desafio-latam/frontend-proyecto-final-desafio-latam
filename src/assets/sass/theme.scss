@@ -59,39 +59,11 @@
 // User custom styles
 @import 'user';
 
-.img-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+// Books
+@import "_books";
 
-.img-carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+// Register
+@import "_register";
 
-.card-carousel {
-  width: 13rem;
-  border: 0;
-  font-weight: bold;
-  color: black;
-}
-
-.card-book {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.card-book-title {
-  flex-grow: 1;
-}
-
-.card-image{
- height: 470px;
- }
-
- .img-carousel{
-  height: 290px;
- }
+// Register
+@import "_main";

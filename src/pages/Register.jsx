@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Field, Formik, Form, ErrorMessage } from 'formik';
-import '../Register.css';
 
 export default function Register() {
 
@@ -15,7 +14,8 @@ export default function Register() {
 
     return (
         <>
-            <main className='main-content-container'>
+            <main className='container pt-5 mt-5 pb-5'>
+                <h2 className='text-center mt-5 mb-4'>Formulario de Registro:</h2>
                 <Formik
                     initialValues={{
                         firstName: '',
@@ -25,7 +25,6 @@ export default function Register() {
                         password: '',
                         repeatPassword: '',
                         birthday: '',
-                        isAdmin: false
                     }}
 
                     validate={(values) => {
@@ -90,10 +89,6 @@ export default function Register() {
                             validations.birthday = 'La fecha de nacimiento no puede ser mayor al día actual';
                         } else if (currentDate.getFullYear() - selectedDate.getFullYear() < 18) {
                             validations.birthday = 'Debes tener al menos 18 años';
-                        }
-
-                        if (!values.isAdmin) {
-                            validations.isAdmin = 'Por favor selecciona un rol';
                         }
 
                         return validations;
@@ -245,31 +240,6 @@ export default function Register() {
                                         <div className='form-error'>{errors.birthday}</div>
                                     )} />
                             </div>
-                            <div className='form-field'>
-                                <label className='form-label' htmlFor="isAdmin">Rol</label>
-                                <div className='form-radio-group'>
-                                    <label>
-                                        <Field
-                                            type="radio"
-                                            name="isAdmin"
-                                            value="false"
-                                        />
-                                        Usuario
-                                    </label>
-                                    <label>
-                                        <Field
-                                            type="radio"
-                                            name="isAdmin"
-                                            value="true"
-                                        />
-                                        Administrador
-                                    </label>
-                                </div>
-                                <ErrorMessage name='isAdmin' component={() => (
-                                    <div className='form-error'>{errors.isAdmin}</div>
-                                )} />
-                            </div>
-
                             <button className='form-button' type="submit">Registrar</button>
                             {submittedForm && <p className="success-message">Registro exitoso</p>}
                         </Form>

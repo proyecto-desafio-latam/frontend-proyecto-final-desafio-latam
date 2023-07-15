@@ -1,13 +1,14 @@
 import { BiBadgeCheck, BiRocket } from "react-icons/bi"
+import { TbWorldHeart } from "react-icons/tb"
 import Banners from "../components/Banners"
 import BookCarousel from "../components/BookCarousel"
-import { useUserContext } from "../context/UserContext"
+import { useBookContext } from "../context/BookContext"
 
 const Home = () => {
-    const { books } = useUserContext()
+    const { books } = useBookContext()
     return (
         <div className="container mt-5 pt-5">
-            <h1 className="text-center pt-5">Título</h1>
+            <h1 className="text-center pt-5"><TbWorldHeart style={{  color:"brown" ,fontSize: '50px' }}/> Mundo Libros</h1>
             <Banners />
             <div className="pt-5">
                 <h3 className="mt-5"> <BiBadgeCheck style={{ color: 'red', fontSize: '50px' }} /> Los más vendidos </h3>

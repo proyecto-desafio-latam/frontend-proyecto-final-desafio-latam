@@ -1,12 +1,12 @@
 import "react-multi-carousel/lib/styles.css"
 import Carousel from "react-multi-carousel"
 import { useNavigate } from "react-router-dom"
-import { useUserContext } from "../context/UserContext"
+import { useBookContext } from "../context/BookContext"
 
 const BookCarousel = ({ books, color }) => {
 
   const navigate = useNavigate()
-  const {FormatCoin} = useUserContext()
+  const {FormatCoin} = useBookContext()
 
   return (
     <div className="container mt-5">
@@ -79,6 +79,7 @@ const BookCarousel = ({ books, color }) => {
               <img className=" img-carousel"
                 src={item.image}
                 alt=""
+                style={{ cursor: 'pointer' }}
                 onClick={() =>
                   navigate(`/books/${item.id}`)}
               />
