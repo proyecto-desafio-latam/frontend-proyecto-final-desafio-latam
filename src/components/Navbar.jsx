@@ -9,7 +9,7 @@ const Navbar = () => {
       <div className="container-fluid pe-lg-4">
         <div className="d-flex align-items-around w-100">
           <a href="/" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
-            <img src="../public/ejemplo-logo.jpg" width="47" alt="Logo" />
+            <img src="../ejemplo-logo.jpg" width="47" alt="Logo" />
             Libros
           </a>
           <button
