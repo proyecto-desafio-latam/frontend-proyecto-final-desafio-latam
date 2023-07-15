@@ -25,7 +25,7 @@ export default function Login() {
             setLoginSuccess(true);
             setTimeout(() => setLoginSuccess(false), 4000);
             console.log("Login exitoso");
-            navigate("/user")
+            navigate("/")
           } else {
             console.log("Error en la solicitud");
           }

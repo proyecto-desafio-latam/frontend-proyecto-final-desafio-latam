@@ -14,9 +14,9 @@ const Footer = () => {
           <div className="col-lg-4 col-md-6">
             <div className="navbar-brand text-light p-0 me-0 mb-3 mb-lg-4">
               <img src="../ejemplo-logo.jpg" width="47" alt="Logo" />
-              Libros
+              Mundo Libros
             </div>
-            <p className="fs-xs text-light opacity-70 mb-4">
+            <p className="fs-xs text-light opacity-70 mb-4 justify">
               En nuestra tienda, te ofrecemos una amplia selección de libros de
               diversos géneros y temáticas para satisfacer tus intereses y
               necesidades de lectura. Nuestro objetivo es brindarte una

@@ -26,12 +26,11 @@ The second milestone consists of the development of the client application with 
 ## Protected routes
 These routes can only be accessed once logged in and includes:
 - `/user`
-- `/user/profile`
 - `/user/favorites`
 - `/user/address`
 - At bookDetail: Add to favorites and add to cart buttons
 - `/cart`
-- `/`
+- `/user/carts`
 - `/`
 - `/`
 - `/`
@@ -40,6 +39,13 @@ These routes can only be accessed once logged in and includes:
 
 ## API
 As the project has not yet developed its API, json files were used to display the books, categories and authors. In addition, [Platzi Fake Store API](https://fakeapi.platzi.com/) was used to generate a login, save token and access protected paths.
+
+For login, enter the following credentials, issued by the APi:
+
+```jsx
+  email: john@mail.com
+  password: changeme
+```
 
 ## Dependencies
 - This react project was created with [Vite](https://vitejs.dev/)

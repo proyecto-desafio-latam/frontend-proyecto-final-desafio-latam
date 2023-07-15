@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
+
+  const { user, logout } = useAuthContext()
+
   return (
     <header
       className="header navbar navbar-expand bg-light border-bottom border-light shadow fixed-top"
@@ -10,7 +14,7 @@ const Navbar = () => {
         <div className="d-flex align-items-around w-100">
           <a href="/" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
             <img src="../ejemplo-logo.jpg" width="47" alt="Logo" />
-            Libros
+            Mundo Libros
           </a>
           <button
             className="navbar-toggler ms-auto"
@@ -21,7 +25,7 @@ const Navbar = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="nav dropdown d-block order-lg-3 ms-4">
+          {user && <div className="nav dropdown d-block order-lg-3 ms-4">
             <a
               href="#"
               className="d-flex nav-link me-2"
@@ -72,19 +76,6 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center">
-                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
-                    Mensajes
-                  </i>
-
-                  <span
-                    className="bg-success rounded-circle mt-n2 ms-1"
-                    style={{ width: "5px", height: "5px" }}
-                  ></span>
-                  <span className="ms-auto fs-xs text-muted">1</span>
-                </a>
-              </li>
-              <li>
                 <a
                   href="/user/allcarts"
                   className="dropdown-item d-flex align-items-center"
@@ -96,9 +87,9 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center">
+                <a href="/user/addresses" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
-                    Calificaciones
+                    Direcciones
                   </i>
 
                   <span className="ms-auto fs-xs text-muted">15</span>
@@ -118,13 +109,14 @@ const Navbar = () => {
               </li>
               <li className="dropdown-divider"></li>
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center">
+                <a href="#" className="dropdown-item d-flex align-items-center"  onClick={logout}>
                   <i className="bx bx-star fs-base opacity-60 me-2"></i>
                   Logout
                 </a>
               </li>
             </ul>
-          </div>
+          </div> }
+          
           <nav
             className="collapse navbar-collapse order-lg-2"
             id="navbarCollapse5"
@@ -142,23 +134,18 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/login" className="nav-link ">
+                {!user && <NavLink to="/login" className="nav-link ">
                   Ingresar
-                </NavLink>
+                </NavLink>}
               </li>
               <li className="nav-item">
-                <NavLink to="/register" className="nav-link ">
+                {!user && <NavLink to="/register" className="nav-link ">
                   Registrarse
-                </NavLink>
+                </NavLink>}
               </li>
               <li className="nav-item">
                 <NavLink to="/about" className="nav-link ">
-                  Acerca de...
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/contact" className="nav-link ">
-                  Contacto
+                  Sobre nosotros
                 </NavLink>
               </li>
             </ul>
