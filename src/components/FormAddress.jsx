@@ -42,10 +42,6 @@ const FormAddress = ({address, setAddress}) => {
         setAddress(newAddresses);
     
         localStorage.setItem('Addresses', JSON.stringify(newAddresses));
-        // console.log("1")
-        // setAddress([...address, newAddress])
-        // console.log("2")
-        // console.log(address)
         setRegion("")
         setSelectedCommune("")
         setAddressLine("")
@@ -57,7 +53,7 @@ const FormAddress = ({address, setAddress}) => {
             <form onSubmit={handleSubmit}>
                 <div className="form-group mt-3">
                     <label className="form-label">Región</label>
-                    <select name="" id="" style={{ minWidth: '400px' }} defaultValue={"placeholder"}>
+                    <select defaultValue={"placeholder"} className="selectAddress">
                         <option  value={"placeholder"} disabled>Región</option>
                     <option onChange={(e) => setRegion(e.target.value)} value={region} type="text" className="form-control"> Región Metropolitana </option> 
                     </select>
@@ -65,7 +61,7 @@ const FormAddress = ({address, setAddress}) => {
                 </div>
                 <div className="form-group mt-3">
                 <label className="form-label">Comunas</label>
-                    <select className="form-label" onChange={(e) => setSelectedCommune(e.target.value)} style={{ minWidth: '400px' }} defaultValue={"placeholder"}>
+                    <select className="form-label selectAddress" onChange={(e) => setSelectedCommune(e.target.value)} defaultValue={"placeholder"}>
                     <option   value={"placeholder"} disabled>Elige tu comuna</option>
                         {commune.map((item) => (
                             <option value={item.id} key={item.id}>
@@ -74,12 +70,10 @@ const FormAddress = ({address, setAddress}) => {
                         ))}
                   
                     </select>
-                   
-                    {/* <input  type="text" value={commune} className="form-control" placeholder="Ingresa correo del colaborador" /> */}
                 </div>
                 <div className="form-group mt-3">
                     <label className="form-label">Dirección</label>
-                    <input onChange={(e) => setAddressLine(e.target.value)} type="text" value={addressLine} className="form-control" placeholder="Ingresa direccion"/>
+                    <input onChange={(e) => setAddressLine(e.target.value)} type="text" value={addressLine} className="form-control selectAddress" placeholder="Ingresa direccion"/>
                 </div>
                 <button type="submit" className="btn btn-primary mt-4">Agregar dirección</button>
                 <p className=" mt-2">{error}</p>

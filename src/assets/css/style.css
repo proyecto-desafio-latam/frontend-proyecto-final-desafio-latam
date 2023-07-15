@@ -16129,4 +16129,9 @@ img-comparison-slider:focus {
   align-items: center;
 }
 
+.selectAddress {
+  height: 2rem;
+  width: 800px;
+}
+
 /*# sourceMappingURL=style.css.map */

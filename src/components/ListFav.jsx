@@ -12,7 +12,7 @@ const ListFav = () => {
       <div className="container  m-5 pt-5 vh-50">
         <h2 className="text-center pt-3"> <BiSolidHeart style={{ color: 'red' }} /> Mis Libros Favoritos <BiSolidHeart style={{ color: 'red' }} /> </h2>
         <div className="container-fluid border d-flex mt-5 pb-5 mb-5 ">
-          <table className="align-items-between p-3 w-100">
+          <table className="align-items-between p-3 w-100 ">
             <thead>
               <tr>
                 <th>#ID</th>
