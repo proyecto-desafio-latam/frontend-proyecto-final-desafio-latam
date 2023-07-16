@@ -45,3 +45,8 @@ For login, enter the following credentials, issued by the APi:
 - This react project was created with [Vite](https://vitejs.dev/)
 - To install dependencies run: `npm install` 
 - To run de app: `npm run dev`
+
+
+## Deploy
+
+-To view this site deployed, please visit: https://poetic-cactus-0e9d78.netlify.app/
