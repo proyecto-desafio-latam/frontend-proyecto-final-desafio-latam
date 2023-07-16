@@ -4,7 +4,7 @@ import { useCartContext } from "../context/CartContext";
 
 const Navbar = () => {
 
-  const { user, logout } = useAuthContext()
+  const { user, logout, favorites } = useAuthContext()
 
   const { cart } = useCartContext();
   const calculateTotalQuantity = () => {
@@ -26,10 +26,10 @@ const Navbar = () => {
     >
       <div className="container-fluid pe-lg-4">
         <div className="d-flex align-items-around w-100">
-          <a href="/" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
+          <Link to="/" className="navbar-brand flex-shrink-0 py-1 py-lg-2">
             <img src="../ejemplo-logo.jpg" width="47" alt="Logo" />
             Mundo Libros
-          </a>
+          </Link>
           <button
             className="navbar-toggler ms-auto"
             type="button"
@@ -70,8 +70,8 @@ const Navbar = () => {
               </li>
 
               <li>
-                <a
-                  href="/user"
+                <Link
+                  to="/user"
                   className="dropdown-item d-flex align-items-center"
                 >
                   <i
@@ -80,46 +80,46 @@ const Navbar = () => {
                   >
                     Perfil
                   </i>
-                </a>
+                </Link>
               </li>
-              <li>
-                <a
-                  href="/user/allcarts"
+              {/* <li>
+                <Link
+                  to="/user/allcarts"
                   className="dropdown-item d-flex align-items-center"
                 >
                   <i className=" bx bx-shopping-bag fsbase opacity-60 me-2">
                     Historial de Compras
                   </i>
                   <span className="ms-auto fs-xs text-muted">5</span>
-                </a>
-              </li>
+                </Link>
+              </li> */}
               <li>
-                <a href="/user/addresses" className="dropdown-item d-flex align-items-center">
+                <Link to="/user/addresses" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
                     Direcciones
                   </i>
 
                   <span className="ms-auto fs-xs text-muted">15</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/user/favorites"
+                <Link
+                  to="/user/favorites"
                   className="dropdown-item d-flex align-items-center"
                 >
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
                     Favoritos
                   </i>
 
-                  <span className="ms-auto fs-xs text-muted">10</span>
-                </a>
+                  <span className="ms-auto fs-xs text-muted">{favorites.length}</span>
+                </Link>
               </li>
               <li className="dropdown-divider"></li>
               <li>
-                <a href="#" className="dropdown-item d-flex align-items-center" onClick={logout}>
+                <Link to="#" className="dropdown-item d-flex align-items-center" onClick={logout}>
                   <i className="bx bx-star fs-base opacity-60 me-2"></i>
                   Logout
-                </a>
+                </Link>
               </li>
             </ul>
           </div>}
