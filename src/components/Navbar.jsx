@@ -40,7 +40,7 @@ const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           {user && <div className="nav dropdown d-block order-lg-3 ms-4">
-            <a
+            <Link
               href="#"
               className="d-flex nav-link me-2"
               data-bs-toggle="dropdown"
@@ -55,7 +55,7 @@ const Navbar = () => {
                 <div className="fs-xs lh-1 opacity-60">Hola,</div>
                 <div className="fs-sm dropdown-toggle">{user.name}</div>{" "}
               </div>
-            </a>
+            </Link>
             <ul
               className="dropdown-menu dropdown-menu-end my-1"
               style={{ width: "14rem" }}
