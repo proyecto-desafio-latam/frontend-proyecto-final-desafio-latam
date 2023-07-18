@@ -1,4 +1,3 @@
-import '../assets/css/Cart.css'
 import React, { useState, useEffect } from 'react';
 
 
