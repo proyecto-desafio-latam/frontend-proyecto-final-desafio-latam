@@ -37,7 +37,7 @@ const BookDetail = () => {
     const handleFavoriteClick = () => {
         setIsFavorite(!isFavorite);
     };
-    console.log(favorites)
+    // console.log(favorites)
 
     // push the book into the cart
     const handleAddToCart = (bookDetailed) => {

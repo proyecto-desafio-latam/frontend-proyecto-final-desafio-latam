@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useAuthContext } from '../context/AuthContext';
+import { useBookContext } from '../context/BookContext';
 
 
 import { useCartContext } from '../context/CartContext';
 
 const Cart = () => {
 
+    const { favorites } = useAuthContext();
+    const { books } = useBookContext();
     const { cart, setCart, deleteFromCart } = useCartContext();
 
     const handleDeleteFromCart = (idBook) => {
@@ -39,17 +43,7 @@ const Cart = () => {
 
     const totalPurchase = totalPurchaseCalculate();
 
-    // useEffect(() => {
-    //   first
-    
-    //   return () => {
-    //     second
-    //   }
-    // }, [third])
-    
-
     return (
-
 
         <div className='cart-favorites-wrapper'>
             {/* cart */}
@@ -59,34 +53,19 @@ const Cart = () => {
                 </div>
                 <hr />
                 <div className="table">
-                    {/* <div className='product-container'>
-                        <div className='description-container'>img product</div>
-                        <div className='description-container'>Nombre Producto</div>
-                        <div className='description-container'>Precio</div>
-                        <div className='description-container'>
-                            <button class="count-button minus">-</button>
-                            <span>1</span>
-                            <button class="count-button plus">+</button>
-                        </div>
-                        <div className='description-container'>
-                            <button class="delete-button">
-                                Eliminar
-                            </button>
-                        </div>
-                    </div> */}
                     {
                         cart.map((book) => (
-                            <div className='table row'>
+                            <div key={book.bookProduct.id} className='table row'>
                                 <div className='id-img'><img className='img-product' src={book.bookProduct.image} alt="" />{ }</div>
                                 <div className='name-product '>{book.bookProduct.title}</div>
                                 <div className='price-total'>{`$${book.bookProduct.price * book.quantity}`}</div>
                                 <div className='quantity-selector'>
-                                    <button onClick={() => handleDecrementBook(book.bookProduct.id)} class="count-button minus">-</button>
+                                    <button onClick={() => handleDecrementBook(book.bookProduct.id)} className="count-button minus">-</button>
                                     <span>{book.quantity}</span>
-                                    <button onClick={() => handleIncrementBook(book.bookProduct.id)} class="count-button plus">+</button>
+                                    <button onClick={() => handleIncrementBook(book.bookProduct.id)} className="count-button plus">+</button>
                                 </div>
                                 <div className='id-img'>
-                                    <button onClick={() => handleDeleteFromCart(book.bookProduct.id)} class="delete-button">
+                                    <button onClick={() => handleDeleteFromCart(book.bookProduct.id)} className="delete-button">
                                         Eliminar
                                     </button>
                                 </div>
@@ -105,15 +84,17 @@ const Cart = () => {
                         <div className='total-container-price'>${totalPurchase}</div>
                     </div>
                 </div>
-
-
             </main>
+
             {/* favorites */}
             <aside className="favorites-container">
                 <div className='title-container'>
                     <h2>Favoritos ❤️</h2>
                 </div>
                 <hr />
+                <div className="table">
+
+                </div>
             </aside>
 
         </div>
