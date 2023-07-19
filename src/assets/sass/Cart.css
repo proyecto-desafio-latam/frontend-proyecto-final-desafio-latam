@@ -1,0 +1,111 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+
+.carrito-title{
+    text-align: center;
+}
+
+/*boton eliminar*/
+.eliminar-button {
+    background-color: #ac0000;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.eliminar-button:hover {
+    background-color: #cc0000;
+}
+
+.pagar-button {
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #4CAF50;
+}
+
+.agregar-button {
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #4354ac;
+}
+
+.agregar-button:hover{
+    background-color: #6c77ad;
+}
+
+.pagar-button:hover {
+    background-color: #45a049;
+}
+
+/*****************************/
+
+.general-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 82px;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+}
+
+/* Estilos generales de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    /* Alineación del contenido de los td y th al centro */
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+    table {
+        border: 1px solid #ccc;
+        /* Agregar bordes para visualización en móviles */
+    }
+
+    th,
+    td {
+        display: block;
+        width: 100%;
+        /* Ajustar cada celda al ancho completo de la tabla */
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    td {
+        border-bottom: 1px solid #ddd;
+    }
+
+    td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+}
