@@ -1,7 +1,3 @@
-
-// import '../assets/sass/_cart.scss';
-import '../assets/sass/Cart.css';
-import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import { useBookContext } from '../context/BookContext';
 
@@ -71,11 +67,11 @@ const Cart = () => {
                     <tbody>
                         {cart.map((book) => (
                             <tr key={book.bookProduct.id}>
-                                <td><img className='img-product' src={book.bookProduct.image} alt="" /></td>
+                                <td><img className='img-product' src={book.bookProduct.image} width="50" height="75" alt="" /></td>
                                 <td>{book.bookProduct.title}</td>
-                                <td><button onClick={() => handleDecrementBook(book.bookProduct.id)} className="count-button minus">-</button>
+                                <td><button onClick={() => handleDecrementBook(book.bookProduct.id)} className="btn-minus">-</button>
                                     <span>{book.quantity}</span>
-                                    <button onClick={() => handleIncrementBook(book.bookProduct.id)} className="count-button plus">+</button></td>
+                                    <button onClick={() => handleIncrementBook(book.bookProduct.id)} className="btn-plus">+</button></td>
                                 <td>${book.bookProduct.price}</td>
                                 <td>{`$${book.bookProduct.price * book.quantity}`}</td>
                                 <td>
