@@ -82,23 +82,22 @@ const Navbar = () => {
                   </i>
                 </Link>
               </li>
-              {/* <li>
+              <li>
                 <Link
-                  to="/user/allcarts"
+                  to="user/shoppinghistory"
                   className="dropdown-item d-flex align-items-center"
                 >
-                  <i className=" bx bx-shopping-bag fsbase opacity-60 me-2">
-                    Historial de Compras
+                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
+                    Historial de compras
                   </i>
-                  <span className="ms-auto fs-xs text-muted">5</span>
                 </Link>
-              </li> */}
+              </li>
+              
               <li>
                 <Link to="/user/addresses" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
                     Direcciones
                   </i>
-
                   <span className="ms-auto fs-xs text-muted">15</span>
                 </Link>
               </li>

@@ -15,6 +15,7 @@ import About from "./pages/About";
 import Addresses from "./pages/Addresses";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
+import ShoppingHistory from "./pages/ShoppingHistory";
 
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/user" element={user ? <User /> : <Navigate to="/login" />} />
           <Route path="/user/favorites" element={user ? <Favorites /> : <Navigate to="/login" />} />
           <Route path="/user/addresses" element={user ? <Addresses /> : <Navigate to="/login" />} />
+          <Route path="/user/shoppinghistory" element={user ? <ShoppingHistory /> : <Navigate to="/login" />} />
           <Route path="/cart" element={user ? <Cart /> : <Navigate to="/login" />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>

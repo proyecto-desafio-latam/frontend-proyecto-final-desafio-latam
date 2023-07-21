@@ -1,13 +1,10 @@
-const initialState = JSON.parse(localStorage.getItem('cart')) || [];
-
 import React, { createContext, useContext, useState, useEffect } from "react";
-
 
 export const CartContext = createContext();
 
-export default function CartContextProvider({ children })  {
+export default function CartContextProvider({ children }) {
 
-
+    const initialState = JSON.parse(localStorage.getItem('cart')) || [];
     //Estado carrito
     const [cart, setCart] = useState(initialState);
 
@@ -18,9 +15,9 @@ export default function CartContextProvider({ children })  {
 
 
     const addToCart = (bookProduct) => {
+        //Si el libro está en el carro (me aseguro con bookInCart)
         const bookInCart = cart.find((book) => book.bookProduct.id === bookProduct.id);
-
-
+        //Si existe en el carro
         if (bookInCart) {
             const newCart = cart.map((item) => item.bookProduct.id === bookProduct.id ?
                 { ...item, quantity: item.quantity + 1 } : item);
@@ -28,7 +25,6 @@ export default function CartContextProvider({ children })  {
         } else {
             setCart([...cart, { bookProduct, quantity: 1 }]);
         }
-
     };
 
 

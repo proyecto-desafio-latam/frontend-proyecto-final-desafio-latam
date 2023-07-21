@@ -11,10 +11,14 @@ export default function BookContextProvider({ children }) {
 
     const getData = async () => {
         try {
-            const response = await fetch("/inventory.json")
+            // const response = await fetch("/inventory.json")
+            const response = await fetch("http://localhost:3002/api/v1/books")
             if (!response.ok) throw "No se puede desplegar la información"
             const data = await response.json()
-            setBooks(data)
+            // console.log(data)
+            // console.log(data.result)
+            // setBooks(data)
+            setBooks(data.result)
         } catch (error) {
             setError(error)
         }

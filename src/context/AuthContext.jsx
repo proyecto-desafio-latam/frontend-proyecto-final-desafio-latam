@@ -54,6 +54,7 @@ export default function UserContextProvider({ children }) {
         setUser(false);
         setToken(null);
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("");
         navigate("/")
     };
 
