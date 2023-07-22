@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
-
-
+import { useState } from 'react';
+import { useAuthContext } from '../context/AuthContext';
+import { useBookContext } from '../context/BookContext';
 import { useCartContext } from '../context/CartContext';
 
 
 const Cart = () => {
 
-    const { cart, setCart, deleteFromCart } = useCartContext();
+    const { favorites, token } = useAuthContext();
+    const { books } = useBookContext();
+    const { cart, setCart, deleteFromCart, addToCart } = useCartContext();
+
+
+    const [loading, setLoading] = useState(false);
 
     //Funcion que borra un tipo de libro del carrito
     const handleDeleteFromCart = (idBook) => {
@@ -41,88 +46,165 @@ const Cart = () => {
         })
         return total;
     }
+    //Invoca la función para calcular el total de todo el carrito
+    const totalPurchase = totalPurchaseCalculate();//Original
 
-    const totalPurchase = totalPurchaseCalculate();
 
-    // useEffect(() => {
-    //   first
-    
-    //   return () => {
-    //     second
-    //   }
-    // }, [third])
-    
+    //Función que extrae y crea un objeto desde el arreglo de carrito
+    //Para llevarlo al POST en el backend
+    const totalPurchaseCalculated = () => {
+        const cartDetail = cart.map((book) => {
+            const { bookProduct, quantity } = book;
+            const priceBook = bookProduct.price;
+            const subtotal = priceBook * quantity;
+
+            return {
+                quantity,
+                price: priceBook,
+                subtotal,
+                //cartId: 1, // Supongamos que el id del carrito es 1 No envía el id del Carrito general
+                bookId: bookProduct.id,
+            };
+        });
+        return cartDetail;
+    };
+
+
+    //Función que agrega un tipo de libro al carrito (orientado a favoritos)
+    const handleAddToCart = (bookDetailed) => {
+        addToCart(bookDetailed)
+    }
+
+
+    const cartDetail = totalPurchaseCalculated();
+    console.log(cartDetail);
+
+
+    //Función que envía el contenido del carrito al backend
+    const handleCheckout = async () => {
+        const cartDetail = totalPurchaseCalculate();
+        setLoading(true);
+        try {
+            const response = await fetch("http://localhost:3002/api/v1/user/purchase", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    //address_id: 123, // Id de la dirección
+                    cart_details: cartDetail,
+                }),
+            });
+            
+            if (!response.ok) {
+                // Si la respuesta del servidor no es exitosa, lanzamos una excepción
+                // y el bloque catch se encargará de manejar el error
+                throw new Error("Error en la solicitud al servidor.");
+            }
+            const data = await response.json();
+            // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito o error
+            console.log(data);
+        } catch (error) {
+            // Manejar errores si es necesario
+            console.error("Error al enviar datos a cart_detail:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
-
-
-        <div className='cart-favorites-wrapper'>
-            {/* cart */}
-            <main className="cart-container">
-                <div className='title-container'>
-                    <h2>Carro 🛒</h2>
-                </div>
-                <hr />
-                <div className="table">
-                    {/* <div className='product-container'>
-                        <div className='description-container'>img product</div>
-                        <div className='description-container'>Nombre Producto</div>
-                        <div className='description-container'>Precio</div>
-                        <div className='description-container'>
-                            <button class="count-button minus">-</button>
-                            <span>1</span>
-                            <button class="count-button plus">+</button>
-                        </div>
-                        <div className='description-container'>
-                            <button class="delete-button">
-                                Eliminar
-                            </button>
-                        </div>
-                    </div> */}
-                    {
-                        cart.map((book) => (
-                            <div className='table row'>
-                                <div className='id-img'><img className='img-product' src={book.bookProduct.image} alt="" />{ }</div>
-                                <div className='name-product '>{book.bookProduct.title}</div>
-                                <div className='price-total'>{`$${book.bookProduct.price * book.quantity}`}</div>
-                                <div className='quantity-selector'>
-                                    <button onClick={() => handleDecrementBook(book.bookProduct.id)} class="count-button minus">-</button>
+        <>
+            <main className='general-container'>
+                <h2 className='carrito-title'>Carrito 🛒</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>IMG</th>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Unitario</th>
+                            <th>Total</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cart.map((book) => (
+                            <tr key={book.bookProduct.id}>
+                                <td>
+                                    <img className='img-product' src={book.bookProduct.image} width="50" height="75" alt="" />
+                                </td>
+                                <td>{book.bookProduct.title}</td>
+                                <td>
+                                    <button onClick={() => handleDecrementBook(book.bookProduct.id)} className="btn-minus">-</button>
                                     <span>{book.quantity}</span>
-                                    <button onClick={() => handleIncrementBook(book.bookProduct.id)} class="count-button plus">+</button>
-                                </div>
-                                <div className='id-img'>
-                                    <button onClick={() => handleDeleteFromCart(book.bookProduct.id)} class="delete-button">
+                                    <button onClick={() => handleIncrementBook(book.bookProduct.id)} className="btn-plus">+</button>
+                                </td>
+                                <td>${book.bookProduct.price}</td>
+                                <td>{`$${book.bookProduct.price * book.quantity}`}</td>
+                                <td>
+                                    <button className="eliminar-button" onClick={() => handleDeleteFromCart(book.bookProduct.id)}>
                                         Eliminar
                                     </button>
-                                </div>
-                            </div>
-                        ))
-                    }
-                </div>
+                                </td>
+                            </tr>
+                        ))}
+                        <tr>
+                            {/* <!-- Celda para el total de ventas --> */}
+                            <td colSpan="4"><strong>Total de Ventas:</strong></td>
+                            <td colSpan="1"><strong>${totalPurchase}</strong></td>
+                            {/* <!-- Celda para el botón de pagar --> */}
+                            <td colSpan="1" data-label="Acciones">
+                                <button onClick={handleCheckout} className="pagar-button">
+                                    {loading ? "Procesando..." : "Pagar"}
+                                </button>
+                            </td>
+                        </tr>
 
-                {/* pago */}
-                <div className='total-cart'>
-                    <div className='total-container'>
-                        <button className='payment-button'>Pagar</button>
-                    </div>
-                    <div className='total-container'>
-                        <div className='total-container-title'>Total</div>
-                        <div className='total-container-price'>${totalPurchase}</div>
-                    </div>
-                </div>
-
-
+                    </tbody>
+                </table>
+                <br />
+                <h2>Direcciones🧭</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Direcciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr></tr>
+                    </tbody>
+                </table>
+                <br />
+                <h2>Favoritos❤️</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Autor</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Agregar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {favorites.map((id) => {
+                            const book = books.find(book => book.id == id);
+                            return (
+                                <tr key={id} className='favorites-header'>
+                                    <td className='id-author'>{book.author.name}</td>
+                                    <td className='id-name'>{book.title}</td>
+                                    <td className='id-category'>{book.category.name}</td>
+                                    <td>
+                                        <button onClick={() => handleAddToCart(book)} className='agregar-button'>Agregar a carrito
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
             </main>
-            {/* favorites */}
-            <aside className="favorites-container">
-                <div className='title-container'>
-                    <h2>Favoritos ❤️</h2>
-                </div>
-                <hr />
-            </aside>
-
-        </div>
-
+        </>
     );
 };
 export default Cart;
