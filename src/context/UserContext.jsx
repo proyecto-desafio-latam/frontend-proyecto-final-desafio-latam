@@ -11,7 +11,7 @@ export default function UserContextProvider({ children }) {
 
   const getComunas = async () => {
     try {
-      const res = await fetch("../comunas.json");
+      const res = await fetch("https://node-bookstore-ww7n.onrender.com/api/v1/addresses");
       const regiones = await res.json();
       console.log(res, regiones[0]);
       setComunas(regiones[0]);
