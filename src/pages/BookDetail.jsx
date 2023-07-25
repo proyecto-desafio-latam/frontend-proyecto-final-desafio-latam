@@ -1,7 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom"
-import { useBookContext } from "../context/BookContext"
-import Heart from "../components/Heart"
 import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import Heart from "../components/Heart"
+import { useBookContext } from "../context/BookContext"
 import { useAuthContext } from "../context/AuthContext"
 import { useCartContext } from "../context/CartContext"
 
@@ -28,7 +28,7 @@ const BookDetail = () => {
                 body: JSON.stringify(dataToSend),
             })
             const data = await response.json()
-            setIsFavorite(true)
+            return data.result
         } catch (error) {
             console.log(error)
         }
@@ -54,54 +54,19 @@ const BookDetail = () => {
         }
     }
 
-
-    // useEffect(() => {
-
-    //     if (isFavorite) {
-    //         setFavorites((prevState) => {
-    //             const newFavorites = [...prevState, id];
-    //             // localStorage.setItem('favorites', JSON.stringify(newFavorites));
-    //             addFavorite(id, token)
-    //             return newFavorites;
-    //         });
-    //     } else {
-    //         setFavorites((prevState) => {
-    //             const newFavorites = prevState.filter((favorite) => favorite !== id);
-    //             // localStorage.setItem('favorites', JSON.stringify(newFavorites));
-    //             return newFavorites;
-    //         });
-    //     }
-    //     if (favorites.find((fav) => fav == id)) {
-    //         setIsFavorite(true);
-    //     }
-    // }, []);
-
-    // [isFavorite, id]
-    // const handleFavoriteClick = () => {
-    //     if (isFavorite) {
-    //         setFavorites()
-    //         setIsFavorite(false);
-    //     } else {
-    //         setIsFavorite(true)
-    //     }
-
-    // };
-    // useEffect(() => {
-    //     if (!isFavorite) {
-    //         setIsFavorite(favorites.includes(id));
-    //     }
-    // }, [favorites, id, isFavorite]);
-
     useEffect(() => {
         setIsFavorite(favorites.includes(id));
-      }, [favorites, id]);
-      
+    }, [favorites, id]);
+
 
     const handleFavoriteClick = async (item) => {
         setIsFavorite(!isFavorite);
 
         if (isFavorite) {
+            console.log(item)
             setFavorites((prevState) => prevState.filter((favorite) => favorite !== item.id));
+            console.log("ya esta, delete")
+            console.log(favorites)
 
             try {
                 await deleteFavorite(item.id, token);
@@ -109,13 +74,18 @@ const BookDetail = () => {
                 console.log(error);
             }
         } else {
-            setFavorites((prevState) => [...prevState, item.id]);
-
             try {
-                await addFavorite(item.id, token);
+                const newFav = await addFavorite(item.id, token);
+                const addFav = { "favorite_id": newFav.id, "book_id": item.id, "title": item.title, "author": item.author, "category": item.category }
+                setIsFavorite(true)
+                setFavorites((prevState) => [...prevState, addFav]);
             } catch (error) {
                 console.log(error);
             }
+
+
+
+
         }
     };
 
