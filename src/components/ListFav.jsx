@@ -19,7 +19,7 @@ const ListFav = () => {
   } else {
     return (
       <>
-        <div className="m-5 pt-3">
+        <div className="m-5 pt-3 mt-1">
           <div className="container-fluid border-none d-flex mt-5 pb-5 mb-5 ">
             <table className="align-items-between p-3 w-100 ">
               <thead>
@@ -36,7 +36,7 @@ const ListFav = () => {
 
                   return (
                     <tr key={item.favorite_id}>
-                      <td>{book.id}</td>
+                      <td><Link to={`/books/${book.id}`}>{book.id}</Link></td>
                       <td>{book.title}</td>
                       <td>{book.author.name}</td>
                       <td>{book.category.name}</td>

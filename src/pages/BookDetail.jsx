@@ -8,11 +8,12 @@ import { useCartContext } from "../context/CartContext"
 const BookDetail = () => {
 
     const { id } = useParams()
+    const navigate = useNavigate()
     const { books, FormatCoin } = useBookContext()
     const { addToCart } = useCartContext()
-    const navigate = useNavigate()
     const { user, favorites, setFavorites, token } = useAuthContext()
-    const [isFavorite, setIsFavorite] = useState(favorites.includes(id));
+    const [isFavorite, setIsFavorite] = useState();
+
 
     const addFavorite = async (bookId, access_token) => {
         const dataToSend = {
@@ -55,7 +56,10 @@ const BookDetail = () => {
     }
 
     useEffect(() => {
-        setIsFavorite(favorites.includes(id));
+        const findFilled = favorites.find(findFilled => findFilled.book_id == id)
+        if (findFilled) {
+            setIsFavorite(true)
+        }
     }, [favorites, id]);
 
 
@@ -63,10 +67,7 @@ const BookDetail = () => {
         setIsFavorite(!isFavorite);
 
         if (isFavorite) {
-            console.log(item)
-            setFavorites((prevState) => prevState.filter((favorite) => favorite !== item.id));
-            console.log("ya esta, delete")
-            console.log(favorites)
+            setFavorites((prevState) => prevState.filter((favorite) => favorite.book_id !== item.id));
 
             try {
                 await deleteFavorite(item.id, token);
@@ -82,10 +83,6 @@ const BookDetail = () => {
             } catch (error) {
                 console.log(error);
             }
-
-
-
-
         }
     };
 
