@@ -7,10 +7,10 @@ const Addresses = () => {
   );
 
   const [commune, setCommune] = useState([]);
-   const getCommunes = async () => {
+  const getCommunes = async () => {
     try {
       const response = await fetch(
-        "https://node-bookstore-ww7n.onrender.com/api/v1/addresses"
+        import.meta.env.VITE_BASE_URL + "/addresses"
       );
       if (!response.ok) throw "No se puede desplegar la información";
       const data = await response.json();
@@ -22,7 +22,6 @@ const Addresses = () => {
   };
 
   useEffect(() => {
-    console.log(address);
     getCommunes();
   }, [address]);
 

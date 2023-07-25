@@ -9,11 +9,8 @@ const FormAddress = ({ address, setAddress }) => {
   const [regiones, setRegiones] = useState([]);
 
   const getLocations = async () => {
-    const response = await fetch(
-      "https://node-bookstore-ww7n.onrender.com/api/v1/addresses"
-    );
+    const response = await fetch(import.meta.env.VITE_BASE_URL + "/addresses");
     const data = await response.json();
-    console.log(data.result);
     setRegiones(data.result);
   };
 
@@ -41,9 +38,9 @@ const FormAddress = ({ address, setAddress }) => {
         addressLine: addressLine,
         // userId: userId, // Asume que tienes el ID del usuario disponible en alguna variable llamada "userId"
       };
-      console.log("Request Body:", requestBody);
+     /*  console.log("Request Body:", requestBody); */
 
-      const response = await fetch("http://localhost:3002/api/v1/addresses", {
+      const response = await fetch(import.meta.env.VITE_BASE_URL+"/addresses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,7 +110,7 @@ const FormAddress = ({ address, setAddress }) => {
   const createNewAddress = () => {
     // Obtener el objeto de la comuna seleccionada
     const selectedCommuneObj =
-      commune.find((commune) => commune.id === selectedCommune) || {};
+    selectedRegion.commune.find((commune) => commune.id === selectedCommune) || {};
 
     // Obtener el nombre de la comuna seleccionada
     const selectedCommuneName = selectedCommuneObj.name || "";
@@ -129,8 +126,8 @@ const FormAddress = ({ address, setAddress }) => {
     return newAddress;
   };
 
-  const newAddress = createNewAddress();
-  console.log(newAddress);
+ /*  const newAddress = createNewAddress(); */
+ /*  console.log(newAddress); */
 
   return (
     <div>
