@@ -11,33 +11,113 @@ const BookDetail = () => {
     const { books, FormatCoin } = useBookContext()
     const { addToCart } = useCartContext()
     const navigate = useNavigate()
-    const [isFavorite, setIsFavorite] = useState(false);
-     const { user, favorites, setFavorites } = useAuthContext()
+    const { user, favorites, setFavorites, token } = useAuthContext()
+    const [isFavorite, setIsFavorite] = useState(favorites.includes(id));
 
- 
+    const addFavorite = async (bookId, access_token) => {
+        const dataToSend = {
+            "book_id": parseInt(bookId)
+        };
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/favorites`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataToSend),
+            })
+            const data = await response.json()
+            setIsFavorite(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteFavorite = async (bookId, access_token) => {
+        const dataToSend = {
+            "book_id": parseInt(bookId)
+        };
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/favorites`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataToSend),
+            })
+            const data = await response.json()
+            setIsFavorite(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    // useEffect(() => {
+
+    //     if (isFavorite) {
+    //         setFavorites((prevState) => {
+    //             const newFavorites = [...prevState, id];
+    //             // localStorage.setItem('favorites', JSON.stringify(newFavorites));
+    //             addFavorite(id, token)
+    //             return newFavorites;
+    //         });
+    //     } else {
+    //         setFavorites((prevState) => {
+    //             const newFavorites = prevState.filter((favorite) => favorite !== id);
+    //             // localStorage.setItem('favorites', JSON.stringify(newFavorites));
+    //             return newFavorites;
+    //         });
+    //     }
+    //     if (favorites.find((fav) => fav == id)) {
+    //         setIsFavorite(true);
+    //     }
+    // }, []);
+
+    // [isFavorite, id]
+    // const handleFavoriteClick = () => {
+    //     if (isFavorite) {
+    //         setFavorites()
+    //         setIsFavorite(false);
+    //     } else {
+    //         setIsFavorite(true)
+    //     }
+
+    // };
+    // useEffect(() => {
+    //     if (!isFavorite) {
+    //         setIsFavorite(favorites.includes(id));
+    //     }
+    // }, [favorites, id, isFavorite]);
+
     useEffect(() => {
-        if (favorites.find((fav) => fav == id)){
-            setIsFavorite(true);
-        }
-        if (isFavorite) {
-            setFavorites((prevState) => {
-                const newFavorites = [...prevState, id];
-                localStorage.setItem('favorites', JSON.stringify(newFavorites)); 
-                return newFavorites;
-            });
-        } else {
-            setFavorites((prevState) => {
-                const newFavorites = prevState.filter((favorite) => favorite !== id);
-                localStorage.setItem('favorites', JSON.stringify(newFavorites));
-                return newFavorites;
-            });
-        }
-    }, [isFavorite, id]);
+        setIsFavorite(favorites.includes(id));
+      }, [favorites, id]);
+      
 
-    const handleFavoriteClick = () => {
+    const handleFavoriteClick = async (item) => {
         setIsFavorite(!isFavorite);
+
+        if (isFavorite) {
+            setFavorites((prevState) => prevState.filter((favorite) => favorite !== item.id));
+
+            try {
+                await deleteFavorite(item.id, token);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            setFavorites((prevState) => [...prevState, item.id]);
+
+            try {
+                await addFavorite(item.id, token);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     };
-    // console.log(favorites)
 
     // push the book into the cart
     const handleAddToCart = (bookDetailed) => {
@@ -54,7 +134,7 @@ const BookDetail = () => {
                             <div className="col-md-4 position ">
                                 <div className="img-container">
                                     <img src={item.image} className="img-fluid rounded-start h-100" alt="..." />
-                                    {user && <Heart className="icon" filled={isFavorite} onClick={handleFavoriteClick} />}
+                                    {user && <Heart className="icon" filled={isFavorite} onClick={() => handleFavoriteClick(item)} />}
                                 </div>
                             </div>
                             <div className="col-md-8">
@@ -66,7 +146,7 @@ const BookDetail = () => {
                                     </h4>
                                     <p>Stock Disponible: {item.stock}</p>
                                     <div className="d-flex justify-content-end gap-3">
-                                        {user && <button onClick={()=>handleAddToCart(item)} className="btn btn-sm btn-primary btn-font"
+                                        {user && <button onClick={() => handleAddToCart(item)} className="btn btn-sm btn-primary btn-font"
                                         >Añadir 🛒</button>}
                                         <button className="btn btn-sm btn-secondary btn-font" onClick={() =>
                                             navigate("/books")

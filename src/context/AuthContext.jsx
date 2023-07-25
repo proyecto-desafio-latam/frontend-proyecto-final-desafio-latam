@@ -11,34 +11,26 @@ export default function UserContextProvider({ children }) {
     const [token, setToken] = useState(initialStateToken);
 
 
-    const getFavoritesFromLocalStorage = () => {
-        const localFavorites = localStorage.getItem('favorites');
-        return localFavorites ? JSON.parse(localFavorites) : [];
-    }
-    
-    const [favorites, setFavorites] = useState(getFavoritesFromLocalStorage);
+    // const getFavoritesFromLocalStorage = () => {
+    //     const localFavorites = localStorage.getItem('favorites');
+    //     return localFavorites ? JSON.parse(localFavorites) : [];
+    // }
+    const [favorites, setFavorites] = useState([]);
 
-    useEffect(() => {
-        if (token) {
-            getUser(token);
-        } else {
-            setUser(false);
-        }
-    }, []);
-
-    const getUser = async (access_token) => {
+    const getFavorites = async (access_token) => {
         try {
-            const res = await fetch("https://api.escuelajs.co/api/v1/auth/profile", {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/favorites`, {
                 headers: {
                     Authorization: `Bearer ${access_token}`,
                 },
-            });
-            const data = await res.json();
-            setUser(data);
+            })
+            if (!response.ok) throw "No se puede desplegar la información";
+            const data = await response.json()
+            setFavorites(data.result)
         } catch (error) {
-            setUser(false);
+            console.log(error)
         }
-    };
+    }
 
     const saveToken = async (access_token) => {
         try {
@@ -50,6 +42,20 @@ export default function UserContextProvider({ children }) {
         }
     };
 
+    const getUser = async (access_token) => {
+        try {
+            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/user/profile`, {
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            });
+            const data = await res.json();
+            setUser(data.result);
+        } catch (error) {
+            setUser(false);
+        }
+    };
+
     const logout = () => {
         setUser(false);
         setToken(null);
@@ -57,6 +63,17 @@ export default function UserContextProvider({ children }) {
         localStorage.removeItem("");
         navigate("/")
     };
+
+    useEffect(() => {
+        if (token) {
+            getUser(token);
+            getFavorites(token);
+        } else {
+            setUser(false);
+        }
+        getFavorites(token)
+    }, [token]);
+
 
     return (
         <AuthContext.Provider value={{ user, getUser, token, saveToken, logout, favorites, setFavorites }}>
