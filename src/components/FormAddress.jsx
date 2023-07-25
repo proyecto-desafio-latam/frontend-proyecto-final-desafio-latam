@@ -1,205 +1,170 @@
 import { useEffect, useState } from "react";
+import { useAuthContext } from '../context/AuthContext';
 
-const FormAddress = ({ address, setAddress }) => {
-  const [commune, setCommune] = useState([]);
-  const [selectedCommune, setSelectedCommune] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
+
+const FormAddress = () => {
+
+  const [selectedRegion, setSelectedRegion] = useState({});
+  const [selectedCommune, setSelectedCommune] = useState({});
+  const [regions, setRegions] = useState([]);
+  const [communes, setCommunes] = useState([]);
   const [addressLine, setAddressLine] = useState("");
   const [error, setError] = useState("");
-  const [regiones, setRegiones] = useState([]);
+
+  const { user } = useAuthContext();
+
+
+
 
   const getLocations = async () => {
-    const response = await fetch(
-      "https://node-bookstore-ww7n.onrender.com/api/v1/addresses"
-    );
+    const connectionString = "https://node-bookstore-ww7n.onrender.com/";
+    const response = await fetch(connectionString + "api/v1/addresses");
     const data = await response.json();
-    console.log(data.result);
-    setRegiones(data.result);
+    // console.log('El usuario es:' + user.email);
+    // console.log('El usuario es:' + user.id);
+    const availableRegions = data.result;
+    console.log(availableRegions);
+    setRegions(availableRegions);
   };
 
   useEffect(() => {
     getLocations();
-    // getCommunes();
-  }, []);
+    console.log("ID de la comuna seleccionada:", selectedCommune.id);
+  }, [selectedCommune])
 
-  const handleRegionChange = (event) => {
-    const selectedRegionId = event.target.value;
-    const selectedRegion = regiones.find(
-      (region) => region.region_id === parseInt(selectedRegionId)
-    );
-    setSelectedRegion(selectedRegion);
+
+  const handleRegionChange = (e) => {
+    const selectedRegionName = e.target.value;
+    setSelectedRegion({ name: selectedRegionName, id: null });
+    console.log(selectedRegionName);
+
+    // Busca la región seleccionada en el arreglo avaibleRegions
+    const selectedRegionData = regions.find((region) => region.region_name === selectedRegionName);//intercambio de availableRegions por regions
+    console.log(selectedRegionData);
+    // Actualizar el estado de las comunas disponibles según la región seleccionada
+    if (selectedRegionData && selectedRegionData.communes) {
+      setCommunes(selectedRegionData.communes);
+      setSelectedCommune({}); // Reinicia la comuna selecionada
+    } else {
+      setCommunes([]);
+      setSelectedCommune({});
+    }
+
   };
 
   const handleCommuneChange = (event) => {
-    const selectedCommuneId = event.target.value;
-    setSelectedCommune(selectedCommuneId);
-  };
-  const postData = async () => {
-    try {
-      const requestBody = {
-        communeId: selectedCommune, // Utiliza el ID de la comuna seleccionada
-        addressLine: addressLine,
-        // userId: userId, // Asume que tienes el ID del usuario disponible en alguna variable llamada "userId"
-      };
-      console.log("Request Body:", requestBody);
-
-      const response = await fetch("http://localhost:3002/api/v1/addresses", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          //Authorization: `Bearer ${token}`// Aquí podrías incluir un token de autenticación si es necesario
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al enviar los datos");
-      }
-
-      // Obtener el nombre de la comuna seleccionada
-      const selectedCommuneName =
-        commune.find((commune) => commune.id === selectedCommune)?.name || "";
-
-      const newAddress = {
-        region: selectedRegion ? selectedRegion.region_name : "",
-        commune: selectedCommuneName,
-        id: Math.random(),
-        addressLine,
-      };
-
-      const updatedAddresses = [...address, newAddress];
-      localStorage.setItem("Addresses", JSON.stringify(updatedAddresses));
-
-      // Limpiar los campos después del envío
-      setSelectedRegion(null);
-      setSelectedCommune(null);
-      setAddressLine("");
-
-      // Aquí puedes hacer algo con la respuesta del servidor si es necesario
-      // Por ejemplo, mostrar un mensaje de éxito o actualizar el estado del componente
-    } catch (error) {
-      console.log(error);
-      // Manejar errores si es necesario
-    }
+    const selectedCommuneName = event.target.value;
+    setSelectedCommune({
+      name: selectedCommuneName,
+      id: communes.find((comuna) => comuna.name === selectedCommuneName)?.id,
+    });
+    console.log(selectedCommuneName.id);
+    console.log("ID de la comuna seleccionada handleCommuneChange:", selectedCommune.id);
+    console.log(selectedCommune);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-    if (!addressLine.trim() || selectedCommune === null) {
-      // Verifica que se haya seleccionado una comuna válida
-      setError("Llena todos los campos");
+
+
+  const handleSubmit = () => {
+    // Obtener el id de la comuna seleccionada
+    const selectedCommuneId = selectedCommune.id;
+
+    // Verificar si el id es un número válido
+    const communeId = typeof selectedCommuneId === "number" ? selectedCommuneId : null;
+    console.log(communeId);
+
+    // Obtener la dirección ingresada en el input
+    const address = addressLine;
+
+    // Verificar que todos los datos requeridos estén disponibles
+    if (!selectedCommuneId || !address) {
+      console.error("Faltan datos requeridos para la solicitud POST");
       return;
     }
 
-    const newAddress = {
-      region: selectedRegion ? selectedRegion.region_name : "",
-      commune: selectedCommune ? selectedCommune : "", // Utiliza el ID de la comuna seleccionada
-      id: Math.random(),
-      addressLine,
+    // Datos listos para enviar en la solicitud POST
+    const data = {
+      address: address,
+      commune_id: Number(selectedCommuneId),
     };
 
-    setAddress((prevAddresses) => [...prevAddresses, newAddress]);
-
-    // Aquí puedes hacer lo que necesites con la información antes de enviarla al servidor
-    postData();
-
-    // Limpiar los campos después del envío
-    setSelectedRegion(null);
-    setSelectedCommune(null);
-    setAddressLine("");
+    // Realizar la solicitud POST utilizando fetch
+    fetch(`http://localhost:3002/api/v1/user/${user.id}/addresses`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error en la solicitud POST");
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        // Manejar la respuesta del servidor si es necesario
+        console.log("Solicitud POST exitosa:", responseData);
+      })
+      .catch((error) => {
+        // Manejar errores en caso de que la solicitud falle
+        console.error("Error en la solicitud POST:", error);
+      });
   };
-
-  const createNewAddress = () => {
-    // Obtener el objeto de la comuna seleccionada
-    const selectedCommuneObj =
-      commune.find((commune) => commune.id === selectedCommune) || {};
-
-    // Obtener el nombre de la comuna seleccionada
-    const selectedCommuneName = selectedCommuneObj.name || "";
-
-    const newAddress = {
-      commune: selectedCommuneName,
-      communeId: selectedCommune,
-      region: selectedRegion.region_name,
-      regionId: selectedRegion.region_id,
-      addressLine,
-    };
-
-    return newAddress;
-  };
-
-  const newAddress = createNewAddress();
-  console.log(newAddress);
 
   return (
+
     <div>
       <form onSubmit={handleSubmit}>
         <div className="form-group mt-3">
           <label className="form-label">Región</label>
-          <select
-            onChange={handleRegionChange}
-            defaultValue={"placeholder"}
-            className="selectAddress"
-          >
-            <option value={"placeholder"} disabled>
-              Región
-            </option>
-            {regiones.map((region) => (
-              <option
-                key={region.region_id}
-                value={region.region_id}
-                className="form-control"
-              >
-                {region.region_name}
-              </option>
+          <select className="selectAddress" value={selectedRegion.name || ""} onChange={handleRegionChange}>
+            <option value="" disabled>Región</option>
+            {regions.map((region) => (
+              <option key={region.region_id} value={region.region_name}>{region.region_name}</option>
             ))}
           </select>
         </div>
-        {console.log(selectedRegion)};
-        <div className="form-group mt-3">
-          <label className="form-label">Comunas</label>
-          {selectedRegion && (
-            <select
-              className="form-label selectAddress"
-              onChange={handleCommuneChange}
-              value={selectedCommune} // Establece el valor seleccionado en el select de comunas
-            >
-              {selectedRegion.communes
-                .sort((a, b) => {
-                  if (a.name < b.name) {
-                    return -1;
-                  }
-                })
-                .map((commune) => (
-                  <option
-                    key={commune.id}
-                    value={commune.id} // Utiliza el ID de la comuna como valor de la opción
-                    className="form-control"
-                  >
-                    {commune.name}
+
+        {selectedRegion.name && (
+          <>
+            <div className="form-group mt-3">
+              <label className="form-label">Comunas</label>
+              <select value={selectedCommune.name || ""} onChange={handleCommuneChange}>
+                <option value="">Seleccione una comuna</option>
+                {communes.map((comuna) => (
+                  <option key={comuna.id} value={comuna.name}>
+                    {comuna.name}
                   </option>
                 ))}
-            </select>
-          )}
-        </div>
-        <div className="form-group mt-3">
-          <label className="form-label">Dirección</label>
-          <input
-            onChange={(e) => setAddressLine(e.target.value)}
-            type="text"
-            value={addressLine}
-            className="form-control selectAddress"
-            placeholder="Ingresa direccion"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary mt-4">
-          Agregar dirección
-        </button>
-        <p className=" mt-2">{error}</p>
+              </select>
+            </div>
+            {selectedCommune.name && (
+              <>
+                <div className="form-group mt-3">
+                  <label className="form-label">Dirección</label>
+                  <input
+                    onChange={(e) => setAddressLine(e.target.value)}
+                    type="text"
+                    value={addressLine}
+                    className="form-control selectAddress"
+                    placeholder="Ingresa direccion"
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary mt-4">
+                  Agregar dirección
+                </button>
+                <p className=" mt-2">{error}</p>
+              </>
+            )}
+
+          </>
+        )}
       </form>
     </div>
+
   );
-};
+}
 
 export default FormAddress;
+

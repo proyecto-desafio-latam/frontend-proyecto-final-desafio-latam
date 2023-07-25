@@ -96,7 +96,7 @@ const Cart = () => {
                     cart_details: cartDetail,
                 }),
             });
-            
+
             if (!response.ok) {
                 // Si la respuesta del servidor no es exitosa, lanzamos una excepción
                 // y el bloque catch se encargará de manejar el error
@@ -116,6 +116,7 @@ const Cart = () => {
     return (
         <>
             <main className='general-container'>
+                {/* Cart 🛒 */}
                 <h2 className='carrito-title'>Carrito 🛒</h2>
                 <table>
                     <thead>
@@ -163,16 +164,24 @@ const Cart = () => {
 
                     </tbody>
                 </table>
-                <br />
                 <h2>Direcciones🧭</h2>
                 <table>
                     <thead>
-                        <tr>
-                            <th>Direcciones</th>
+                        {/* <tr ><th colSpan="5">Direcciones</th></tr> */}
+                        <tr>                
+                            <th>Dirección</th>
+                            <th>Comuna</th>
+                            <th>Región</th>
+                            <th>Costo envío</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr></tr>
+                        <tr>                            
+                            <td>Dirección</td>
+                            <td>Comuna</td>
+                            <td>Región</td>
+                            <td>Costo envío</td>
+                        </tr>
                     </tbody>
                 </table>
                 <br />

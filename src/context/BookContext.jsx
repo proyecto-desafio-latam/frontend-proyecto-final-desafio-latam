@@ -17,9 +17,11 @@ export default function BookContextProvider({ children }) {
       const connectionString = "https://node-bookstore-ww7n.onrender.com/";
       const response = await fetch(connectionString + "api/v1/books");
       if (!response.ok) throw "No se puede desplegar la información";
-      console.log(response);
+      // console.log('Response error !response.ok');
+      // console.log(response);
       const { result } = await response.json();
-      console.log(result);
+      // console.log('ListBooks from BookContext(getData)');
+      // console.log(result);
       setBooks(result);
     } catch (error) {
       setError(error);
