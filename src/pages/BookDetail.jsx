@@ -101,7 +101,7 @@ const BookDetail = () => {
 
     return (
         <div className="container mt-5 p-5">
-            < div className="card mb-3 mt-5" key={book.id}>
+            < div className="card mb-3 mt-5 overflow-hidden" key={book.id}>
                 <div className="row g-0">
                     <div className="col-md-4 position">
                         <div className="img-container">
@@ -136,7 +136,7 @@ const BookDetail = () => {
                                         Reseña
                                     </button>
                                 </h3>
-                                <div className="accordion-collapse collapse show" id="q-1" data-bs-parent="#faq">
+                                <div className="accordion-collapse collapse" id="q-1" data-bs-parent="#faq">
                                     <div className="accordion-body fs-sm pt-0">
                                         <p className="justify">
                                             {book.description}

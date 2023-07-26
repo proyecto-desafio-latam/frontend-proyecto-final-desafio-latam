@@ -16054,6 +16054,11 @@ img-comparison-slider:focus {
   text-align: justify;
 }
 
+.dropdown-menu-user {
+  left: unset !important;
+  right: 0;
+}
+
 * {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono", "Droid Sans Mono", monospace, monospace;
 }
