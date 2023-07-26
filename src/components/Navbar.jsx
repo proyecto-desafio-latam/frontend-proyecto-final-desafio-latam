@@ -92,7 +92,7 @@ const Navbar = () => {
                   </i>
                 </Link>
               </li>
-              
+
               <li>
                 <Link to="/user/addresses" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
@@ -154,6 +154,21 @@ const Navbar = () => {
                   Sobre nosotros
                 </NavLink>
               </li>
+              {user.is_admin && <li className="nav-item">
+                <NavLink to="/publication" className="nav-link ">
+                  Agregar Libro
+                </NavLink>
+              </li>}
+              {user.is_admin && <li className="nav-item">
+                <NavLink to="/author" className="nav-link ">
+                  Agregar Autor
+                </NavLink>
+              </li>}
+              {user.is_admin && <li className="nav-item">
+                <NavLink to="/category" className="nav-link ">
+                  Agregar Categoría
+                </NavLink>
+              </li>}
             </ul>
           </nav>
         </div>
