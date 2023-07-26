@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 export const BookContext = createContext();
 
@@ -44,7 +43,7 @@ export default function BookContextProvider({ children }) {
 
   return (
     <BookContext.Provider
-      value={{ books, setBooks, error, setError, FormatCoin, book, setBook, getBook }}
+      value={{ books, setBooks, getData, error, setError, FormatCoin, book, setBook, getBook }}
     >
       {children}
     </BookContext.Provider>

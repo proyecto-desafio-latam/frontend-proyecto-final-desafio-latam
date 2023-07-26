@@ -31,7 +31,7 @@ const ListFav = () => {
                 </tr>
               </thead>
               <tbody>
-                {favorites.map((item) => {
+                {favorites.map((item) => { //dejar independiente de books
                   const book = books.find(book => book.id == item.book_id);
 
                   return (
@@ -49,11 +49,7 @@ const ListFav = () => {
         </div>
       </>
     );
-
-
   }
-
-
 };
 
 export default ListFav;

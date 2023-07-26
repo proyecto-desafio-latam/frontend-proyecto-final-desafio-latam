@@ -112,7 +112,7 @@ const BookDetail = () => {
                     <div className="col-md-8">
                         <div className="card-body">
                             <h5 className="fs-1">{book.title}</h5>
-                            <p className="card-text"><b> Autor:</b> {book.author}</p>
+                            <p className="card-text"><b> Autor:</b> {book.author.name}</p>
                             <h4 className="card-text">
                                 <b> {FormatCoin(book.price)}</b>
                             </h4>
@@ -150,7 +150,7 @@ const BookDetail = () => {
                                 </h3>
                                 <div className="accordion-collapse collapse" id="q-2" data-bs-parent="#faq">
                                     <div className="accordion-body fs-sm pt-0">
-                                        <p>{book.category}</p>
+                                        <p>{book.category.name}</p>
                                     </div>
                                 </div>
                             </div>

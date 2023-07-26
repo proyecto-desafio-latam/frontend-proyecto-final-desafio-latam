@@ -4,9 +4,10 @@ import { useAuthContext } from "../context/AuthContext";
 
 const addAuthor = () => {
     const [author, setAuthor] = useState();
+    const [message, setMessage] = useState("");
     const [success, setSuccess] = useState(false);
     const { token } = useAuthContext();
-    
+
     const handleSubmit = async (values, { resetForm }) => {
         try {
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}authors`, {
@@ -22,9 +23,12 @@ const addAuthor = () => {
                 const data = await response.json();
                 setAuthor(data.result);
                 setSuccess(true);
+                setMessage(`agregado con éxito.`);
                 resetForm();
             } else {
-                console.log("Error en la solicitud");
+                setAuthor(values)
+                setSuccess(false)
+                setMessage(`ya existe.`)
             }
         } catch (error) {
             console.log("Error en la solicitud:", error);
@@ -68,13 +72,10 @@ const addAuthor = () => {
                                 Agregar
                             </button>
                         </div>
-                        {success ? (
-                            <div className="alert alert-success mt-3">
-                                {author && author.name} agregado con éxito.
-                            </div>
-                        ) : (<div className="alert alert-danger mt-3">
-                            El autor ya existe, revisalo en la lista
-                        </div>)}
+                        {message &&
+                            <div className={(success ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
+                                {`Autor ${author.name} ${message}`}
+                            </div>}
                     </Form>
                 )}
             </Formik>

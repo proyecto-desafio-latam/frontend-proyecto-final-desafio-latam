@@ -4,8 +4,8 @@ import { useAuthContext } from "../context/AuthContext";
 
 const AddCategory = () => {
     const [category, setCategory] = useState();
-    const [success, setSuccess] = useState(false);
     const [message, setMessage] = useState("");
+    const [success, setSuccess] = useState(false);
     const { token } = useAuthContext();
 
     const handleSubmit = async (values, { resetForm }) => {
@@ -23,13 +23,12 @@ const AddCategory = () => {
                 const data = await response.json();
                 setCategory(data.result);
                 setSuccess(true);
-                setMessage(`${category.name} agregada con éxito.`)
+                setMessage(`agregada con éxito.`)
                 resetForm();
             } else {
-                console.log("Error en la solicitud");
-                setMessage(`:( no exito.`)
+                setCategory(values)
                 setSuccess(false)
-
+                setMessage(`ya existe.`)
             }
         } catch (error) {
             console.log("Error en la solicitud:", error);
@@ -74,20 +73,10 @@ const AddCategory = () => {
                             </button>
                         </div>
 
-                        {category && success ? (
-                            <div className="alert alert-success mt-3">
-                                {category.name} agregado con éxito.
-                            </div>
-                        ) :
-                         (!success && !category && (
-                            <div className="alert alert-danger mt-3">
-                                No se pudo agregar la categoría.
-                            </div>
-                        ))
-                    
-                    }
-                        
-
+                        {message &&
+                            <div className={(success ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
+                                {`Categoria ${category.name} ${message}`}
+                            </div>}
                     </Form>
                 )}
             </Formik>
