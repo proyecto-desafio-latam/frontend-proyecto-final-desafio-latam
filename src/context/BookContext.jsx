@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const BookContext = createContext();
 
@@ -15,7 +16,7 @@ export default function BookContextProvider({ children }) {
 
   const getData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/books`);
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}books`);
       if (!response.ok) throw "No se puede desplegar la información";
       console.log(response);
       const { result } = await response.json();
@@ -29,13 +30,13 @@ export default function BookContextProvider({ children }) {
     getData();
   }, []);
 
-  const getBook = async () => {
+  const getBook = async (id) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/books/:id`);
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}books/${id}`);
       if (!response.ok) throw "No se puede desplegar la información";
       console.log(response);
       const data = await response.json();
-      setBook(data);
+      setBook(data.result);
     } catch (error) {
       setError(error);
     }
