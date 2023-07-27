@@ -1,13 +1,9 @@
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { useBookContext } from "../context/BookContext";
 
 const ListFav = () => {
 
   const { favorites } = useAuthContext()
-  console.log("listafav")
-  console.log(favorites)
-  const { books } = useBookContext()
 
   if (favorites.length === 0 || books.length === 0) {
     return (
@@ -31,15 +27,13 @@ const ListFav = () => {
                 </tr>
               </thead>
               <tbody>
-                {favorites.map((item) => { //dejar independiente de books
-                  const book = books.find(book => book.id == item.book_id);
-
+                {favorites.map((item) => {
                   return (
                     <tr key={item.favorite_id}>
-                      <td><Link to={`/books/${book.id}`}>{book.id}</Link></td>
-                      <td>{book.title}</td>
-                      <td>{book.author.name}</td>
-                      <td>{book.category.name}</td>
+                      <td><Link to={`/books/${item.book_id}`}>{item.book_id}</Link></td>
+                      <td>{item.title}</td>
+                      <td>{item.author.name}</td>
+                      <td>{item.category.name}</td>
                     </tr>
                   );
                 })}
