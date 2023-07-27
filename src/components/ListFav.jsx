@@ -5,7 +5,7 @@ const ListFav = () => {
 
   const { favorites } = useAuthContext()
 
-  if (favorites.length === 0 || books.length === 0) {
+  if (favorites.length === 0) {
     return (
       <div  >
         <p className="text-center fs-md mt-5">Aún no tienes favoritos, para poder agregarlos, accede al catálogo de libros <Link to="/books">aquí</Link></p>
