@@ -10,7 +10,7 @@ export default function Login() {
 
     const handleSubmit = async (values, { resetForm }) => {
         try {
-          const response = await fetch("https://api.escuelajs.co/api/v1/auth/login", {
+          const response = await fetch(`${import.meta.env.VITE_BASE_URL}login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -20,7 +20,8 @@ export default function Login() {
     
           if (response.ok) {
             const data = await response.json()
-            saveToken(data.access_token)
+            console.log(data)
+            saveToken(data)
             resetForm();
             setLoginSuccess(true);
             setTimeout(() => setLoginSuccess(false), 4000);

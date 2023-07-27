@@ -3,8 +3,8 @@ import { TbWorldHeart } from "react-icons/tb"
 
 const About = () => {
   return (
-    <>
-      <div className="m-5 pt-5">
+    < div className="container">
+      <div className="mt-5 mb-5 pt-5">
         <h1 className="text-center mt-5">Sobre nosotros</h1>
         <p className="fw-bolder justify mt-5">
           Bienvenido a nuestra tienda de libros online, donde nos apasiona
@@ -45,7 +45,7 @@ const About = () => {
           <TbWorldHeart style={{ color: "brown", fontSize: '70px', textAlign: "center" }} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { useCartContext } from "../context/CartContext";
 
 const Navbar = () => {
 
-  const { user, logout, favorites } = useAuthContext()
+  const { user, logout, favorites } = useAuthContext();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const { cart } = useCartContext();
   const calculateTotalQuantity = () => {
@@ -20,8 +22,8 @@ const Navbar = () => {
   const totalQuantityCart = calculateTotalQuantity();
 
   return (
-    <header
-      className="header navbar navbar-expand bg-light border-bottom border-light shadow fixed-top"
+    <nav
+      className="navbar navbar-expand-lg bg-light border-bottom border-light shadow fixed-top"
       data-scroll-header
     >
       <div className="container-fluid pe-lg-4">
@@ -43,7 +45,10 @@ const Navbar = () => {
             <Link
               href="#"
               className="d-flex nav-link me-2"
-              data-bs-toggle="dropdown"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
+              aria-expanded="false"
+              onClick={() => setShowDropdown(!showDropdown)}
             >
               <img
                 src="../avatar.png"
@@ -57,7 +62,7 @@ const Navbar = () => {
               </div>
             </Link>
             <ul
-              className="dropdown-menu dropdown-menu-end my-1"
+              className={`dropdown-menu dropdown-menu-end my-1 ${showDropdown ? "show" : ""} dropdown-menu-user`}
               style={{ width: "14rem" }}
             >
 
@@ -92,7 +97,7 @@ const Navbar = () => {
                   </i>
                 </Link>
               </li>
-              
+
               <li>
                 <Link to="/user/addresses" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
@@ -154,11 +159,26 @@ const Navbar = () => {
                   Sobre nosotros
                 </NavLink>
               </li>
+              {user.is_admin && <li className="nav-item">
+                <NavLink to="/publication" className="nav-link ">
+                  Agregar Libro
+                </NavLink>
+              </li>}
+              {user.is_admin && <li className="nav-item">
+                <NavLink to="/author" className="nav-link ">
+                  Agregar Autor
+                </NavLink>
+              </li>}
+              {user.is_admin && <li className="nav-item">
+                <NavLink to="/category" className="nav-link ">
+                  Agregar Categoría
+                </NavLink>
+              </li>}
             </ul>
           </nav>
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 
