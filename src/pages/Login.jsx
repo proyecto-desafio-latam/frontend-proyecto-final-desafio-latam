@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [loginSuccess, setLoginSuccess] = useState(false);
+    const [message, setMessage] = useState("");
     const {saveToken} = useAuthContext()
     const navigate = useNavigate()
 
@@ -24,11 +25,12 @@ export default function Login() {
             saveToken(data)
             resetForm();
             setLoginSuccess(true);
+            setMessage(`Login exitoso`);
             setTimeout(() => setLoginSuccess(false), 4000);
-            console.log("Login exitoso");
             navigate("/")
           } else {
-            console.log("Error en la solicitud");
+            setMessage(`Email y/o contraseña incorrecta`);
+            setLoginSuccess(false);
           }
         } catch (error) {
           console.log("Error en la solicitud:", error);
@@ -101,7 +103,10 @@ export default function Login() {
                                 <p>Aun no tienes cuenta? <Link to="/register">crea una aquí</Link></p>
                             </div>
 
-                            {loginSuccess && <p className="success-message">Login exitoso</p>}
+                            {message &&
+                            <div className={(loginSuccess ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
+                                {`${message}`}
+                            </div>}
                         </Form>
                     )}
                 </Formik>
