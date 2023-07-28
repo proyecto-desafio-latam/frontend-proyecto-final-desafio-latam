@@ -1,10 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { useCartContext } from "../context/CartContext";
+import { useAddressesContext } from "../context/AddressesContext";
 
 const Navbar = () => {
 
-  const { user, logout, favorites } = useAuthContext()
+  const { userAddresses } = useAddressesContext();
+  const { user, logout, favorites } = useAuthContext();
 
   const { cart } = useCartContext();
   const calculateTotalQuantity = () => {
@@ -92,13 +94,13 @@ const Navbar = () => {
                   </i>
                 </Link>
               </li>
-              
+
               <li>
                 <Link to="/user/addresses" className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
                     Direcciones
                   </i>
-                  <span className="ms-auto fs-xs text-muted">15</span>
+                  <span className="ms-auto fs-xs text-muted">{userAddresses.length}</span>
                 </Link>
               </li>
               <li>

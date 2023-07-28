@@ -148,7 +148,7 @@ const FormAddress = () => {
                     type="text"
                     value={addressLine}
                     className="form-control selectAddress"
-                    placeholder="Ingresa direccion"
+                    placeholder="Vicuña Mackena 4945"
                   />
                 </div>
                 <button type="submit" className="btn btn-primary mt-4">
