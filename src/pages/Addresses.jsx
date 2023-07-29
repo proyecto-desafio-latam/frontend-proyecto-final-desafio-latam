@@ -6,7 +6,9 @@ const Addresses = () => {
     () => JSON.parse(localStorage.getItem("Addresses")) || []
   );
 
-  const [commune, setCommune] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const [commune, setComune] = useState();
+
   const getCommunes = async () => {
     try {
       const response = await fetch(
@@ -14,8 +16,21 @@ const Addresses = () => {
       );
       if (!response.ok) throw "No se puede desplegar la información";
       const data = await response.json();
-      console.log(data.result);
-      setCommune(data);
+      setRegions(data.result);
+      console.log(regions);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserAddresses = async (user_id = 2) => {
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_BASE_URL + "/user/" + user_id + "/addresses"
+      );
+      if (!response.ok) throw "No se puede desplegar la información";
+      const data = await response.json();
+      setAddress(data.result);
     } catch (error) {
       console.log(error);
     }
@@ -23,7 +38,8 @@ const Addresses = () => {
 
   useEffect(() => {
     getCommunes();
-  }, [address]);
+    getUserAddresses();
+  }, []);
 
   return (
     <div className="container mt-5 pt-5">
@@ -41,19 +57,30 @@ const Addresses = () => {
       <div className="container pd-4 mt-5">
         <hr />
         <h5 className="mt-3">Listado de direcciones</h5>
-        {address.map(({ id, region, communeId, addressLine }) => {
-          // Busca el nombre de la comuna correspondiente
-          const communeName =
-            commune.find((commune) => commune.id === communeId)?.name || "";
-          return (
-            <li key={id}>
-              {region} - {communeName.commune} - {addressLine}
-            </li>
-          );
-        })}
+        {address.length ? (
+          address.map(({ id, commune_name, address }) => {
+            const i = +1;
+            // Busca el nombre de la comuna correspondiente
+            const communeName =
+              regions.find((communes) => communes.name === commune_name)
+                ?.name || "";
+            console.log(
+              regions.includes({ commune_name }),
+              { commune_name },
+              regions
+            );
+            return (
+              <li key={id}>
+                {i} - {communeName.commune_name} - {address}
+              </li>
+            );
+          })
+        ) : (
+          <div>No tienes direcciones registradas</div>
+        )}
         {/* <ul className="mb-5 pb-5">
-                    {address.map(({ id, region, communeId, addressLine }) => {
-                        return <li key={id}>{region}- {commune} - {addressLine}</li>
+                    {address.map(({ id, region, commune_id, address }) => {
+                        return <li key={id}>{region}- {commune} - {address}</li>
                     })}
                 </ul> */}
       </div>

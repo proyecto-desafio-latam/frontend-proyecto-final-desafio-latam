@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-const FormAddress = ({ address, setAddress }) => {
-  const [commune, setCommune] = useState([]);
+const FormAddress = ({ address, setAddress, commune }) => {
   const [selectedCommune, setSelectedCommune] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [addressLine, setAddressLine] = useState("");
@@ -38,16 +37,19 @@ const FormAddress = ({ address, setAddress }) => {
         addressLine: addressLine,
         // userId: userId, // Asume que tienes el ID del usuario disponible en alguna variable llamada "userId"
       };
-     /*  console.log("Request Body:", requestBody); */
+      /*  console.log("Request Body:", requestBody); */
 
-      const response = await fetch(import.meta.env.VITE_BASE_URL+"/addresses", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          //Authorization: `Bearer ${token}`// Aquí podrías incluir un token de autenticación si es necesario
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        import.meta.env.VITE_BASE_URL + "/user" + "/2" + "/addresses",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            //Authorization: `Bearer ${token}`// Aquí podrías incluir un token de autenticación si es necesario
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Error al enviar los datos");
@@ -87,16 +89,15 @@ const FormAddress = ({ address, setAddress }) => {
       // Verifica que se haya seleccionado una comuna válida
       setError("Llena todos los campos");
       return;
+    } else {
+      const newAddress = {
+        address: addressLine,
+        commune_name: selectedCommune ? selectedCommune : "", // Utiliza el ID de la comuna seleccionada
+        id: Date.now(),
+        region_name: selectedRegion ? selectedRegion.region_name : "",
+      };
+      setAddress([...address, newAddress]);
     }
-
-    const newAddress = {
-      region: selectedRegion ? selectedRegion.region_name : "",
-      commune: selectedCommune ? selectedCommune : "", // Utiliza el ID de la comuna seleccionada
-      id: Math.random(),
-      addressLine,
-    };
-
-    setAddress((prevAddresses) => [...prevAddresses, newAddress]);
 
     // Aquí puedes hacer lo que necesites con la información antes de enviarla al servidor
     postData();
@@ -110,7 +111,9 @@ const FormAddress = ({ address, setAddress }) => {
   const createNewAddress = () => {
     // Obtener el objeto de la comuna seleccionada
     const selectedCommuneObj =
-    selectedRegion.commune.find((commune) => commune.id === selectedCommune) || {};
+      selectedRegion.commune.find(
+        (commune) => commune.id === selectedCommune
+      ) || {};
 
     // Obtener el nombre de la comuna seleccionada
     const selectedCommuneName = selectedCommuneObj.name || "";
@@ -126,8 +129,8 @@ const FormAddress = ({ address, setAddress }) => {
     return newAddress;
   };
 
- /*  const newAddress = createNewAddress(); */
- /*  console.log(newAddress); */
+  /*  const newAddress = createNewAddress(); */
+  /*  console.log(newAddress); */
 
   return (
     <div>
@@ -153,7 +156,7 @@ const FormAddress = ({ address, setAddress }) => {
             ))}
           </select>
         </div>
-        {console.log(selectedRegion)};
+        {console.log(selectedRegion)};{console.log(address)};
         <div className="form-group mt-3">
           <label className="form-label">Comunas</label>
           {selectedRegion && (
