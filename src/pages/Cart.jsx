@@ -1,10 +1,11 @@
 // import '../assets/cart.css';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import { useBookContext } from '../context/BookContext';
 import { useCartContext } from '../context/CartContext';
 import { useAddressesContext } from '../context/AddressesContext';
+
 
 
 const Cart = () => {
@@ -197,7 +198,21 @@ const Cart = () => {
             // Aquí puedes manejar errores de la solicitud o del backend, si ocurren
             console.error('Error:', error);
         }
+
     };
+    console.log('Soy cart: ', cart);
+    console.log('Soy cart: ', cart);
+    const totalWithDelivery = () => {
+        return totalPurchase + selectedAddress.delivery_price;
+    }
+
+    useEffect(() => {
+
+    }, [cart])
+
+    console.log('Esto es totalPurchase:', totalPurchase)
+
+
 
 
 
@@ -223,7 +238,7 @@ const Cart = () => {
                             </div>
                         ))}
                     </div>
-                    {selectedAddress && (
+                    {selectedAddress && selectedAddress.address && selectedAddress.delivery_price && selectedAddress.commune_name && selectedAddress.region_name && (
                         <>
                             <div>
                                 <br />
@@ -234,7 +249,6 @@ const Cart = () => {
                                 </p>
                             </div>
                             <p><strong>¿No encuentras tu domicilio? ¡Agregalo <Link to="/user/addresses">aquí!</Link></strong></p>
-
                         </>
                     )}
 
@@ -274,17 +288,30 @@ const Cart = () => {
                                 </td>
                             </tr>
                         ))}
-                        <tr>
-                            {/* <!-- Celda para el total de ventas --> */}
-                            <td colSpan="4"><strong>Total de Ventas:</strong></td>
-                            <td colSpan="1"><strong>${totalPurchase}</strong></td>
-                            {/* <!-- Celda para el botón de pagar --> */}
-                            <td colSpan="1" data-label="Acciones">
-                                <button onClick={handleCheckout} className="pagar-button">
-                                    {loading ? "Procesando..." : "Pagar"}
-                                </button>
-                            </td>
-                        </tr>
+                        {selectedAddress && selectedAddress.address && selectedAddress.delivery_price && selectedAddress.commune_name && selectedAddress.region_name && (
+
+                            <tr>
+                                <th colSpan="4"><strong>Envío</strong></th>
+                                <th colSpan="1"><strong>${selectedAddress.delivery_price}</strong></th>
+                                <th colSpan="1">-</th>
+                            </tr>
+                        )}
+
+                        {totalPurchase !== 0 && selectedAddress && selectedAddress.delivery_price ? (
+                            <tr>
+                                {/* <!-- Celda para el total de ventas --> */}
+                                <th colSpan="4"><strong>Total de Ventas:</strong></th>
+                                <th colSpan="1"><strong>${totalPurchase + selectedAddress.delivery_price}</strong></th>
+                                {/* <!-- Celda para el botón de pagar --> */}
+                                <th colSpan="1" data-label="Acciones">
+                                    <button onClick={handleCheckout} className="pagar-button">
+                                        {loading ? "Procesando..." : "Pagar"}
+                                    </button>
+                                </th>
+                            </tr>
+                        ) : null}
+
+
 
                     </tbody>
                 </table>
@@ -315,7 +342,7 @@ const Cart = () => {
                         })}
                     </tbody>
                 </table>
-            </main>
+            </main >
         </>
     );
 };
