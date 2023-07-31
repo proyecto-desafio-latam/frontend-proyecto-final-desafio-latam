@@ -69,11 +69,10 @@ const Addresses = () => {
         <hr />
         <h5 className="mt-3">Listado de direcciones</h5>
         {address.length ? (
-          address.map(({ id, commune_name, address }) => {
-            
+          address.map(({ id, commune_name, address }, index) => {
             return (
               <li key={id}>
-                {1} - {commune_name} - {address}
+                {index + 1} - {commune_name} - {address}
               </li>
             );
           })
