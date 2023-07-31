@@ -109,7 +109,7 @@ const Navbar = () => {
               </li>
               
               <li>
-                <Link to="/user/addresses" className="dropdown-item d-flex align-items-center">
+                <Link to={`/user/${user.id}/addresses`} className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
                     Direcciones
                   </i>
