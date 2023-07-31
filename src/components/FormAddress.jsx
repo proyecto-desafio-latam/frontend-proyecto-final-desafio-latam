@@ -79,6 +79,15 @@ const FormAddress = () => {
     if (!selectedCommuneId || !address) {
       console.error("Faltan datos requeridos para la solicitud POST");
       return;
+    } else {
+      const newAddress = {
+        address: addressLine,
+        commune_name: selectedCommune ? selectedCommune : "", // Utiliza el ID de la comuna seleccionada
+        id: Date.now(),
+        region_name: selectedRegion ? selectedRegion.region_name : "",
+      };
+      setAddress([...address, newAddress]);
+      console.log(newAddress);
     }
 
     // Datos listos para enviar en la solicitud POST

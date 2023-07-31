@@ -50,7 +50,7 @@ const Addresses = () => {
         <FormAddress setAddress={setAddress} address={address} />
       </div>
 
-      <div className="container pd-4 mt-5">
+      <div className="container p-4 mt-5">
         <hr />
         <h5 className="mt-3">Listado de direcciones🧭</h5>
         <table>

@@ -3,13 +3,36 @@ import { Field, Formik, Form, ErrorMessage } from 'formik';
 
 export default function Register() {
 
-    const [submittedForm, setSubmittedForm] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [message, setMessage] = useState("");
 
-    //reformulación de objeto values para que no incluya el valor 'repeatPassword'
-    const prepareData = (values) => {
-        // Eliminar la propiedad 'repeatPassword' del objeto 'values'
-        const { repeatPassword, ...data } = values;
-        return data;
+    const handleRegister = async (values, { resetForm }) => {
+        try {
+            //reformulación de objeto values para que no incluya el valor 'repeatPassword'
+            // const prepareData = (values) => {
+            //     // Eliminar la propiedad 'repeatPassword' del objeto 'values'
+            //     const { repeatPassword, ...data } = values;
+            // };
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setSuccess(true);
+                setMessage(`Usuario agregado con éxito`);
+                resetForm();
+            } else {
+                setSuccess(false);
+                setMessage(`Ya existe una cuentra registrada con este correo`);
+            }
+        } catch (error) {
+            console.log("Error en la solicitud:", error);
+        }
     };
 
     return (
@@ -18,9 +41,9 @@ export default function Register() {
                 <h2 className='text-center mt-5 mb-4'>Formulario de Registro:</h2>
                 <Formik
                     initialValues={{
-                        firstName: '',
-                        lastName: '',
-                        userName: '',
+                        name: '',
+                        lastname: '',
+                        username: '',
                         email: '',
                         password: '',
                         repeatPassword: '',
@@ -31,31 +54,31 @@ export default function Register() {
 
                         let validations = {};
 
-                        // Validación firstName
-                        if (!values.firstName) {
-                            validations.firstName = 'Por favor ingresa un nombre';
-                        } else if (!/^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/.test(values.firstName)) {
-                            validations.firstName = 'El nombre solo puede contener letras';
-                        } else if (values.firstName.length < 2) {
-                            validations.firstName = 'Ingrese un nombre válido';
+                        // Validación name
+                        if (!values.name) {
+                            validations.name = 'Por favor ingresa un nombre';
+                        } else if (!/^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/.test(values.name)) {
+                            validations.name = 'El nombre solo puede contener letras';
+                        } else if (values.name.length < 2) {
+                            validations.name = 'Ingrese un nombre válido';
                         }
 
                         // Validación lastName
-                        if (!values.lastName) {
-                            validations.lastName = 'Por favor ingresa un apellido';
-                        } else if (!/^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/.test(values.lastName)) {
-                            validations.lastName = 'El apellido solo puede contener letras';
-                        } else if (values.lastName.length < 2) {
-                            validations.lastName = 'Ingrese un apellido válido';
+                        if (!values.lastname) {
+                            validations.lastname = 'Por favor ingresa un apellido';
+                        } else if (!/^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/.test(values.lastname)) {
+                            validations.lastname = 'El apellido solo puede contener letras';
+                        } else if (values.lastname.length < 2) {
+                            validations.lastname = 'Ingrese un apellido válido';
                         }
 
-                        // Validación userName
-                        if (!values.userName) {
-                            validations.userName = 'Por favor ingresa un nombre de usuario válido';
-                        } else if (!/^[a-zA-Z0-9.\-_]+$/.test(values.userName)) {
-                            validations.userName = 'El nombre de usuario solo puede contener letras';
-                        } else if (values.userName.length < 2) {
-                            validations.userName = 'Ingrese un nombre de usuario válido';
+                        // Validación username
+                        if (!values.username) {
+                            validations.username = 'Por favor ingresa un nombre de usuario válido';
+                        } else if (!/^[a-zA-Z0-9.\-_]+$/.test(values.username)) {
+                            validations.username = 'El nombre de usuario solo puede contener letras';
+                        } else if (values.username.length < 2) {
+                            validations.username = 'Ingrese un nombre de usuario válido';
                         }
 
                         // Validación email
@@ -95,98 +118,98 @@ export default function Register() {
                     }}
 
 
-                    onSubmit={async (values, { resetForm }) => {
-
-                        // If register is success
-
-                        resetForm();             // clean inputs
-                        setSubmittedForm(true);  // change state for "Registro exitoso"
-                        console.log(submittedForm)
-                        setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
-                        console.log(values);
-                        const data = prepareData(values);
-                        console.log('Data to send:', data);
-
-                        // try {
-                        //     const response = await fetch('/api/register', {
-                        //         method: 'POST',
-                        //         headers: {
-                        //             'Content-Type': 'application/json'
-                        //         },
-                                   //aquí se debe cambiar el 'values' por data (que reformula el objeto en viado sin repeatPW)
-                        //         body: JSON.stringify(values)
-
-                        //     });
-                        //     console.log(values);
 
 
-                        //     if (response.ok) {
-                        //         // If register is success
+                    // If register is success
 
-                        //         resetForm();             // clean inputs
-                        //         setSubmittedForm(true);  // change state for "Registro exitoso"
-                        //         console.log(submittedForm)
-                        //         setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
-                        //     } else {
-                        //         // If is an error server
-                        //         console.error('Error en el servidor:', response.status);
-                        //     }
-                        // } catch (error) {
-                        //     // Error in request
-                        //     console.error('Error al enviar la solicitud:', error);
-                        // }
-                    }}
+                    // resetForm();             // clean inputs
+                    // setSubmittedForm(true);  // change state for "Registro exitoso"
+                    // console.log(submittedForm)
+                    // setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
+                    // console.log(values);
+                    // const data = prepareData(values);
+                    // console.log('Data to send:', data);
+
+                    // try {
+                    //     const response = await fetch('/api/register', {
+                    //         method: 'POST',
+                    //         headers: {
+                    //             'Content-Type': 'application/json'
+                    //         },
+                    //aquí se debe cambiar el 'values' por data (que reformula el objeto en viado sin repeatPW)
+                    //         body: JSON.stringify(values)
+
+                    //     });
+                    //     console.log(values);
+
+
+                    //     if (response.ok) {
+                    //         // If register is success
+
+                    //         resetForm();             // clean inputs
+                    //         setSubmittedForm(true);  // change state for "Registro exitoso"
+                    //         console.log(submittedForm)
+                    //         setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
+                    //     } else {
+                    //         // If is an error server
+                    //         console.error('Error en el servidor:', response.status);
+                    //     }
+                    // } catch (error) {
+                    //     // Error in request
+                    //     console.error('Error al enviar la solicitud:', error);
+                    // }
+                    onSubmit={handleRegister}
                 >
 
                     {({ errors }) => (
                         <Form className='register-form'>
                             <div className='form-field'>
-                                <label className='form-label' htmlFor="firstName">Nombre</label>
+                                <label className='form-label' htmlFor="name">Nombre</label>
                                 <Field
                                     className="form-input"
                                     type="text"
-                                    id='firstName'
-                                    name='firstName'
+                                    id='name'
+                                    name='name'
                                     placeholder='Susan'
                                 />
-                                <ErrorMessage name='firstName' component={() => (
-                                    <div className='form-error'>{errors.firstName}</div>
+                                <ErrorMessage name='name' component={() => (
+                                    <div className='form-error'>{errors.name}</div>
                                 )} />
 
                             </div>
                             <div className='form-field'>
-                                <label className='form-label' htmlFor="lastName">Apellido</label>
+                                <label className='form-label' htmlFor="lastname">Apellido</label>
                                 <Field
                                     className="form-input"
                                     type="text"
-                                    id='lastName'
-                                    name='lastName'
+                                    id='lastname'
+                                    name='lastname'
                                     placeholder='Navarro'
                                 />
-                                <ErrorMessage className='form-error' name='lastName'
+                                <ErrorMessage className='form-error' name='lastname'
                                     component={() => (
-                                        <div className='form-error'>{errors.lastName}</div>
+                                        <div className='form-error'>{errors.lastname}</div>
                                     )} />
 
                             </div>
                             <div className='form-field'>
-                                <label className='form-label' htmlFor="name">Nombre de usuario</label>
+                                <label className='form-label' htmlFor="username">Nombre de usuario</label>
                                 <Field
                                     className="form-input"
                                     type="text"
-                                    id='userName'
-                                    name='userName'
-                                    placeholder='suuuuu'
+                                    id='username'
+                                    name='username'
+                                    placeholder='username'
                                 />
                                 <ErrorMessage
                                     className='form-error'
-                                    name='userName'
+                                    name='username'
                                     component={() => (
-                                        <div className='form-error'>{errors.userName}</div>
+                                        <div className='form-error'>{errors.username}</div>
                                     )} />
                             </div>
                             <div className='form-field'>
-                                <label className='form-label' htmlFor="name">Correo</label>
+                                <label className='form-label' htmlFor="email">Correo</label>
                                 <Field
                                     className="form-input"
                                     type="email"
@@ -241,7 +264,10 @@ export default function Register() {
                                     )} />
                             </div>
                             <button className='form-button' type="submit">Registrar</button>
-                            {submittedForm && <p className="success-message">Registro exitoso</p>}
+                            {message &&
+                                <div className={(success ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
+                                    {`${message}`}
+                                </div>}
                         </Form>
                     )}
                 </Formik >

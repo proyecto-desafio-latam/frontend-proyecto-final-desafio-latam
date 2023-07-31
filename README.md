@@ -49,4 +49,4 @@ For login, enter the following credentials, issued by the APi:
 
 ## Deploy
 
--To view this site deployed, please visit: https://poetic-cactus-0e9d78.netlify.app/
+-To view this site deployed, please visit: https://mundo-libros.netlify.app/

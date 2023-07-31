@@ -1,44 +1,49 @@
-import { BiSolidHeart } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { useBookContext } from "../context/BookContext";
 
 const ListFav = () => {
 
-  const { favorites } = useAuthContext() 
-  const { books } = useBookContext()
- 
-  return (
-    <>
-      <div className="container  m-5 pt-5 vh-50">
-        <h2 className="text-center pt-3"> <BiSolidHeart style={{ color: 'red' }} /> Mis Libros Favoritos <BiSolidHeart style={{ color: 'red' }} /> </h2>
-        <div className="container-fluid border d-flex mt-5 pb-5 mb-5 ">
-          <table className="align-items-between p-3 w-100 ">
-            <thead>
-              <tr>
-                <th>#ID</th>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Categoría</th>
-              </tr>
-            </thead>
-            <tbody>
-                {favorites.map((id) => {
-                 const book = books.find(book => book.id == id);
+  const { favorites } = useAuthContext()
+
+  if (favorites.length === 0) {
+    return (
+      <div  >
+        <p className="text-center fs-md mt-5">Aún no tienes favoritos, para poder agregarlos, accede al catálogo de libros <Link to="/books">aquí</Link></p>
+      </div>
+    )
+
+  } else {
+    return (
+      <>
+        <div className="m-5 pt-3 mt-1">
+          <div className="container-fluid border-none d-flex mt-5 pb-5 mb-5 ">
+            <table className="align-items-between p-3 w-100 ">
+              <thead>
+                <tr>
+                  <th>#ID</th>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Categoría</th>
+                </tr>
+              </thead>
+              <tbody>
+                {favorites.map((item) => {
                   return (
-                    <tr key={id}>
-                      <td>{book.id}</td>
-                      <td>{book.title}</td>
-                      <td>{book.author.name}</td>
-                      <td>{book.category.name}</td>
+                    <tr key={item.favorite_id}>
+                      <td><Link to={`/books/${item.book_id}`}>{item.book_id}</Link></td>
+                      <td>{item.title}</td>
+                      <td>{item.author.name}</td>
+                      <td>{item.category.name}</td>
                     </tr>
                   );
                 })}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default ListFav;
