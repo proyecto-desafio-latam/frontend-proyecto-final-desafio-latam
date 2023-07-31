@@ -17,8 +17,7 @@ const FormAddress = () => {
 
 
   const getLocations = async () => {
-    const connectionString = "https://node-bookstore-ww7n.onrender.com/";
-    const response = await fetch(connectionString + "api/v1/addresses");
+    const response = await fetch(import.meta.env.VITE_BASE_URL + "/addresses");
     const data = await response.json();
     // console.log('El usuario es:' + user.email);
     // console.log('El usuario es:' + user.id);
@@ -90,6 +89,7 @@ const FormAddress = () => {
 
     // Realizar la solicitud POST utilizando fetch
     fetch(`http://localhost:3002/api/v1/user/${user.id}/addresses`, {
+      //fetch(import.meta.env.VITE_BASE_URL + `/user/${user.id}/addresses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

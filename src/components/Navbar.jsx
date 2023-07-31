@@ -4,18 +4,16 @@ import { useCartContext } from "../context/CartContext";
 import { useAddressesContext } from "../context/AddressesContext";
 
 const Navbar = () => {
-
-  const { userAddresses } = useAddressesContext();
   const { user, logout, favorites } = useAuthContext();
+  const { userAddresses } = useAddressesContext();
+
 
   const { cart } = useCartContext();
   const calculateTotalQuantity = () => {
     let totalQuantity = 0;
-
     cart.forEach((item) => {
       totalQuantity += item.quantity;
     });
-
     return totalQuantity;
   }
 
@@ -96,7 +94,7 @@ const Navbar = () => {
               </li>
 
               <li>
-                <Link to="/user/addresses" className="dropdown-item d-flex align-items-center">
+                <Link to={`/user/${user.id}/addresses`} className="dropdown-item d-flex align-items-center">
                   <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
                     Direcciones
                   </i>

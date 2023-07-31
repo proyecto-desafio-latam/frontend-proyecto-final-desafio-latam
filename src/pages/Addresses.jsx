@@ -13,30 +13,10 @@ const Addresses = () => {
   const { user } = useAuthContext();
   const { userAddresses, setUserAddresses } = useAddressesContext();
 
-  // const getCommunes = async () => {
-  //   try {
-  //     console.log('Soy el usuario: ' + user.id);
-  //     // const response = await fetch("https://node-bookstore-ww7n.onrender.com/api/v1/addresses");
-  //     const response = await fetch(`http://localhost:3002/api/v1/user/${user.id}/addresses`);
-  //     if (!response.ok) throw "No se puede desplegar la información";
-  //     const data = await response.json();
-  //     console.log(data.result);
-  //     // setCommune(data.result);
-  //     setAddress(data.result);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // console.log(address);
-  //   getCommunes();
-  // }, []);
-  // // }, [address]);
 
   const handleDelete = async (elementId) => {
     try {
-      const response = await fetch(`http://localhost:3002/api/v1/user/addresses/${elementId}`, {
+        const response = await fetch(import.meta.env.VITE_BASE_URL + `/addresses/${elementId}`, {
         method: 'DELETE',
       });
 
