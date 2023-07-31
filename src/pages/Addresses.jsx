@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 import FormAddress from "../components/FormAddress";
+import { useAuthContext } from "../context/AuthContext";
 
 const Addresses = () => {
-  const [address, setAddress] = useState(
-    () => JSON.parse(localStorage.getItem("Addresses")) || []
-  );
+  const { user } = useAuthContext();
+  const [address, setAddress] = useState(async () => {
+    try {
+      const urlRoute =
+        import.meta.env.VITE_BASE_URL + "user" + `/${user.id}` + "/addresses";
+      const response = await fetch(urlRoute);
+      console.log("response de address", response);
+      console.log(user);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   const [regions, setRegions] = useState([]);
   const [commune, setComune] = useState();
@@ -23,10 +34,10 @@ const Addresses = () => {
     }
   };
 
-  const getUserAddresses = async (user_id = 2) => {
+  const getUserAddresses = async () => {
     try {
       const response = await fetch(
-        import.meta.env.VITE_BASE_URL + "/user/" + user_id + "/addresses"
+        import.meta.env.VITE_BASE_URL + "/user/" + user.id + "/addresses"
       );
       if (!response.ok) throw "No se puede desplegar la información";
       const data = await response.json();
@@ -59,19 +70,10 @@ const Addresses = () => {
         <h5 className="mt-3">Listado de direcciones</h5>
         {address.length ? (
           address.map(({ id, commune_name, address }) => {
-            const i = +1;
-            // Busca el nombre de la comuna correspondiente
-            const communeName =
-              regions.find((communes) => communes.name === commune_name)
-                ?.name || "";
-            console.log(
-              regions.includes({ commune_name }),
-              { commune_name },
-              regions
-            );
+            
             return (
               <li key={id}>
-                {i} - {communeName.commune_name} - {address}
+                {1} - {commune_name} - {address}
               </li>
             );
           })

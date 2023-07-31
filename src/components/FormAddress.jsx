@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
 
 const FormAddress = ({ address, setAddress, commune }) => {
   const [selectedCommune, setSelectedCommune] = useState("");
@@ -6,6 +7,7 @@ const FormAddress = ({ address, setAddress, commune }) => {
   const [addressLine, setAddressLine] = useState("");
   const [error, setError] = useState("");
   const [regiones, setRegiones] = useState([]);
+  const { user } = useAuthContext();
 
   const getLocations = async () => {
     const response = await fetch(import.meta.env.VITE_BASE_URL + "/addresses");
@@ -33,14 +35,14 @@ const FormAddress = ({ address, setAddress, commune }) => {
   const postData = async () => {
     try {
       const requestBody = {
-        communeId: selectedCommune, // Utiliza el ID de la comuna seleccionada
-        addressLine: addressLine,
+        commune_id: selectedCommune, // Utiliza el ID de la comuna seleccionada
+        address: addressLine,
         // userId: userId, // Asume que tienes el ID del usuario disponible en alguna variable llamada "userId"
       };
       /*  console.log("Request Body:", requestBody); */
 
       const response = await fetch(
-        import.meta.env.VITE_BASE_URL + "/user" + "/2" + "/addresses",
+        import.meta.env.VITE_BASE_URL + "/user" + `/${user.id}` + "/addresses",
         {
           method: "POST",
           headers: {
@@ -97,6 +99,7 @@ const FormAddress = ({ address, setAddress, commune }) => {
         region_name: selectedRegion ? selectedRegion.region_name : "",
       };
       setAddress([...address, newAddress]);
+      console.log(newAddress);
     }
 
     // Aquí puedes hacer lo que necesites con la información antes de enviarla al servidor
