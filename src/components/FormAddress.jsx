@@ -146,7 +146,7 @@ const FormAddress = ({ address, setAddress, commune }) => {
             className="selectAddress"
           >
             <option value={"placeholder"} disabled>
-              Región
+              Seleccione una Región
             </option>
             {regiones.map((region) => (
               <option
@@ -159,7 +159,6 @@ const FormAddress = ({ address, setAddress, commune }) => {
             ))}
           </select>
         </div>
-        {console.log(selectedRegion)};{console.log(address)};
         <div className="form-group mt-3">
           <label className="form-label">Comunas</label>
           {selectedRegion && (
