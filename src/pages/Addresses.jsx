@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Zoom, toast } from "react-toastify"
 import FormAddress from "../components/FormAddress";
 import { useAddressesContext } from "../context/AddressesContext";
 
@@ -12,10 +13,11 @@ const Addresses = () => {
         const response = await fetch(import.meta.env.VITE_BASE_URL + `user/addresses/${elementId}`, {
         method: 'DELETE',
       });
-
       if (response.ok) {
         setUserAddresses((prevAddresses) => prevAddresses.filter((address) => address.id !== elementId));
+        toast.info("Dirrección borrada exitosamente", { position: toast.POSITION.TOP_CENTER, transition: Zoom, autoClose:2000 })
       } else {
+        toast.warning("No puedes borrar esta dirección, porque tienes compras asociadas", { position: toast.POSITION.TOP_CENTER, transition: Zoom })
         console.error('Error al eliminar el elemento:', response.status);
       }
     } catch (error) {
