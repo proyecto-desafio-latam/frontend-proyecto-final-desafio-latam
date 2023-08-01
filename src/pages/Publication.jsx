@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Field, Formik, Form, ErrorMessage } from "formik";
 import { useAuthContext } from "../context/AuthContext";
 import { useBookContext } from "../context/BookContext";
-import { useEffect } from "react";
+
 
 const Publication = () => {
     const [author, setAuthor] = useState([]);
@@ -17,7 +17,6 @@ const Publication = () => {
         try {
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}authors`);
             if (!response.ok) throw "No se puede desplegar la información";
-            console.log(response);
             const data = await response.json();
             setAuthor(data.result);
         } catch (error) {
@@ -29,7 +28,6 @@ const Publication = () => {
         try {
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}categories`);
             if (!response.ok) throw "No se puede desplegar la información";
-            console.log(response);
             const data = await response.json();
             setCategory(data.result);
         } catch (error) {

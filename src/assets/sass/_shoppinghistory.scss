@@ -1,22 +1,12 @@
-title {
-    display: flex;
-    height: 15vh;
-    align-items: center;
-    justify-content: center;
-}
+//
+// Shopping History
+// --------------------------------------------------
 
-h2 {
+.h2-shopping {
     margin-top: 127px;
-}
-
-.wrapper {
-    /* margin-top: 300px; */
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    justify-content: center;
-    align-items: flex-start;
-
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .accordion {
@@ -25,21 +15,15 @@ h2 {
 }
 
 .item {
-    background-color: lightblue;
+    border: 2px solid #4354AC;
     margin-bottom: 5px;
     padding: 10px 20px;
     border-radius: 5px;
 }
 
-.crt-gnrl-el {
-    /* border: 1px solid black; */
-}
-
 .cart-general {
     display: flex;
     flex-direction: row;
-    /* border: 1px solid black; */
-    padding: 5px 10px;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
@@ -48,29 +32,22 @@ h2 {
 .cart-general-wrap {
     display: flex;
     flex-direction: row;
-    /* border: 1px solid black; */
-    padding: 5px 10px;
-    justify-content: space-between;
     flex-wrap: wrap;
+    gap: 25px;
 }
 
 .cart-detail {
-    /* Cambiamos a display: block */
     display: block;
-    padding: 5px 20px;
-    /* Propiedades para la animación de expandir y contraer */
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s cubic-bezier(1, 0, 1, 0);
 }
 
-h2{
-    font-size: 20px;
-    font-weight: bold;
-}
-
-/* Agregamos la clase para mostrar los detalles del carro */
 .cart-detail-show {
     max-height: 9999px;
-    /* transition: max-height 0.5s */
+}
+
+.thead-history th{
+   background-color: #4354AC;
+   color: white;
 }

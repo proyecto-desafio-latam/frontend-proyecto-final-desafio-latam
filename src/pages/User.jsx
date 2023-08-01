@@ -46,8 +46,8 @@ const User = () => {
   };
 
   return (
-    <div>
-      <h2 className="pt-3 text-center">Mi perfil</h2>
+    <div className="pt-4">
+      <h2 className="pt-3 text-center mt-5 pt-5">Mi perfil</h2>
       <div className="container pt-5 w-50 mb-5">
         <div>
           <div className="form-group row">

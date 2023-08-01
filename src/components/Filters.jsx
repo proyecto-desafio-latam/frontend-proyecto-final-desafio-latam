@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const Filters = ({ filterCategory, setFilterCategory, setSortedBooks, search, setSearch }) => {
+const Filters = ({ filterCategory, setFilterCategory, setSortedBooks }) => {
 
     const [sort, setSort] = useState("");
     const [category, setCategory] = useState([]);
