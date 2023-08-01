@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Paginate from 'react-paginate';
 import CardBook from "../components/CardBook"
 import Filters from "../components/Filters"
 
 const Books = () => {
-        
+
     const [filterCategory, setFilterCategory] = useState(0);
     const [sortedBooks, setSortedBooks] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -12,7 +12,7 @@ const Books = () => {
     const indexOfLastBook = currentPage * booksPerPage;
     const indexOfFirstBook = indexOfLastBook - booksPerPage;
     let currentBooks = sortedBooks.slice(indexOfFirstBook, indexOfLastBook);
- 
+
     const setFilterAndResetPage = (category) => {
         setFilterCategory(category);
         setCurrentPage(1);
@@ -21,11 +21,12 @@ const Books = () => {
     return (
         <>
             <div className="container p-5 mt-5">
-                <Filters setFilterCategory={setFilterAndResetPage} filterCategory={filterCategory} setSortedBooks={setSortedBooks}/>
+                <Filters setFilterCategory={setFilterAndResetPage} filterCategory={filterCategory} setSortedBooks={setSortedBooks}  />
                 <div className="pt-4 row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4  gx-3 gx-md-4 mt-n2 mt-sm-0">
-                    {currentBooks.map((item) => (
-                        <CardBook book={item} key={item.id} />
-                    ))}
+                    {currentBooks
+                        .map((item) => (
+                            <CardBook book={item} key={item.id} />
+                        ))}
                 </div>
                 <Paginate
                     breakLabel="..."

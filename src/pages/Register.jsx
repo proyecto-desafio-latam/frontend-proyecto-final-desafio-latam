@@ -8,11 +8,6 @@ export default function Register() {
 
     const handleRegister = async (values, { resetForm }) => {
         try {
-            //reformulación de objeto values para que no incluya el valor 'repeatPassword'
-            // const prepareData = (values) => {
-            //     // Eliminar la propiedad 'repeatPassword' del objeto 'values'
-            //     const { repeatPassword, ...data } = values;
-            // };
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}register`, {
                 method: "POST",
                 headers: {
@@ -63,7 +58,7 @@ export default function Register() {
                             validations.name = 'Ingrese un nombre válido';
                         }
 
-                        // Validación lastName
+                        // Validación lastname
                         if (!values.lastname) {
                             validations.lastname = 'Por favor ingresa un apellido';
                         } else if (!/^[a-zA-ZáéíóúñÁÉÍÓÚÑ\s]+$/.test(values.lastname)) {
@@ -88,21 +83,21 @@ export default function Register() {
                             validations.email = 'Por favor ingresa un correo válido';
                         }
 
-                        // Password Validation
+                        // Validación password
                         if (!values.password) {
                             validations.password = 'Por favor ingrese una contraseña';
                         } else if (values.password.length < 6) {
                             validations.password = 'La contraseña es demasiado corta';
                         }
 
-                        // RepeatPassword Validation
+                        // x2 Validación password
                         if (!values.repeatPassword) {
                             validations.repeatPassword = 'Por favor repita la contraseña correctamente';
                         } else if (values.password !== values.repeatPassword) {
                             validations.repeatPassword = 'Las contraseñas no coinciden';
                         }
 
-                        // Birthday Validation
+                        // Validación birthday
                         const currentDate = new Date(); // Obtener la fecha actual
                         const selectedDate = new Date(values.birthday); // Obtener la fecha ingresada
 
@@ -116,48 +111,6 @@ export default function Register() {
 
                         return validations;
                     }}
-
-
-
-
-                    // If register is success
-
-                    // resetForm();             // clean inputs
-                    // setSubmittedForm(true);  // change state for "Registro exitoso"
-                    // console.log(submittedForm)
-                    // setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
-                    // console.log(values);
-                    // const data = prepareData(values);
-                    // console.log('Data to send:', data);
-
-                    // try {
-                    //     const response = await fetch('/api/register', {
-                    //         method: 'POST',
-                    //         headers: {
-                    //             'Content-Type': 'application/json'
-                    //         },
-                    //aquí se debe cambiar el 'values' por data (que reformula el objeto en viado sin repeatPW)
-                    //         body: JSON.stringify(values)
-
-                    //     });
-                    //     console.log(values);
-
-
-                    //     if (response.ok) {
-                    //         // If register is success
-
-                    //         resetForm();             // clean inputs
-                    //         setSubmittedForm(true);  // change state for "Registro exitoso"
-                    //         console.log(submittedForm)
-                    //         setTimeout(() => setSubmittedForm(false), 4000); //hide "Registro exitoso after 4 sec"
-                    //     } else {
-                    //         // If is an error server
-                    //         console.error('Error en el servidor:', response.status);
-                    //     }
-                    // } catch (error) {
-                    //     // Error in request
-                    //     console.error('Error al enviar la solicitud:', error);
-                    // }
                     onSubmit={handleRegister}
                 >
 
