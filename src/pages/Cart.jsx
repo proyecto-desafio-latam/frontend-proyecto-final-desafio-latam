@@ -6,8 +6,6 @@ import { useBookContext } from '../context/BookContext';
 import { useCartContext } from '../context/CartContext';
 import { useAddressesContext } from '../context/AddressesContext';
 
-
-
 const Cart = () => {
 
     const { favorites, token, user } = useAuthContext();
@@ -27,13 +25,13 @@ const Cart = () => {
 
     //Función que incrementa un tipo de libro en el carrito
     const handleIncrementBook = (idBook) => {
-        console.log('Soy el arreglo de direcciones de usuario')
-        console.log(userAddresses)
+        // console.log('Soy el arreglo de direcciones de usuario')
+        // console.log(userAddresses)
         const newCart = cart.map((item) => item.bookProduct.id === idBook ?
             { ...item, quantity: item.quantity + 1 } : item);
         setCart(newCart);
     };
-    console.log('Carro con todo:', cart);
+    // console.log('Carro con todo:', cart);
 
     //Función que decrementa un tipo de libro en el carrito
     const handleDecrementBook = (idBook) => {
@@ -79,23 +77,22 @@ const Cart = () => {
         return cartDetail;
     };
 
-    const createCartContainer = () => {
-        if (cart == []) {
-            const createdAt = new Date();
+    // const createCartContainer = () => {
+    //     if (cart == []) {
+    //         const createdAt = new Date();
 
-            const cartContainer = {
-                user: user.id,
-                createdAt: createdAt,
-                addressId: selectedAddress.id,
-            }
-        }
-        const cartContainer = {
-            user: user.id,
-            createdAt: createdAt,
-            addressId: selectedAddress.id,
-        }
-
-    }
+    //         const cartContainer = {
+    //             user: user.id,
+    //             createdAt: createdAt,
+    //             addressId: selectedAddress.id,
+    //         }
+    //     }
+    //     const cartContainer = {
+    //         user: user.id,
+    //         createdAt: createdAt,
+    //         addressId: selectedAddress.id,
+    //     }
+    // }
 
 
     //Función que agrega un tipo de libro al carrito (orientado a favoritos)
@@ -103,45 +100,9 @@ const Cart = () => {
         addToCart(bookDetailed)
     }
 
-
     const cartDetail = totalPurchaseCalculated();
-    console.log('CartDetail', cartDetail);
-    console.log('Libro', cart);
-
-
-
-    //Función que envía el contenido del carrito al backend
-    const handleCheckout = async () => {
-        const cartDetail = totalPurchaseCalculate();
-        setLoading(true);
-        try {
-            const response = await fetch("http://localhost:3002/api/v1/user/purchase", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    //address_id: 123, // Id de la dirección
-                    cart_details: cartDetail,
-                }),
-            });
-
-            if (!response.ok) {
-                // Si la respuesta del servidor no es exitosa, lanzamos una excepción
-                // y el bloque catch se encargará de manejar el error
-                throw new Error("Error en la solicitud al servidor.");
-            }
-            const data = await response.json();
-            // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito o error
-            console.log(data);
-        } catch (error) {
-            // Manejar errores si es necesario
-            console.error("Error al enviar datos a cart_detail:", error);
-        } finally {
-            setLoading(false);
-        }
-    }
+    // console.log('CartDetail', cartDetail);
+    // console.log('Libro', cart);
 
     // HanddleAddressSelection para manejar la dirección activa que sólo debe ser una
     const handleAddressSelection = (addressId) => {
@@ -153,53 +114,56 @@ const Cart = () => {
     };
 
 
+    console.log('Datos a backend:');
+    console.log(selectedAddress.id);
+    console.log(cartDetail);
+    console.log(token)
 
-    // Función para agregar productos al carrito en el frontend
     const addToCartContainer = async () => {
-        // Supongamos que previamente has recopilado la información necesaria del usuario
-
-        // Referencia de elementos a enviar en carrito
-        const address_id = 123; // ID de la dirección seleccionada por el usuario
-        const cart_details = [
-            { book_id: 456, quantity: 2 }, // Ejemplo de un libro seleccionado con su cantidad
-            { book_id: 789, quantity: 1 }, // Ejemplo de otro libro seleccionado con su cantidad
-            // Puedes agregar más libros seleccionados aquí si es necesario
-        ];
-
-        // Datos a enviar al backend
-        const data = {
-            address_id: selectedAddress.id,
-            cart_details: cartDetail,
-        };
+        const cartDetail = totalPurchaseCalculate();
+        setLoading(true);
 
         try {
-            // Configurar la solicitud fetch para enviar los datos al backend
-            const response = await fetch('/api/addCart', {
+            //const response = await fetch('http://localhost:3002/api/v1/user/purchase', {
+
+            const response = await fetch(import.meta.env.VITE_BASE_URL + `user/purchase`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // En este punto, no necesitas enviar el token de autorización por los encabezados
-                    // porque el middleware verifyToken en el backend ya lo maneja.
-                    // El token de autorización debe estar almacenado en una cookie o en el almacenamiento local
-                    // y se enviará automáticamente en todas las solicitudes al backend.
-                    // Si tu backend está configurado para manejar las cookies automáticamente, esta parte es manejada por el navegador.
-                    // De lo contrario, si estás almacenando el token en LocalStorage, puedes enviarlo manualmente como un encabezado personalizado aquí.
+                    'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(data), // Convertimos el objeto "data" a una cadena JSON y lo enviamos en el cuerpo de la solicitud.
+                body: JSON.stringify({
+                    address_id: selectedAddress.id,
+                    cart_details: cartDetail,
+                }),
             });
 
-            // Procesar la respuesta del backend
-            const responseData = await response.json();
-            // Aquí puedes manejar la respuesta del backend, si es necesario
-            console.log(responseData);
-            // Por ejemplo, podrías mostrar un mensaje al usuario indicando que se ha agregado al carrito exitosamente.
+            if (!response.ok) {
+                throw new Error("Error en la solicitud al servidor.");
+            }
 
+            const data = await response.json();
+            console.log(data);
         } catch (error) {
-            // Aquí puedes manejar errores de la solicitud o del backend, si ocurren
-            console.error('Error:', error);
+            console.error("Error al enviar datos a cart_detail:", error);
+            // Aquí puedes mostrar un mensaje al usuario indicando que ocurrió un error en la solicitud.
+        } finally {
+            setLoading(false);
         }
-
     };
+
+
+
+
+
+
+    // En este punto, no necesitas enviar el token de autorización por los encabezados
+    // porque el middleware verifyToken en el backend ya lo maneja.
+    // El token de autorización debe estar almacenado en una cookie o en el almacenamiento local
+    // y se enviará automáticamente en todas las solicitudes al backend.
+    // Si tu backend está configurado para manejar las cookies automáticamente, esta parte es manejada por el navegador.
+    // De lo contrario, si estás almacenando el token en LocalStorage, puedes enviarlo manualmente como un encabezado personalizado aquí.    
+
     console.log('Soy cart: ', cart);
     console.log('Soy cart: ', cart);
     const totalWithDelivery = () => {
@@ -210,10 +174,6 @@ const Cart = () => {
     }, [cart])
 
     console.log('Esto es totalPurchase:', totalPurchase)
-
-
-
-
 
     return (
         <>
@@ -316,7 +276,7 @@ const Cart = () => {
                                     <th colSpan="1"><strong>${totalPurchase + selectedAddress.delivery_price}</strong></th>
                                     {/* <!-- Celda para el botón de pagar --> */}
                                     <th colSpan="1" data-label="Acciones">
-                                        <button onClick={handleCheckout} className="pagar-button">
+                                        <button onClick={() => addToCartContainer()} className="pagar-button">
                                             {loading ? "Procesando..." : "Pagar"}
                                         </button>
                                     </th>

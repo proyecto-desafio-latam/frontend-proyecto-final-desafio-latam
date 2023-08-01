@@ -98,7 +98,7 @@ const FormAddress = () => {
 
     // Realizar la solicitud POST utilizando fetch
     fetch(`http://localhost:3002/api/v1/user/${user.id}/addresses`, {
-      //fetch(import.meta.env.VITE_BASE_URL + `/user/${user.id}/addresses`, {
+    //fetch(import.meta.env.VITE_BASE_URL + `/user/${user.id}/addresses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

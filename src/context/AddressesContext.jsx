@@ -11,7 +11,8 @@ export default function AddressesContextProvider({ children }) {
 
     const getAddresses = async () => {
         try {
-            const response = await fetch(import.meta.env.VITE_BASE_URL + `/user/${user.id}/addresses`)
+            //const response = await fetch(import.meta.env.VITE_BASE_URL + `/user/${user.id}/addresses`)
+            const response = await fetch(`http://localhost:3002/api/v1/user/${user.id}/addresses`);
             const { result } = await response.json();
             console.log('Mis direcciones');
             console.log(result);
