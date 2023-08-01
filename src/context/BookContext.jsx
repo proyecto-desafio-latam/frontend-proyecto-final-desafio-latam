@@ -17,16 +17,13 @@ export default function BookContextProvider({ children }) {
     try {
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}books`);
       if (!response.ok) throw "No se puede desplegar la información";
-      // console.log('Response error !response.ok');
-      // console.log(response);
       const { result } = await response.json();
-      // console.log('ListBooks from BookContext(getData)');
-      // console.log(result);
       setBooks(result);
     } catch (error) {
       setError(error);
     }
   };
+
   useEffect(() => {
     getData();
   }, []);
@@ -35,7 +32,6 @@ export default function BookContextProvider({ children }) {
     try {
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}books/${id}`);
       if (!response.ok) throw "No se puede desplegar la información";
-      console.log(response);
       const data = await response.json();
       setBook(data.result);
     } catch (error) {

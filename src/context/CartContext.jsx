@@ -17,8 +17,6 @@ export default function CartContextProvider({ children }) {
 
     const addToCart = (bookProduct) => {
         const bookInCart = cart.find((book) => book.bookProduct.id === bookProduct.id);
-
-
         if (bookInCart) {
             const newCart = cart.map((item) => item.bookProduct.id === bookProduct.id ?
                 { ...item, quantity: item.quantity + 1 } : item);
@@ -36,9 +34,7 @@ export default function CartContextProvider({ children }) {
     }
 
     return (
-        // Se pasan las propiedades del contexto, se crea el contexto
         <CartContext.Provider
-            // enviamos los valores que utilizamos en el contexto
             value={{
                 cart,
                 setCart,

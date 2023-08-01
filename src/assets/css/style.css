@@ -16096,9 +16096,6 @@ img-comparison-slider:focus {
   border-radius: 4px;
 }
 
-/* .form-input--date {
-    Estilos específicos para el input de fecha 
-}  */
 .form-error {
   color: rgb(122, 0, 0);
   margin-top: 4px;
@@ -16198,10 +16195,12 @@ main {
 
 .selected-address {
   background-color: #f0f0f0;
-  /* Cambia el color de fondo para el elemento seleccionado */
   color: #333;
-  /* Cambia el color del texto para el elemento seleccionado */
-  /* Agrega cualquier otro estilo adicional que desees para el elemento seleccionado */
+}
+
+.carrito-title {
+  text-align: center;
+  font-size: 25px;
 }
 
 /*boton eliminar*/
@@ -16336,6 +16335,67 @@ th {
     float: left;
     font-weight: bold;
   }
+}
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: purple;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--warning {
+  background-color: red;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info {
+  background-color: darkgreen;
+}
+
+.h2-shopping {
+  margin-top: 127px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.accordion {
+  width: 500px;
+  border-radius: 5px;
+}
+
+.item {
+  border: 2px solid #4354AC;
+  margin-bottom: 5px;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.cart-general {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cart-general-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.cart-detail {
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(1, 0, 1, 0);
+}
+
+.cart-detail-show {
+  max-height: 9999px;
+}
+
+.thead-history th {
+  background-color: #4354AC;
+  color: white;
 }
 
 /*# sourceMappingURL=style.css.map */

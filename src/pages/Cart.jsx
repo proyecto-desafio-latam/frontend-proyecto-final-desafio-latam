@@ -1,6 +1,6 @@
-// import '../assets/cart.css';
-import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Zoom, toast } from "react-toastify"
 import { useAuthContext } from '../context/AuthContext';
 import { useBookContext } from '../context/BookContext';
 import { useCartContext } from '../context/CartContext';
@@ -9,29 +9,24 @@ import { useAddressesContext } from '../context/AddressesContext';
 const Cart = () => {
 
     const { favorites, token, user } = useAuthContext();
-    const { books } = useBookContext();
+    const { books, FormatCoin  } = useBookContext();
     const { cart, setCart, deleteFromCart, addToCart } = useCartContext();
-    const { userAddresses, setUserAddresses, selectedAddress, setSelectedAddress, getAddresses } = useAddressesContext();
+    const { userAddresses, selectedAddress, setSelectedAddress } = useAddressesContext();
 
     const [loading, setLoading] = useState(false);
-
-    // const [selectedAddressId, setSelectedAddressId] = useState(null);
-
 
     //Funcion que borra un tipo de libro del carrito
     const handleDeleteFromCart = (idBook) => {
         deleteFromCart(idBook);
+        toast.warning("Eliminaste el libro del carro")
     }
 
     //Función que incrementa un tipo de libro en el carrito
     const handleIncrementBook = (idBook) => {
-        // console.log('Soy el arreglo de direcciones de usuario')
-        // console.log(userAddresses)
         const newCart = cart.map((item) => item.bookProduct.id === idBook ?
             { ...item, quantity: item.quantity + 1 } : item);
         setCart(newCart);
     };
-    // console.log('Carro con todo:', cart);
 
     //Función que decrementa un tipo de libro en el carrito
     const handleDecrementBook = (idBook) => {
@@ -56,10 +51,7 @@ const Cart = () => {
     }
     //Invoca la función para calcular el total de todo el carrito
     const totalPurchase = totalPurchaseCalculate();//Original
-    console.log('Total: ' + totalPurchase);
 
-    //Función que extrae y crea un objeto desde el arreglo de carrito
-    //Para llevarlo al POST en el backend
     const totalPurchaseCalculated = () => {
         const cartDetail = cart.map((book) => {
             const { bookProduct, quantity } = book;
@@ -70,118 +62,74 @@ const Cart = () => {
                 quantity,
                 price: priceBook,
                 subtotal,
-                //cartId: 1, // Supongamos que el id del carrito es 1 No envía el id del Carrito general
                 bookId: bookProduct.id,
             };
         });
         return cartDetail;
     };
 
-    // const createCartContainer = () => {
-    //     if (cart == []) {
-    //         const createdAt = new Date();
-
-    //         const cartContainer = {
-    //             user: user.id,
-    //             createdAt: createdAt,
-    //             addressId: selectedAddress.id,
-    //         }
-    //     }
-    //     const cartContainer = {
-    //         user: user.id,
-    //         createdAt: createdAt,
-    //         addressId: selectedAddress.id,
-    //     }
-    // }
-
-
     //Función que agrega un tipo de libro al carrito (orientado a favoritos)
     const handleAddToCart = (bookDetailed) => {
-        addToCart(bookDetailed)
+        const book = books.find(book => bookDetailed.book_id == book.id);
+        addToCart(book)
+        toast.success("Agregaste el libro al carro")
     }
 
     const cartDetail = totalPurchaseCalculated();
-    // console.log('CartDetail', cartDetail);
-    // console.log('Libro', cart);
 
-    // HanddleAddressSelection para manejar la dirección activa que sólo debe ser una
-    const handleAddressSelection = (addressId) => {
-        // En la función handleAddressSelection, actualiza el estado de la dirección seleccionada.
-        const selected = userAddresses.find((address) => address.id === addressId);
-        console.log(selected);
+    //Función que envía el contenido del carrito al backend
+    const handleCheckout = async () => {
 
-        return setSelectedAddress(selected);
-    };
+        let postData = { "address_id": selectedAddress.id }
+        let cart_details = []
+        cart.map((item) => {
+            const detail = { "quantity": item.quantity, "book_id": item.bookProduct.id }
+            cart_details.push(detail)
+        }
+        )
+        postData["cart_details"] = cart_details
 
-
-    console.log('Datos a backend:');
-    console.log(selectedAddress.id);
-    console.log(cartDetail);
-    console.log(token)
-
-    const addToCartContainer = async () => {
-        const cartDetail = totalPurchaseCalculate();
         setLoading(true);
-
         try {
-            //const response = await fetch('http://localhost:3002/api/v1/user/purchase', {
-
-            const response = await fetch(import.meta.env.VITE_BASE_URL + `user/purchase`, {
-                method: 'POST',
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}user/purchase`, {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    address_id: selectedAddress.id,
-                    cart_details: cartDetail,
-                }),
+                body: JSON.stringify(postData),
             });
 
             if (!response.ok) {
                 throw new Error("Error en la solicitud al servidor.");
             }
-
             const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error("Error al enviar datos a cart_detail:", error);
-            // Aquí puedes mostrar un mensaje al usuario indicando que ocurrió un error en la solicitud.
-        } finally {
+            toast.info("Compra exitosa 📖", { position: toast.POSITION.TOP_CENTER, transition: Zoom })
             setLoading(false);
+            setTimeout(() => setCart([]), 2000);
+            localStorage.setItem("cart", JSON.stringify([]));
+        } catch (error) {
+            console.error("Error al enviar los datos:", error);
         }
-    };
-
-
-
-
-
-
-    // En este punto, no necesitas enviar el token de autorización por los encabezados
-    // porque el middleware verifyToken en el backend ya lo maneja.
-    // El token de autorización debe estar almacenado en una cookie o en el almacenamiento local
-    // y se enviará automáticamente en todas las solicitudes al backend.
-    // Si tu backend está configurado para manejar las cookies automáticamente, esta parte es manejada por el navegador.
-    // De lo contrario, si estás almacenando el token en LocalStorage, puedes enviarlo manualmente como un encabezado personalizado aquí.    
-
-    console.log('Soy cart: ', cart);
-    console.log('Soy cart: ', cart);
-    const totalWithDelivery = () => {
-        return totalPurchase + selectedAddress.delivery_price;
     }
+
+    // HanddleAddressSelection para manejar la dirección activa que sólo debe ser una
+    const handleAddressSelection = (addressId) => {
+        // En la función handleAddressSelection, actualiza el estado de la dirección seleccionada.
+        const selected = userAddresses.find((address) => address.id === addressId);
+        return setSelectedAddress(selected);
+    };
 
     useEffect(() => {
     }, [cart])
-
-    console.log('Esto es totalPurchase:', totalPurchase)
 
     return (
         <>
             <main className='general-container'>
                 <div className="accordion-container">
                     {/* Domicilios 🏠 */}
-                    <h1 className='carrito-title'>Domicilios 🏠</h1>
-                    {userAddresses === 0 ? (<>
+                    <h2 className='carrito-title'>Domicilios 🏠</h2>
+                    {userAddresses == 0 ? (<>
                         <div>
                             <p className="text-center fs-md mt-5">Agrega un domicilio <Link to={`/user/${user.id}/addresses`}>aquí</Link> para poder efectuar tu compra! </p>
                         </div>
@@ -207,12 +155,12 @@ const Cart = () => {
                                 <div>
                                     <br />
                                     <h5>Dirección activa:</h5>
-                                    <p><strong>{selectedAddress.address}</strong> - Costo de envío: ${selectedAddress.delivery_price}</p>
+                                    <p><strong>{selectedAddress.address}</strong> - Costo de envío: {FormatCoin(Number(selectedAddress.delivery_price))}</p>
                                     <p>
                                         Comuna: {selectedAddress.commune_name} - Región: {selectedAddress.region_name}
                                     </p>
                                 </div>
-                                <p><strong>¿No encuentras tu domicilio? ¡Agregalo <Link to="/user/addresses">aquí!</Link></strong></p>
+                                <p><strong>¿No encuentras tu domicilio? ¡Agregalo <Link to={`/user/${user.id}/addresses`}>aquí!</Link></strong></p>
                             </>
                         )}
 
@@ -221,7 +169,7 @@ const Cart = () => {
                 </div>
 
                 {/* Cart 🛒 */}
-                <h2 className='carrito-title'>Carrito 🛒</h2>
+                <h2 className='carrito-title pt-5 mt-5'>Carrito 🛒</h2>
 
 
                 {cart.length === 0 ? (<>
@@ -253,7 +201,7 @@ const Cart = () => {
                                         <button onClick={() => handleIncrementBook(book.bookProduct.id)} className="btn-plus">+</button>
                                     </td>
                                     <td>${book.bookProduct.price}</td>
-                                    <td>{`$${book.bookProduct.price * book.quantity}`}</td>
+                                    <td>{FormatCoin(Number(book.bookProduct.price) * Number(book.quantity))}</td>
                                     <td>
                                         <button className="eliminar-button" onClick={() => handleDeleteFromCart(book.bookProduct.id)}>
                                             Eliminar
@@ -264,7 +212,7 @@ const Cart = () => {
                             {selectedAddress && selectedAddress.address && selectedAddress.delivery_price && selectedAddress.commune_name && selectedAddress.region_name && (
                                 <tr>
                                     <th colSpan="4"><strong>Envío</strong></th>
-                                    <th colSpan="1"><strong>${selectedAddress.delivery_price}</strong></th>
+                                    <th colSpan="1"><strong>{FormatCoin(Number(selectedAddress.delivery_price))}</strong></th>
                                     <th colSpan="1">-</th>
                                 </tr>
                             )}
@@ -273,7 +221,7 @@ const Cart = () => {
                                 <tr>
                                     {/* <!-- Celda para el total de ventas --> */}
                                     <th colSpan="4"><strong>Total de Ventas:</strong></th>
-                                    <th colSpan="1"><strong>${totalPurchase + selectedAddress.delivery_price}</strong></th>
+                                    <th colSpan="1"><strong>{FormatCoin(Number(totalPurchase) + Number(selectedAddress.delivery_price))}</strong></th>
                                     {/* <!-- Celda para el botón de pagar --> */}
                                     <th colSpan="1" data-label="Acciones">
                                         <button onClick={() => addToCartContainer()} className="pagar-button">
@@ -286,7 +234,7 @@ const Cart = () => {
                     </table>
                 </>}
 
-                <h2>Favoritos❤️</h2>
+                <h2 className='carrito-title pt-5 mt-5'>Favoritos❤️</h2>
                 {favorites.length === 0 ? (<>
                     <div  >
                         <p className="text-center fs-md mt-5">Aún no cuentas con favoritos. Visita el catálogo <Link to="/books">aquí</Link>!</p>
@@ -302,15 +250,14 @@ const Cart = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {favorites.map((id) => {
-                                const book = books.find(book => book.id == id);
+                            {favorites.map((item) => {
                                 return (
-                                    <tr key={id} className='favorites-header'>
-                                        <td className='id-author'>{book.author.name}</td>
-                                        <td className='id-name'>{book.title}</td>
-                                        <td className='id-category'>{book.category.name}</td>
+                                    <tr key={item.book_id}>
+                                        <td>{item.author.name}</td>
+                                        <td>{item.title}</td>
+                                        <td>{item.category.name}</td>
                                         <td>
-                                            <button onClick={() => handleAddToCart(book)} className='agregar-button'>Agregar a carrito
+                                            <button onClick={() => handleAddToCart(item)} className='agregar-button'>Agregar a carrito
                                             </button>
                                         </td>
                                     </tr>
@@ -324,4 +271,5 @@ const Cart = () => {
         </>
     );
 };
+
 export default Cart;

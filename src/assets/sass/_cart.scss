@@ -4,7 +4,7 @@
     border: 0px;
 }
 
-.h2-cart{
+.h2-cart {
     display: flex;
     align-items: center;
     margin-top: 0px;
@@ -31,15 +31,13 @@
 
 .selected-address {
     background-color: #f0f0f0;
-    /* Cambia el color de fondo para el elemento seleccionado */
     color: #333;
-    /* Cambia el color del texto para el elemento seleccionado */
-    /* Agrega cualquier otro estilo adicional que desees para el elemento seleccionado */
 }
 
-// .carrito-title {
-//     text-align: center;
-// }
+.carrito-title {
+    text-align: center;
+    font-size: 25px;
+}
 
 /*boton eliminar*/
 .eliminar-button {
