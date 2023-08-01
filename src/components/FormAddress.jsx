@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from '../context/AuthContext';
+import { useAddressesContext } from "../context/AddressesContext";
 
 
 const FormAddress = () => {
@@ -12,6 +13,7 @@ const FormAddress = () => {
   const [error, setError] = useState("");
 
   const { user } = useAuthContext();
+  const { getAddresses  } = useAddressesContext()
 
 
 
@@ -64,7 +66,8 @@ const FormAddress = () => {
 
 
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     // Obtener el id de la comuna seleccionada
     const selectedCommuneId = selectedCommune.id;
 
@@ -86,7 +89,7 @@ const FormAddress = () => {
         id: Date.now(),
         region_name: selectedRegion ? selectedRegion.region_name : "",
       };
-      setAddress([...address, newAddress]);
+      // setAddress([...address, newAddress]);
       console.log(newAddress);
     }
 
@@ -94,21 +97,25 @@ const FormAddress = () => {
     const data = {
       address: address,
       commune_id: Number(selectedCommuneId),
+      user_id: user.id
     };
+    console.log(data)
 
     // Realizar la solicitud POST utilizando fetch
-    fetch(`http://localhost:3002/api/v1/user/${user.id}/addresses`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}user/${user.id}/addresses`, {
       //fetch(import.meta.env.VITE_BASE_URL + `/user/${user.id}/addresses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+     
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error en la solicitud POST");
         }
+        getAddresses()
         return response.json();
       })
       .then((responseData) => {

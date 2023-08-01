@@ -40,7 +40,7 @@ const Addresses = () => {
     setUserAddresses(userAddresses);
   }, [userAddresses, setUserAddresses]);
 
-
+  console.log(userAddresses)
   return (
     <div className="container mt-5 pt-5">
       <h2 className="text-center pt-5">Mis direcciones</h2>

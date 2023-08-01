@@ -100,7 +100,8 @@ const Cart = () => {
 
     //Función que agrega un tipo de libro al carrito (orientado a favoritos)
     const handleAddToCart = (bookDetailed) => {
-        addToCart(bookDetailed)
+        const book = books.find(book => bookDetailed.book_id == book.id);
+        addToCart(book)
     }
 
 
@@ -112,19 +113,26 @@ const Cart = () => {
 
     //Función que envía el contenido del carrito al backend
     const handleCheckout = async () => {
-        const cartDetail = totalPurchaseCalculate();
-        setLoading(true);
+        
+        let postData = {"address_id": selectedAddress.id}
+        let cart_details = []
+        cart.map((item) => 
+            {
+                const detail = {"quantity": item.quantity, "book_id": item.bookProduct.id}
+                cart_details.push(detail)
+            }
+        )
+        postData["cart_details"] = cart_details
+
+        // setLoading(true);
         try {
-            const response = await fetch("http://localhost:3002/api/v1/user/purchase", {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}user/purchase`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    //address_id: 123, // Id de la dirección
-                    cart_details: cartDetail,
-                }),
+                body: JSON.stringify(postData),
             });
 
             if (!response.ok) {
@@ -133,11 +141,11 @@ const Cart = () => {
                 throw new Error("Error en la solicitud al servidor.");
             }
             const data = await response.json();
-            // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito o error
-            console.log(data);
+            localStorage.setItem("cart", JSON.stringify([]));
+            setCart([])
+           
         } catch (error) {
-            // Manejar errores si es necesario
-            console.error("Error al enviar datos a cart_detail:", error);
+            console.error("Error al enviar los datos:", error);
         } finally {
             setLoading(false);
         }
@@ -190,6 +198,7 @@ const Cart = () => {
 
             // Procesar la respuesta del backend
             const responseData = await response.json();
+
             // Aquí puedes manejar la respuesta del backend, si es necesario
             console.log(responseData);
             // Por ejemplo, podrías mostrar un mensaje al usuario indicando que se ha agregado al carrito exitosamente.
@@ -252,7 +261,7 @@ const Cart = () => {
                                         Comuna: {selectedAddress.commune_name} - Región: {selectedAddress.region_name}
                                     </p>
                                 </div>
-                                <p><strong>¿No encuentras tu domicilio? ¡Agregalo <Link to="/user/addresses">aquí!</Link></strong></p>
+                                <p><strong>¿No encuentras tu domicilio? ¡Agregalo <Link to={`/user/${user.id}/addresses`}>aquí!</Link></strong></p>
                             </>
                         )}
 
@@ -342,7 +351,7 @@ const Cart = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {favorites.map((id) => {
+                            {/* {favorites.map((id) => {
                                 const book = books.find(book => book.id == id);
                                 return (
                                     <tr key={id} className='favorites-header'>
@@ -351,6 +360,20 @@ const Cart = () => {
                                         <td className='id-category'>{book.category.name}</td>
                                         <td>
                                             <button onClick={() => handleAddToCart(book)} className='agregar-button'>Agregar a carrito
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })} */}
+                            {favorites.map((item) => {
+                                console.log(item)
+                                return (
+                                    <tr key={item.book_id}>
+                                        <td>{item.author.name}</td>
+                                        <td>{item.title}</td>
+                                        <td>{item.category.name}</td>
+                                        <td>
+                                            <button onClick={() => handleAddToCart(item)} className='agregar-button'>Agregar a carrito
                                             </button>
                                         </td>
                                     </tr>
