@@ -49,4 +49,4 @@ For login, enter the following credentials, issued by the APi:
 
 ## Deploy
 
--To view this site deployed, please visit: https://mundo-libros.netlify.app/
+-To view this site deployed, please visit: https://mundolibros-store.netlify.app/
