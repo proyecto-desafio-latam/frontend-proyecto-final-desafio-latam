@@ -1,50 +1,37 @@
 import { useEffect, useState } from "react";
 import FormAddress from "../components/FormAddress";
-import { useAuthContext } from "../context/AuthContext";
 import { useAddressesContext } from "../context/AddressesContext";
 
 const Addresses = () => {
-  // const [address, setAddress] = useState(
-  //   () => JSON.parse(localStorage.getItem("Addresses")) || []
-  // );
   const [address, setAddress] = useState([]);
-
-  // const [commune, setCommune] = useState([]);
-  const { user } = useAuthContext();
   const { userAddresses, setUserAddresses } = useAddressesContext();
 
 
   const handleDelete = async (elementId) => {
     try {
-        const response = await fetch(import.meta.env.VITE_BASE_URL + `/addresses/${elementId}`, {
+        const response = await fetch(import.meta.env.VITE_BASE_URL + `user/addresses/${elementId}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
-        console.log('Elemento eliminado exitosamente.');
-        // Realizar acciones adicionales si la eliminación es exitosa.
         setUserAddresses((prevAddresses) => prevAddresses.filter((address) => address.id !== elementId));
       } else {
         console.error('Error al eliminar el elemento:', response.status);
-        // Manejar otros códigos de respuesta en caso de que la eliminación no sea exitosa.
       }
     } catch (error) {
       console.error('Error al eliminar el elemento:', error);
-      // Manejar errores de red u otros errores no relacionados con el código de respuesta.
     }
-
-    // setUserAddresses(userAddresses);
   };
 
   useEffect(() => {
     setUserAddresses(userAddresses);
   }, [userAddresses, setUserAddresses]);
 
-  console.log(userAddresses)
+ 
   return (
-    <div className="container mt-5 pt-5">
+    <div className="container mt-5 pt-5 pb-5 mb-5">
       <h2 className="text-center pt-5">Mis direcciones</h2>
-      <p className="">Ingresa tu dirección para tus compras:</p>
+      <p className="text-center">Ingresa tu dirección para tus compras:</p>
       <div className="container">
         {/* <FormAddress setAddress={setAddress} address={address} /> */}
         <FormAddress setAddress={setAddress} address={address} />
@@ -76,7 +63,6 @@ const Addresses = () => {
                 <td><button className="btn btn-primary mt-4" onClick={() => handleDelete(address.id)}>Quitar</button></td>
               </tr>
             ))}
-
           </tbody>
         </table>
 

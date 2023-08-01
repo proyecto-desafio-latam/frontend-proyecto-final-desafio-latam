@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify"
 import Heart from "../components/Heart"
 import { useBookContext } from "../context/BookContext"
 import { useAuthContext } from "../context/AuthContext"
@@ -93,6 +94,7 @@ const BookDetail = () => {
     // push the book into the cart
     const handleAddToCart = (bookDetailed) => {
         addToCart(bookDetailed)
+        toast.success("Agregaste el libro al carro")
     }
 
     if (book.length === 0) return (<div className="container mt-5 pt-5"  >

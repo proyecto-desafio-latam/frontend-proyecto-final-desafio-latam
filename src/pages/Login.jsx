@@ -21,7 +21,6 @@ export default function Login() {
     
           if (response.ok) {
             const data = await response.json()
-            console.log(data)
             saveToken(data)
             resetForm();
             setLoginSuccess(true);

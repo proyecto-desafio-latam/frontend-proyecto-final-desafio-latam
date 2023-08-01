@@ -15,33 +15,24 @@ const FormAddress = () => {
   const { user } = useAuthContext();
   const { getAddresses  } = useAddressesContext()
 
-
-
-
   const getLocations = async () => {
     const response = await fetch(import.meta.env.VITE_BASE_URL + "/addresses");
     const data = await response.json();
-    // console.log('El usuario es:' + user.email);
-    // console.log('El usuario es:' + user.id);
     const availableRegions = data.result;
-    console.log(availableRegions);
     setRegions(availableRegions);
   };
 
   useEffect(() => {
     getLocations();
-    console.log("ID de la comuna seleccionada:", selectedCommune.id);
   }, [selectedCommune])
 
 
   const handleRegionChange = (e) => {
     const selectedRegionName = e.target.value;
     setSelectedRegion({ name: selectedRegionName, id: null });
-    console.log(selectedRegionName);
 
-    // Busca la región seleccionada en el arreglo avaibleRegions
-    const selectedRegionData = regions.find((region) => region.region_name === selectedRegionName);//intercambio de availableRegions por regions
-    console.log(selectedRegionData);
+    // Buscar región seleccionada en el arreglo avaibleRegions
+    const selectedRegionData = regions.find((region) => region.region_name === selectedRegionName); //intercambio de availableRegions por regions
     // Actualizar el estado de las comunas disponibles según la región seleccionada
     if (selectedRegionData && selectedRegionData.communes) {
       setCommunes(selectedRegionData.communes);
@@ -59,12 +50,7 @@ const FormAddress = () => {
       name: selectedCommuneName,
       id: communes.find((comuna) => comuna.name === selectedCommuneName)?.id,
     });
-    console.log(selectedCommuneName.id);
-    console.log("ID de la comuna seleccionada handleCommuneChange:", selectedCommune.id);
-    console.log(selectedCommune);
   };
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -89,7 +75,6 @@ const FormAddress = () => {
         id: Date.now(),
         region_name: selectedRegion ? selectedRegion.region_name : "",
       };
-      // setAddress([...address, newAddress]);
       console.log(newAddress);
     }
 
@@ -99,11 +84,8 @@ const FormAddress = () => {
       commune_id: Number(selectedCommuneId),
       user_id: user.id
     };
-    console.log(data)
 
-    // Realizar la solicitud POST utilizando fetch
     fetch(`${import.meta.env.VITE_BASE_URL}user/${user.id}/addresses`, {
-      //fetch(import.meta.env.VITE_BASE_URL + `/user/${user.id}/addresses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -119,11 +101,9 @@ const FormAddress = () => {
         return response.json();
       })
       .then((responseData) => {
-        // Manejar la respuesta del servidor si es necesario
         console.log("Solicitud POST exitosa:", responseData);
       })
       .catch((error) => {
-        // Manejar errores en caso de que la solicitud falle
         console.error("Error en la solicitud POST:", error);
       });
   };
@@ -134,7 +114,7 @@ const FormAddress = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group mt-3">
           <label className="form-label">Región</label>
-          <select className="selectAddress" value={selectedRegion.name || ""} onChange={handleRegionChange}>
+          <select className="form-select" value={selectedRegion.name || ""} onChange={handleRegionChange}>
             <option value="" disabled>Región</option>
             {regions.map((region) => (
               <option key={region.region_id} value={region.region_name}>{region.region_name}</option>
@@ -146,7 +126,7 @@ const FormAddress = () => {
           <>
             <div className="form-group mt-3">
               <label className="form-label">Comunas</label>
-              <select value={selectedCommune.name || ""} onChange={handleCommuneChange}>
+              <select className="form-select" value={selectedCommune.name || ""} onChange={handleCommuneChange}>
                 <option value="">Seleccione una comuna</option>
                 {communes.map((comuna) => (
                   <option key={comuna.id} value={comuna.name}>
@@ -163,7 +143,7 @@ const FormAddress = () => {
                     onChange={(e) => setAddressLine(e.target.value)}
                     type="text"
                     value={addressLine}
-                    className="form-control selectAddress"
+                    className="form-control select-address"
                     placeholder="Vicuña Mackena 4945"
                   />
                 </div>

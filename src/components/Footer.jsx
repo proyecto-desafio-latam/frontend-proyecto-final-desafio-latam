@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   const openLinks = () => {
-    window.open("https://github.com/rigozdev");
-    window.open("https://github.com/lilithrv");
-    window.open("https://github.com/MattCuadros");
+    window.open("https://github.com/proyecto-desafio-latam");
   };
 
   return (
@@ -13,7 +11,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-lg-4 col-md-6">
             <div className="navbar-brand text-light p-0 me-0 mb-3 mb-lg-4">
-              <img src="../ejemplo-logo.jpg" width="47" alt="Logo" />
+              <img src="/ejemplo-logo.jpg" width="47" alt="Logo" />
               Mundo Libros
             </div>
             <p className="fs-xs text-light opacity-70 mb-4 justify">

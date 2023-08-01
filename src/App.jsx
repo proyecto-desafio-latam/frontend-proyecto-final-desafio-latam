@@ -23,7 +23,6 @@ import AddCategory from "./pages/AddCategory";
 export default function App() {
   const { user } = useAuthContext();
   if (user === null) return <div>Loading...</div>;
-  console.log(user);
 
   return (
     <>
