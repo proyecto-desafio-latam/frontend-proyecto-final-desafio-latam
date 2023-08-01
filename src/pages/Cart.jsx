@@ -9,7 +9,7 @@ import { useAddressesContext } from '../context/AddressesContext';
 const Cart = () => {
 
     const { favorites, token, user } = useAuthContext();
-    const { books } = useBookContext();
+    const { books, FormatCoin  } = useBookContext();
     const { cart, setCart, deleteFromCart, addToCart } = useCartContext();
     const { userAddresses, selectedAddress, setSelectedAddress } = useAddressesContext();
 
@@ -130,7 +130,7 @@ const Cart = () => {
                 <div className="accordion-container">
                     {/* Domicilios 🏠 */}
                     <h2 className='carrito-title'>Domicilios 🏠</h2>
-                    {userAddresses === 0 ? (<>
+                    {userAddresses == 0 ? (<>
                         <div>
                             <p className="text-center fs-md mt-5">Agrega un domicilio <Link to={`/user/${user.id}/addresses`}>aquí</Link> para poder efectuar tu compra! </p>
                         </div>
@@ -156,7 +156,7 @@ const Cart = () => {
                                 <div>
                                     <br />
                                     <h5>Dirección activa:</h5>
-                                    <p><strong>{selectedAddress.address}</strong> - Costo de envío: ${selectedAddress.delivery_price}</p>
+                                    <p><strong>{selectedAddress.address}</strong> - Costo de envío: {FormatCoin(Number(selectedAddress.delivery_price))}</p>
                                     <p>
                                         Comuna: {selectedAddress.commune_name} - Región: {selectedAddress.region_name}
                                     </p>
@@ -202,7 +202,7 @@ const Cart = () => {
                                         <button onClick={() => handleIncrementBook(book.bookProduct.id)} className="btn-plus">+</button>
                                     </td>
                                     <td>${book.bookProduct.price}</td>
-                                    <td>{`$${book.bookProduct.price * book.quantity}`}</td>
+                                    <td>{FormatCoin(Number(book.bookProduct.price) * Number(book.quantity))}</td>
                                     <td>
                                         <button className="eliminar-button" onClick={() => handleDeleteFromCart(book.bookProduct.id)}>
                                             Eliminar
@@ -213,7 +213,7 @@ const Cart = () => {
                             {selectedAddress && selectedAddress.address && selectedAddress.delivery_price && selectedAddress.commune_name && selectedAddress.region_name && (
                                 <tr>
                                     <th colSpan="4"><strong>Envío</strong></th>
-                                    <th colSpan="1"><strong>${selectedAddress.delivery_price}</strong></th>
+                                    <th colSpan="1"><strong>{FormatCoin(Number(selectedAddress.delivery_price))}</strong></th>
                                     <th colSpan="1">-</th>
                                 </tr>
                             )}
@@ -222,7 +222,7 @@ const Cart = () => {
                                 <tr>
                                     {/* <!-- Celda para el total de ventas --> */}
                                     <th colSpan="4"><strong>Total de Ventas:</strong></th>
-                                    <th colSpan="1"><strong>${totalPurchase + selectedAddress.delivery_price}</strong></th>
+                                    <th colSpan="1"><strong>{FormatCoin(Number(totalPurchase) + Number(selectedAddress.delivery_price))}</strong></th>
                                     {/* <!-- Celda para el botón de pagar --> */}
                                     <th colSpan="1" data-label="Acciones">
                                         <button onClick={handleCheckout} className="pagar-button">

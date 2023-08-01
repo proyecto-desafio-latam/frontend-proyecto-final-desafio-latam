@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Zoom, toast } from "react-toastify"
 import FormAddress from "../components/FormAddress";
 import { useAddressesContext } from "../context/AddressesContext";
+import { useBookContext } from "../context/BookContext";
 
 const Addresses = () => {
   const [address, setAddress] = useState([]);
   const { userAddresses, setUserAddresses } = useAddressesContext();
+  const { FormatCoin } = useBookContext()
 
 
   const handleDelete = async (elementId) => {
@@ -61,7 +63,7 @@ const Addresses = () => {
                 <td>{address.address}</td>
                 <td>{address.commune_name}</td>
                 <td>{address.region_name}</td>
-                <td>{address.delivery_price}</td>
+                <td>{FormatCoin(Number(address.delivery_price))}</td>
                 <td><button className="btn btn-primary mt-4" onClick={() => handleDelete(address.id)}>Quitar</button></td>
               </tr>
             ))}
