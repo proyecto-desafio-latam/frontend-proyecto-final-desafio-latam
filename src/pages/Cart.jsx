@@ -229,7 +229,7 @@ const Cart = () => {
                         <div className="accordion" id="accordionExample">
                             {userAddresses.map((address, index) => (
                                 <div className="accordion-item" key={address.id}>
-                                    <h2 className="accordion-header" id={`heading${index}`}>
+                                    <h2 className="accordion-header h2-cart" id={`heading${index}`}>
                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded="false" aria-controls={`collapse${index}`} onClick={() => handleAddressSelection(address.id)}>
                                             {address.address}
                                         </button>
