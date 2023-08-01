@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const Filters = ({ filterCategory, setFilterCategory, setSortedBooks }) => {
+const Filters = ({ filterCategory, setFilterCategory, setSortedBooks, search, setSearch }) => {
 
     const [sort, setSort] = useState("");
     const [category, setCategory] = useState([]);
@@ -42,6 +42,34 @@ const Filters = ({ filterCategory, setFilterCategory, setSortedBooks }) => {
         }
     };
 
+    const handleSearchTitle = async (e) => {
+        try {
+            filterTitle(e)
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    const filterTitle = async (title) => {
+        try {
+            let filtersArray = []
+            let baseURL = `${import.meta.env.VITE_BASE_URL}books?`
+            if (title != "") {
+                filtersArray.push(`title=${title}`)
+            }
+            if (sort !== "") {
+                filtersArray.push(sort)
+            }
+            const filters = filtersArray.join("&")
+            const response = await fetch(`${baseURL}${filters}`)
+            if (!response.ok) throw "No se puede desplegar la información";
+            const data = await response.json()
+            setSortedBooks(data.result)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const filterBooks = async () => {
         try {
             let filtersArray = []
@@ -75,18 +103,20 @@ const Filters = ({ filterCategory, setFilterCategory, setSortedBooks }) => {
     }, [sort, filterCategory])
 
     return (
-        <div className="d-lg-flex align-items-center justify-content-between py-4 mt-lg-2">
+        <div className=" py-4 mt-lg-2">
             <h1 className="me-3">Catálogo de Libros</h1>
-            <div className="d-md-flex d-xl-flex mb-3">
-                <select className="form-select me-md-4 mb-2 mb-md-0" style={{ minWidth: '240px' }} onChange={(e) => handleFilterCategory(e.target.value)} >
-                    <option value={0}>Todas las categorías</option>
-                    {category.map((item) => (
-                        <option value={item.id} key={item.id}>
-                            {item.name}
-                        </option>
-                    ))}
-                </select>
-                <div className="position-relative" >
+            <div className="d-md-flex d-xl-flex d-sm-flex mb-3">
+                <div className="col-xl-4 col-md-6 col-sm-12 px-2">
+                    <select className="form-select me-md-4 mb-2 mb-md-0" style={{ minWidth: '240px' }} onChange={(e) => handleFilterCategory(e.target.value)} >
+                        <option value={0}>Todas las categorías</option>
+                        {category.map((item) => (
+                            <option value={item.id} key={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className=" col-xl-4 col-md-6 col-sm-12 px-2" >
                     <select
                         className="form-select me-md-4 mb-2 mb-md-0"
                         style={{ minWidth: '240px' }}
@@ -101,6 +131,9 @@ const Filters = ({ filterCategory, setFilterCategory, setSortedBooks }) => {
                             </option>
                         ))}
                     </select>
+                </div>
+                <div className="col-xl-4 col-md-6 col-sm-12 px-2">
+                    <input className="form-control me-md-4 mb-2 mb-md-0" onChange={(e) => handleSearchTitle(e.target.value.trim())} type="search" placeholder="Busca tu libro" aria-label="Search" />
                 </div>
             </div>
         </div>

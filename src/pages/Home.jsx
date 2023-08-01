@@ -1,12 +1,10 @@
+import { useEffect, useState } from "react"
 import { BiBadgeCheck, BiRocket } from "react-icons/bi"
 import { TbWorldHeart } from "react-icons/tb"
 import Banners from "../components/Banners"
 import BookCarousel from "../components/BookCarousel"
-import { useBookContext } from "../context/BookContext"
-import { useEffect, useState } from "react"
 
 const Home = () => {
-    const { books } = useBookContext()
     const [latestBooks, setLatestBooks] = useState([]);
     const [popularBooks, setPopularBooks] = useState([]);
 
@@ -14,7 +12,7 @@ const Home = () => {
     useEffect(() => {
         const fetchLatestBooks = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BASE_URL}/books/latest`);
+                const response = await fetch(`${import.meta.env.VITE_BASE_URL}books/latest`);
                 const data = await response.json();
                 setLatestBooks(data.result);
             } catch (error) {
@@ -24,7 +22,7 @@ const Home = () => {
 
         const fetchPopularBooks = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BASE_URL}/books/popular`);
+                const response = await fetch(`${import.meta.env.VITE_BASE_URL}books/popular`);
                 const data = await response.json();
                 setPopularBooks(data.result);
             } catch (error) {
