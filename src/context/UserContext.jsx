@@ -13,7 +13,7 @@ export default function UserContextProvider({ children }) {
     try {
       const res = await fetch("https://node-bookstore-ww7n.onrender.com/api/v1/addresses");
       const regiones = await res.json();
-      console.log(res, regiones[0]);
+      // console.log(res, regiones[0]);
       setComunas(regiones[0]);
     } catch (error) {
       console.log(error);

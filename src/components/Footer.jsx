@@ -52,7 +52,7 @@ const Footer = () => {
                     </li>
                     <li className="nav-item">
                       <Link
-                         to={"/books"}
+                        to={"/books"}
                         className="nav-link text-light d-inline-block px-0 py-2"
                       >
                         Libros
@@ -60,7 +60,7 @@ const Footer = () => {
                     </li>
                     <li className="nav-item">
                       <Link
-                         to={"/about"}
+                        to={"/about"}
                         className="nav-link text-light d-inline-block px-0 py-2"
                       >
                         Quienes somos
@@ -87,32 +87,36 @@ const Footer = () => {
                   <ul className="nav flex-column mb-2 mb-lg-0">
                     <li className="nav-item">
                       <Link
-                         to={"http://www.facebook.com"}
+                        to={"http://www.facebook.com"}
                         className="nav-link  text-light d-inline-block px-0 pt-1 pb-2"
+                        target="_blank"
                       >
                         Facebook
                       </Link>
                     </li>
                     <li className="nav-item">
                       <Link
-                          to={"http://www.linkedin.com"}
+                        to={"http://www.linkedin.com"}
                         className="nav-link  text-light d-inline-block px-0 pt-1 pb-2"
+                        target="_blank"
                       >
                         LinkedIn
                       </Link>
                     </li>
                     <li className="nav-item">
                       <Link
-                          to={"http://www.twitter.com"}
+                        to={"http://www.twitter.com"}
                         className="nav-link  text-light d-inline-block px-0 pt-1 pb-2"
+                        target="_blank"
                       >
                         Twitter
                       </Link>
                     </li>
                     <li className="nav-item">
                       <Link
-                          to={"http://www.instagram.com"}
+                        to={"http://www.instagram.com"}
                         className="nav-link text-light d-inline-block px-0 pt-1 pb-2"
+                        target="_blank"
                       >
                         Instagram
                       </Link>

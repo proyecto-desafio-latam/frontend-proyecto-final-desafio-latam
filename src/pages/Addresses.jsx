@@ -1,29 +1,45 @@
 import { useEffect, useState } from "react";
 import FormAddress from "../components/FormAddress";
+import { useAuthContext } from "../context/AuthContext";
+import { useAddressesContext } from "../context/AddressesContext";
 
 const Addresses = () => {
-  const [address, setAddress] = useState(
-    () => JSON.parse(localStorage.getItem("Addresses")) || []
-  );
+  // const [address, setAddress] = useState(
+  //   () => JSON.parse(localStorage.getItem("Addresses")) || []
+  // );
+  const [address, setAddress] = useState([]);
 
-  const [commune, setCommune] = useState([]);
-  const getCommunes = async () => {
+  // const [commune, setCommune] = useState([]);
+  const { user } = useAuthContext();
+  const { userAddresses, setUserAddresses } = useAddressesContext();
+
+
+  const handleDelete = async (elementId) => {
     try {
-      const response = await fetch(
-        import.meta.env.VITE_BASE_URL + "/addresses"
-      );
-      if (!response.ok) throw "No se puede desplegar la información";
-      const data = await response.json();
-      console.log(data.result);
-      setCommune(data);
+        const response = await fetch(import.meta.env.VITE_BASE_URL + `/addresses/${elementId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        console.log('Elemento eliminado exitosamente.');
+        // Realizar acciones adicionales si la eliminación es exitosa.
+        setUserAddresses((prevAddresses) => prevAddresses.filter((address) => address.id !== elementId));
+      } else {
+        console.error('Error al eliminar el elemento:', response.status);
+        // Manejar otros códigos de respuesta en caso de que la eliminación no sea exitosa.
+      }
     } catch (error) {
-      console.log(error);
+      console.error('Error al eliminar el elemento:', error);
+      // Manejar errores de red u otros errores no relacionados con el código de respuesta.
     }
+
+    // setUserAddresses(userAddresses);
   };
 
   useEffect(() => {
-    getCommunes();
-  }, [address]);
+    setUserAddresses(userAddresses);
+  }, [userAddresses, setUserAddresses]);
+
 
   return (
     <div className="container mt-5 pt-5">
@@ -31,31 +47,39 @@ const Addresses = () => {
       <p className="">Ingresa tu dirección para tus compras:</p>
       <div className="container">
         {/* <FormAddress setAddress={setAddress} address={address} /> */}
-        <FormAddress
-          setAddress={setAddress}
-          address={address}
-          commune={commune}
-        />
+        <FormAddress setAddress={setAddress} address={address} />
       </div>
 
-      <div className="container pd-4 mt-5">
+      <div className="container p-4 mt-5">
         <hr />
-        <h5 className="mt-3">Listado de direcciones</h5>
-        {address.map(({ id, region, communeId, addressLine }) => {
-          // Busca el nombre de la comuna correspondiente
-          const communeName =
-            commune.find((commune) => commune.id === communeId)?.name || "";
-          return (
-            <li key={id}>
-              {region} - {communeName.commune} - {addressLine}
-            </li>
-          );
-        })}
-        {/* <ul className="mb-5 pb-5">
-                    {address.map(({ id, region, communeId, addressLine }) => {
-                        return <li key={id}>{region}- {commune} - {addressLine}</li>
-                    })}
-                </ul> */}
+        <h5 className="mt-3">Listado de direcciones🧭</h5>
+        <table>
+          <thead>
+            <tr>
+              <th colSpan="5">Direcciones</th>
+            </tr>
+            <tr>
+              <th>Dirección</th>
+              <th>Comuna</th>
+              <th>Región</th>
+              <th>Costo envío</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userAddresses.map((address) => (
+              <tr key={address.id}>
+                <td>{address.address}</td>
+                <td>{address.commune_name}</td>
+                <td>{address.region_name}</td>
+                <td>{address.delivery_price}</td>
+                <td><button className="btn btn-primary mt-4" onClick={() => handleDelete(address.id)}>Quitar</button></td>
+              </tr>
+            ))}
+
+          </tbody>
+        </table>
+
       </div>
     </div>
   );

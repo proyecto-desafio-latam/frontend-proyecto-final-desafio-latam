@@ -11,6 +11,7 @@ import BookContextProvider from "./context/BookContext";
 import AuthContextProvider from "./context/AuthContext";
 import CartContextProvider from "./context/CartContext";
 import UserContextProvider from "./context/UserContext";
+import AddressesContextProvider from "./context/AddressesContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <CartContextProvider>
           <BookContextProvider>
             <UserContextProvider>
-              <App />
+              <AddressesContextProvider>
+                <App />
+              </AddressesContextProvider>
             </UserContextProvider>
           </BookContextProvider>
         </CartContextProvider>

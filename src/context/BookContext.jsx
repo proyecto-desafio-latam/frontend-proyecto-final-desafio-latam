@@ -17,9 +17,11 @@ export default function BookContextProvider({ children }) {
     try {
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}books`);
       if (!response.ok) throw "No se puede desplegar la información";
-      console.log(response);
+      // console.log('Response error !response.ok');
+      // console.log(response);
       const { result } = await response.json();
-      console.log(result);
+      // console.log('ListBooks from BookContext(getData)');
+      // console.log(result);
       setBooks(result);
     } catch (error) {
       setError(error);
