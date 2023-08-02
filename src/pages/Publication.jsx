@@ -69,8 +69,8 @@ const Publication = () => {
 
 
     return (
-        <div className="container mt-2 pb-5">
-            <h2 className="text-center pt-2 pb-5">Panel para agregar nuevo libro al catálogo</h2>
+        <div className="container pt-5 pb-5">
+            <h2 className="text-center pt-5 mt-5 pb-4">Panel para agregar nuevo libro al catálogo</h2>
             <Formik
                 initialValues={{
                     title: "",
