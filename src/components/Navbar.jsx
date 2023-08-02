@@ -58,7 +58,6 @@ const Navbar = () => {
                 <div className="d-none d-sm-block ps-2">
                   <div className="fs-xs lh-1 opacity-60">Hola,</div>
                   <div className="fs-sm dropdown">{user.name}</div>
-                  <div className="fs-sm dropdown-toggle">{user.name}</div>
                 </div>
               </Link>
               <ul
