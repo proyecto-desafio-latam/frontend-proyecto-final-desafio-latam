@@ -57,6 +57,7 @@ const Navbar = () => {
                 />
                 <div className="d-none d-sm-block ps-2">
                   <div className="fs-xs lh-1 opacity-60">Hola,</div>
+                  <div className="fs-sm dropdown">{user.name}</div>
                   <div className="fs-sm dropdown-toggle">{user.name}</div>
                 </div>
               </Link>
@@ -75,7 +76,9 @@ const Navbar = () => {
                       Carrito
                     </i>
                     <span
-                      className="bg-success rounded-circle mt-n2 ms-1"
+                      className={`${
+                        totalQuantityCart ? "" : "d-none"
+                      }bg-success rounded-circle m-1 `}
                       style={{ width: "5px", height: "5px" }}
                     ></span>
                     <span className="ms-auto fs-xs text-muted">
@@ -92,38 +95,43 @@ const Navbar = () => {
                     <i
                       className="bx bx-shopping-bag fsbase opacity-60 me-2
                             "
+                    >
+                      Perfil
+                    </i>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="user/shoppinghistory"
+                    className="dropdown-item d-flex align-items-center"
                   >
-                    Perfil
-                  </i>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="user/shoppinghistory"
-                  className="dropdown-item d-flex align-items-center"
-                >
-                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
-                    Historial de compras
-                  </i>
-                </Link>
-              </li>
-              
-              <li>
-                <Link to={`/user/${user.id}/addresses`} className="dropdown-item d-flex align-items-center">
-                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
-                    Direcciones
-                  </i>
-                  <span className="ms-auto fs-xs text-muted">{userAddresses.length}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/user/favorites"
-                  className="dropdown-item d-flex align-items-center"
-                >
-                  <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
-                    Favoritos
-                  </i>
+                    <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
+                      Historial de compras
+                    </i>
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to={`/user/${user.id}/addresses`}
+                    className="dropdown-item d-flex align-items-center"
+                  >
+                    <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
+                      Direcciones
+                    </i>
+                    <span className="ms-auto fs-xs text-muted">
+                      {userAddresses.length}
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/user/favorites"
+                    className="dropdown-item d-flex align-items-center"
+                  >
+                    <i className="bx bx-shopping-bag fsbase opacity-60 me-2">
+                      Favoritos
+                    </i>
 
                     <span className="ms-auto fs-xs text-muted">
                       {favorites.length}
