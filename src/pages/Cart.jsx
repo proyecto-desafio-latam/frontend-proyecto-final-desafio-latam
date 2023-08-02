@@ -9,7 +9,7 @@ import { useAddressesContext } from '../context/AddressesContext';
 const Cart = () => {
 
     const { favorites, token, user } = useAuthContext();
-    const { books, FormatCoin  } = useBookContext();
+    const { books, FormatCoin } = useBookContext();
     const { cart, setCart, deleteFromCart, addToCart } = useCartContext();
     const { userAddresses, selectedAddress, setSelectedAddress } = useAddressesContext();
 
@@ -224,7 +224,7 @@ const Cart = () => {
                                     <th colSpan="1"><strong>{FormatCoin(Number(totalPurchase) + Number(selectedAddress.delivery_price))}</strong></th>
                                     {/* <!-- Celda para el botón de pagar --> */}
                                     <th colSpan="1" data-label="Acciones">
-                                        <button onClick={() => addToCartContainer()} className="pagar-button">
+                                        <button onClick={handleCheckout} className="pagar-button">
                                             {loading ? "Procesando..." : "Pagar"}
                                         </button>
                                     </th>
