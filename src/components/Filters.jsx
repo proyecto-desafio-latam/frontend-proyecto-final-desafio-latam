@@ -133,7 +133,7 @@ const Filters = ({ filterCategory, setFilterCategory, setSortedBooks }) => {
                     </select>
                 </div>
                 <div className="col-xl-4 col-md-6 col-sm-12 px-2">
-                    <input className="form-control me-md-4 mb-2 mb-md-0" onChange={(e) => handleSearchTitle(e.target.value.trim())} type="search" placeholder="Busca tu libro" aria-label="Search" />
+                    <input className="form-control me-md-4 mb-2 mb-md-0" onChange={(e) => handleSearchTitle(e.target.value.trim().toLowerCase())} type="search" placeholder="Busca tu libro" aria-label="Search" />
                 </div>
             </div>
         </div>
