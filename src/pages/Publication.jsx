@@ -5,7 +5,6 @@ import { toast } from "react-toastify"
 import { useAuthContext } from "../context/AuthContext";
 import { useBookContext } from "../context/BookContext";
 
-
 const Publication = () => {
     const [author, setAuthor] = useState([]);
     const [category, setCategory] = useState([]);
