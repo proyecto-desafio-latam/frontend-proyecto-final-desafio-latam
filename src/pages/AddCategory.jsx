@@ -1,11 +1,8 @@
 import { Field, Formik, Form, ErrorMessage } from "formik";
-import { useState } from "react";
+import { toast } from "react-toastify"
 import { useAuthContext } from "../context/AuthContext";
 
 const AddCategory = () => {
-    const [category, setCategory] = useState();
-    const [message, setMessage] = useState("");
-    const [success, setSuccess] = useState(false);
     const { token } = useAuthContext();
 
     const handleSubmit = async (values, { resetForm }) => {
@@ -21,14 +18,10 @@ const AddCategory = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                setCategory(data.result);
-                setSuccess(true);
-                setMessage(`agregada con éxito.`)
+                toast.success(`Categoría ${values.name} agregada con éxito.`)
                 resetForm();
             } else {
-                setCategory(values)
-                setSuccess(false)
-                setMessage(`ya existe.`)
+                toast.warning(`Categoría ${values.name} ya existe.`)
             }
         } catch (error) {
             console.log("Error en la solicitud:", error);
@@ -73,10 +66,6 @@ const AddCategory = () => {
                             </button>
                         </div>
 
-                        {message &&
-                            <div className={(success ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
-                                {`Categoria ${category.name} ${message}`}
-                            </div>}
                     </Form>
                 )}
             </Formik>

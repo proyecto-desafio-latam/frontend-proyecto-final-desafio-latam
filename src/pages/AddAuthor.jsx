@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { Field, Formik, Form, ErrorMessage } from "formik";
+import { toast } from "react-toastify"
 import { useAuthContext } from "../context/AuthContext";
 
 const addAuthor = () => {
-    const [author, setAuthor] = useState();
-    const [message, setMessage] = useState("");
-    const [success, setSuccess] = useState(false);
     const { token } = useAuthContext();
 
     const handleSubmit = async (values, { resetForm }) => {
@@ -21,14 +18,10 @@ const addAuthor = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                setAuthor(data.result);
-                setSuccess(true);
-                setMessage(`agregado con éxito.`);
+                toast.success(`Autor ${values.name} agregado con éxito.`)
                 resetForm();
             } else {
-                setAuthor(values)
-                setSuccess(false)
-                setMessage(`ya existe.`)
+                toast.warning(`Autor ${values.name} ya existe.`)
             }
         } catch (error) {
             console.log("Error en la solicitud:", error);
@@ -56,7 +49,7 @@ const addAuthor = () => {
                     <Form className="register-form">
                         <div className="form-field">
                             <label className="form-label" htmlFor="name">
-                                Categoría
+                                Autor
                             </label>
                             <Field
                                 className="form-input"
@@ -72,10 +65,7 @@ const addAuthor = () => {
                                 Agregar
                             </button>
                         </div>
-                        {message &&
-                            <div className={(success ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
-                                {`Autor ${author.name} ${message}`}
-                            </div>}
+                        
                     </Form>
                 )}
             </Formik>
