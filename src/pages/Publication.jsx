@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Field, Formik, Form, ErrorMessage } from "formik";
+import { toast } from "react-toastify"
 import { useAuthContext } from "../context/AuthContext";
 import { useBookContext } from "../context/BookContext";
 
@@ -9,8 +10,6 @@ const Publication = () => {
     const [author, setAuthor] = useState([]);
     const [category, setCategory] = useState([]);
     const { getData } = useBookContext();
-    const [message, setMessage] = useState("");
-    const [success, setSuccess] = useState(false);
     const { token } = useAuthContext();
 
     const getAuthors = async () => {
@@ -54,13 +53,11 @@ const Publication = () => {
             if (response.ok) {
                 const data = await response.json();
                 getData()
-                setSuccess(true);
-                setMessage(`agregado con éxito.`);
+                toast.success(`Libro ${values.title} agregado con éxito.`, {autoClose:2000} )
                 resetForm();
             } else {
                 getData()
-                setSuccess(false)
-                setMessage(`no pudo ser agregado, revisa si todos los datos están completos y correctos.`)
+                toast.warning(`Libro no pudo ser agregado, revisa que todos los datos estén completos.`,  {autoClose:3000} )
             }
         } catch (error) {
             console.log("Error en la solicitud:", error);
@@ -217,10 +214,6 @@ const Publication = () => {
                     </Form>
                 )}
             </Formik>
-            {message &&
-                <div className={(success ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
-                    {`Libro ${message}`}
-                </div>}
         </div>
     );
 };

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Field, Formik, Form, ErrorMessage } from "formik";
+import { toast } from "react-toastify"
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const [loginSuccess, setLoginSuccess] = useState(false);
-    const [message, setMessage] = useState("");
     const {saveToken} = useAuthContext()
     const navigate = useNavigate()
 
@@ -23,13 +22,10 @@ export default function Login() {
             const data = await response.json()
             saveToken(data)
             resetForm();
-            setLoginSuccess(true);
-            setMessage(`Login exitoso`);
-            setTimeout(() => setLoginSuccess(false), 4000);
+            toast.success(`Login exitoso`, { position: toast.POSITION.TOP_CENTER});
             navigate("/")
           } else {
-            setMessage(`Email y/o contraseña incorrecta`);
-            setLoginSuccess(false);
+            toast.warning(`Email y/o contraseña incorrecta`, {autoClose: 2500, position: toast.POSITION.TOP_CENTER});
           }
         } catch (error) {
           console.log("Error en la solicitud:", error);
@@ -101,11 +97,6 @@ export default function Login() {
                                 <button className='form-button-login' type="submit">Login</button>
                                 <p>Aun no tienes cuenta? <Link to="/register">crea una aquí</Link></p>
                             </div>
-
-                            {message &&
-                            <div className={(loginSuccess ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
-                                {`${message}`}
-                            </div>}
                         </Form>
                     )}
                 </Formik>

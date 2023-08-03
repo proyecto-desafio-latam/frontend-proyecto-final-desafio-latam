@@ -16104,9 +16104,10 @@ img-comparison-slider:focus {
 .form-button,
 .form-button-login {
   padding: 8px 16px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
+  background-color: white;
+  color: #4354AC;
+  font-weight: bold;
+  border: solid #4354AC 2px;
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
@@ -16117,8 +16118,9 @@ img-comparison-slider:focus {
 
 .form-button:hover,
 .form-button-login:hover {
-  background-color: #45a049;
-  /* Cambia el color de fondo en el hover */
+  background-color: #4354AC;
+  font-weight: bold;
+  color: white;
 }
 
 .form-button:active,
@@ -16341,7 +16343,7 @@ th {
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--warning {
-  background-color: red;
+  background-color: rgb(209, 36, 36);
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--info {

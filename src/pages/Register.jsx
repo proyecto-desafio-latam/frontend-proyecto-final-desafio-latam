@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Field, Formik, Form, ErrorMessage } from 'formik';
+import { toast } from "react-toastify"
 
 export default function Register() {
-
-    const [success, setSuccess] = useState(false);
-    const [message, setMessage] = useState("");
 
     const handleRegister = async (values, { resetForm }) => {
         try {
@@ -18,12 +16,10 @@ export default function Register() {
 
             if (response.ok) {
                 const data = await response.json();
-                setSuccess(true);
-                setMessage(`Usuario agregado con éxito`);
+                toast.success("Usuario agregado con éxito", {position: toast.POSITION.TOP_CENTER})
                 resetForm();
             } else {
-                setSuccess(false);
-                setMessage(`Ya existe una cuentra registrada con este correo`);
+                toast.warning("Ya existe una cuentra registrada con este correo", {autoclose: 5000, position: toast.POSITION.TOP_CENTER})
             }
         } catch (error) {
             console.log("Error en la solicitud:", error);
@@ -217,10 +213,6 @@ export default function Register() {
                                     )} />
                             </div>
                             <button className='form-button' type="submit">Registrar</button>
-                            {message &&
-                                <div className={(success ? "alert alert-success mt-3" : "alert alert-danger mt-3")}>
-                                    {`${message}`}
-                                </div>}
                         </Form>
                     )}
                 </Formik >
